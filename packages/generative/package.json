@@ -1,0 +1,25 @@
+{
+  "name": "@lucidme/generative",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Motore organismi/stelle: seed → render deterministico. Zero dipendenze esterne, zero accesso DOM globale.",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "lint": "eslint src",
+    "clean": "rm -rf build dist .turbo"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.5"
+  }
+}

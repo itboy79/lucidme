@@ -1,0 +1,63 @@
+/* AUTO-GENERATO da `scripts/gen-tokens.mjs`. NON EDITARE A MANO.
+ * Fonte: `src/tokens/*.ts` (estratti dal prototipo Organico Generativo).
+ * Rigenerare con `pnpm --filter @lucidme/ui gen:tokens`.
+ * Sincronizzato con i valori del `:root` del prototipo byte per byte. */
+:root {
+  --lm-body-bg: #040408;
+  --lm-bg0: #07070f;
+  --lm-bg1: #0a0a14;
+  --lm-bg2: #141430;
+  --lm-ink: #e8e6f2;
+  --lm-ink-dim: #8b88a6;
+  --lm-ink-faint: #565370;
+  --lm-cyan: #7fe7dc;
+  --lm-violet: #b69cff;
+  --lm-amber: #ffc98a;
+  --lm-rose: #ff9ec6;
+  --lm-hue-calma: 172;
+  --lm-hue-meraviglia: 262;
+  --lm-hue-gioia: 36;
+  --lm-hue-paura: 295;
+  --lm-hue-malinconia: 215;
+  --lm-hue-desiderio: 330;
+  --lm-notte-title: #f4e9dc;
+  --lm-notte-eyebrow: rgba(255,201,138,.55);
+  --lm-stage-frame: #16162a;
+  --lm-font-serif: 'Fraunces', serif;
+  --lm-font-sans: 'Outfit', sans-serif;
+  --lm-fonts-href: https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Outfit:wght@300..600&display=swap;
+  --lm-ease: cubic-bezier(.2,.6,.2,1);
+  --lm-ease-standard: cubic-bezier(.4,0,.2,1);
+  --lm-duration-screen-fade: 800ms;
+  --lm-duration-detail-fade: 600ms;
+  --lm-duration-toast-fade: 500ms;
+  --lm-duration-nav: 500ms;
+  --lm-duration-chip: 400ms;
+  --lm-duration-button-press: 300ms;
+  --lm-keyframe-breathe: 7000ms;
+  --lm-keyframe-fade-pulse: 5000ms;
+  --lm-keyframe-rec-pulse: 4000ms;
+  --lm-blob-delay-b1: 0ms;
+  --lm-blob-delay-b2: -2500ms;
+  --lm-blob-delay-b3: -4000ms;
+  --lm-radius-pill: 60px;
+  --lm-radius-pill-sm: 50px;
+  --lm-radius-toast: 50px;
+  --lm-radius-circle: 50%;
+  --lm-radius-stage: 44px;
+  --lm-blob-b1: 58% 42% 55% 45% / 48% 56% 44% 52%;
+  --lm-blob-b2: 44% 56% 48% 52% / 55% 45% 58% 42%;
+  --lm-blob-b3: 52% 48% 60% 40% / 42% 58% 46% 54%;
+  --lm-radius-emotion-chip: 40% 60% 55% 45% / 60% 40% 60% 40%;
+  --lm-radius-sign: 55% 45% 60% 40% / 45% 60% 40% 55%;
+}
+
+/* Base reset allineato al prototipo. */
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--lm-bg1);
+  color: var(--lm-ink);
+  font-family: var(--lm-font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

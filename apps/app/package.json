@@ -1,0 +1,36 @@
+{
+  "name": "@lucidme/app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lucid Me — app PWA SvelteKit (core prodotto).",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build && svelte-kit sync",
+    "preview": "vite preview --port 4173 --host",
+    "typecheck": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "clean": "rm -rf build .svelte-kit dist .turbo"
+  },
+  "dependencies": {
+    "@lucidme/core": "workspace:*",
+    "@lucidme/db": "workspace:*",
+    "@lucidme/ui": "workspace:*",
+    "@lucidme/generative": "workspace:*",
+    "@lucidme/content": "workspace:*"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^3.0.6",
+    "@sveltejs/kit": "^2.8.0",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "@sentry/sveltekit": "^8.40.0",
+    "svelte": "^5.1.0",
+    "svelte-check": "^4.0.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.0",
+    "vite-plugin-pwa": "^0.21.0",
+    "vitest": "^2.1.5"
+  }
+}

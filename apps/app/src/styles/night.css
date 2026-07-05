@@ -1,0 +1,45 @@
+/* night.css — modalità notte (§S4-1).
+ *
+ * Dal prototipo (righe 77-78): `#scr-notte` ha un radial-gradient ambrato in
+ * basso, e `.notte-dim` riduce la saturazione del contenuto. Lo applichiamo
+ * globalmente aggiungendo `data-night="true"` su <html> 30 min prima
+ * dell'ora-sonno impostata, con transizione 2s.
+ *
+ * Lo scope è l'attributo su <html>, così la modalità notte pervade tutta l'app
+ * (non solo la rotta /notte) mentre l'utente è vicino al sonno.
+ */
+
+/* Transizione morbida su tutto ciò che la notte tocca. */
+html {
+  transition:
+    background 2s var(--lm-ease-standard, ease),
+    filter 2s var(--lm-ease-standard, ease);
+}
+
+/* Modalità notte attiva: radial ambrato + saturazione ridotta (.notte-dim). */
+html[data-night='true'] body {
+  background:
+    radial-gradient(100% 80% at 50% 110%, rgba(255, 201, 138, 0.07), transparent 60%),
+    var(--lm-bg1);
+}
+
+html[data-night='true'] .stage {
+  /* saturate .75 dal prototipo (.notte-dim) — meno vibrante, più notturno */
+  filter: saturate(0.75);
+  background:
+    radial-gradient(120% 90% at 50% -10%, var(--lm-bg2) 0%, var(--lm-bg1) 45%, var(--lm-bg0) 100%),
+    radial-gradient(100% 60% at 50% 110%, rgba(255, 201, 138, 0.05), transparent 60%);
+  transition: filter 2s var(--lm-ease-standard, ease);
+}
+
+/* Accent ambrato invece di cyan quando è notte: i link/CTA virano al caldo. */
+html[data-night='true'] .accent-cyan {
+  color: var(--lm-amber);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  html[data-night='true'] .stage {
+    transition: none;
+  }
+}

@@ -1,0 +1,485 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-05T23:13:42.572Z",
+  "lessons": [
+    {
+      "day": 1,
+      "phase": "fondamenti",
+      "title": "Benvenuto nel Sentiero",
+      "durationMin": 6,
+      "sources": [],
+      "practice": {
+        "type": "lettura",
+        "steps": [
+          "Leggi la lezione."
+        ]
+      },
+      "body": "# Benvenuto nel Sentiero\n\nUn **sogno lucido** è un sogno in cui sai di stare sognando, mentre accade. Non è un'idea New Age: è un fenomeno studiato in laboratorio dal 1981 e confermato con segnali oculari volontari durante la fase REM.\n\nLa domanda onesta è: quante persone lo vivono? Saunders e colleghi, in una meta-analisi del 2016 su oltre 20.000 partecipanti, riportano che più della metà delle persone ha avuto almeno un sogno lucido nella vita, e circa una persona su cinque lo sperimenta con una certa regolarità.\n\nQuindi non è un dono raro. È una **capacità allenabile**, e il Sentiero te la allena in tre settimane.\n\n## Cosa NON ti promettiamo\n\nChe diventerai lucido in 21 giorni non lo scriviamo: sarebbe disonesto. La ricerca mostra che i tempi variano molto da persona a persona. Quello che possiamo fare è darti le tecniche con il maggior supporto scientifico, nell'ordine giusto, un passo alla volta.\n\n## Il patto\n\nPer tre settimane dedichi pochi minuti al giorno. Niente di più. Funziona se ci torni sopra, non se ci pensi intensamente una volta.\n\nDomani parliamo del primo, vero prerequisito: **ricordare i sogni**. Non ha senso cercare la lucidità se al risveglio non ricordi nulla.\n"
+    },
+    {
+      "day": 2,
+      "phase": "fondamenti",
+      "title": "Ricordare prima di volare",
+      "durationMin": 6,
+      "sources": [],
+      "practice": {
+        "type": "lettura",
+        "steps": [
+          "Leggi la lezione.",
+          "Stasera metti il telefono fuori portata dal letto.",
+          "Tieni blocco e penna (o l'app) sul comodino."
+        ]
+      },
+      "body": "# Ricordare prima di volare\n\nSi dà per scontato di sognare poco. In realtà sogniamo ogni notte, 4-6 volte, durante la fase REM. Quello che manca è il **ricordo**.\n\nSe al risveglio non ricordi i sogni, anche diventando lucido non lo sapresti: il sogno svanirebbe con gli altri. Per questo il ricordo è il primo muscolo da allenare.\n\n## Le quattro regole del ricordo\n\n1. **Movimento minimo al risveglio.** Non scattare, non guardare il telefono. Resta immobile con gli occhi chiusi: il sogno vive ancora nel corpo. Bastano dieci secondi.\n2. **Ancora emozionale.** Non cercare \"la storia\". Cerca cosa provavi: paura, meraviglia, urgenza. L'emozione è il filo che tira fuori il resto.\n3. **Appena sveglio, subito giù.** Anche una parola sola. Scrivere consolidila; aspettare la dissolve. La revisione scientifica sui benefici e i tratti dei sogni lucidi sottolinea quanto il diario del mattino sia la base condivisa di ogni tecnica di induzione.\n4. **Costanza sul numero di sogni, non sulla lunghezza.** Tre righe ogni giorno valgono più di una pagina ogni settimana.\n\n## Il primo uso di Alba\n\nDomani mattina, appena apri gli occhi, apri **Alba**. Racconta il sogno a voce o scrivilo. Anche \"non ricordo nulla, sentivo solo tensione\" va benissimo: per una settimana è già un'ancora.\n\nSenza ricordo non c'è lucidità. È il lavoro invisibile, e rende tutto il resto possibile.\n"
+    },
+    {
+      "day": 3,
+      "phase": "fondamenti",
+      "title": "La prima notte con Alba",
+      "durationMin": 7,
+      "sources": [],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Stasera: decidi dove tieni il telefono e come aprirai Alba con un solo gesto.",
+          "Al risveglio resta fermo 10 secondi, occhi chiusi, cerca l'emozione.",
+          "Apri Alba e registra (voce o testo) anche solo una frase.",
+          "Scegli un'emozione dominante, anche se approssimativa."
+        ]
+      },
+      "body": "# La prima notte con Alba\n\nIeri hai messo le basi. Ora trasformiamo il ricordo in un **rito automatico**: meno decisioni al mattino, più sogno che sopravvive.\n\nIl problema non è la volontà, è l'attrito. Al risveglio la mente scivola subito verso la giornata. Se per aprire il diario devi cercare l'app, leggere notifiche, pensare a cosa scrivere — il sogno è perso.\n\n## Abbassa l'attrito\n\n- **Posizione fissa.** Telefono e tazza d'acqua nello stesso punto ogni sera.\n- **Un solo gesto.** La mattina non navighi: apri Alba in diretto.\n- **Niente telefono prima del sogno.** Le notifiche uccidono la traccia onirica più di ogni altra cosa. Il diario viene **prima**.\n\n## Cosa registrare, in ordine\n\n1. L'**emozione** dominante, anche vaga.\n2. Un'**immagine** residua: un colore, un volto, un luogo.\n3. La **storia**, se emerge. Non forzarla.\n\nSe ti resta solo \"ansia, senza immagini\", va benissimo. Lo scrivi. Tra qualche giorno i dettagli arriveranno da soli: il cervello impara che al mattino **quella** roba si salva, e smette di cancellarla.\n\n## Perché conta per la lucidità\n\nLe tecniche che vedrai dalla prossima settimana (reality check, MILD) funzionano solo se hai un materiale onirico con cui lavorare. Senza ricordo, sono teoria.\n\nDomani inizia la **Fase II**: il reality testing. Il primo vero strumento diretto verso la lucidità.\n"
+    },
+    {
+      "day": 4,
+      "phase": "reality-testing",
+      "title": "Il check delle mani",
+      "durationMin": 6,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Oggi conta le tue dita 5 volte: al risveglio, a metà mattina, a pranzo, nel pomeriggio, prima di cena.",
+          "Ogni volta guarda davvero le mani, conta, chiediti: «sto sognando?»",
+          "Stasera segna su quante volte lo hai fatto."
+        ]
+      },
+      "body": "# Il check delle mani\n\nLa lucidità, nel sogno, arriva quasi sempre da un **dubbio**: qualcosa non torna, e ti chiedi se stai sognando. Il reality check trasforma quel dubbio in certezza.\n\nL'idea è semplice: se da sveglio ti alleni a fare una prova, prima o poi la farai anche in sogno — e lì la prova fallirà, rivelando il sogno.\n\n## Perché le mani\n\nLe mani sono il check più affidabile perché le guardi di continuo. Nel sogno, quasi mai sono normali: hanno troppe dita, si deformano, cambiano forma mentre le osservi.\n\n## Come si fa davvero\n\nNon basta \"guardarsi le mani\". Il check ha tre secondi:\n\n1. **Guarda** le mani aperte.\n2. **Conta** le dita, lentamente.\n3. **Domandati sul serio**: «sto sognando, adesso?». Cerca una vera risposta, non dare per scontato \"no\".\n\nLa terza fase è quella che quasi tutti saltano, e che rende il check inutile. Il punto non è il gesto: è l'**abitudine al dubbio**.\n\n## Quanto spesso\n\nPochi check al giorno non bastano. Punta a **5-10 volte**, legate a momenti fissi (al risveglio, ai pasti, quando apri una porta). Leghi il check a un trigger esistente: così diventa automatico.\n\nSe ti sembra banale, ricorda: il check entra nei sogni solo se è diventato riflesso. La banalità da sveglio è esattamente il punto.\n\nStasera conta: se sei sotto le 5 volte, domani raddoppia.\n"
+    },
+    {
+      "day": 5,
+      "phase": "reality-testing",
+      "title": "Testo e orologio",
+      "durationMin": 6,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Oggi, a ogni check delle mani, leggi anche un testo (un cartello, una pagina).",
+          "Guarda l'ora, distogli lo sguardo, poi guarda di nuovo: è la stessa?",
+          "Domandati: «sto sognando?»"
+        ]
+      },
+      "body": "# Testo e orologio\n\nLe mani sono un buon check, ma non sono infallibili. Per questo si usano **almeno due check diversi**, insieme.\n\nOggi aggiungi il check del **testo** e dell'**orologio**: nel sogno entrambi sono instabili in modo affidabile.\n\n## Testo\n\nLeggi una scritta — un cartello, il titolo di un libro, una notifica. Distogli lo sguardo. Guarda di nuovo.\n\n- Da svegli: la scritta è identica.\n- In sogno: cambia, si sfoca, si trasforma, sparisce. A volte torna un'altra lingua.\n\nNon c'è versione intermedia: o resta, o salta. Per questo è un check forte.\n\n## Orologio (digitale)\n\nStessa cosa con un orologio digitale (quello del telefono va bene).\n\n- Da svegli: l'ora avanza di un minuto, regolare.\n- In sogno: numeri assurdi, ore che saltano (le 47:93), caratteri illeggibili.\n\n## La regola dei due check\n\nMai fidarsi di un check solo. A volte, in sogno, le mani sembrano normali e passi oltre. Fare due check indipendenti riduce drasticamente i falsi \"tutto a posto\".\n\nQuindi da oggi: **mani + testo** oppure **mani + orologio**, insieme, nella stessa sessione di dubbio. Il triplo movimento (guarda, distogli, riguarda) è ciò che rivela il sogno.\n\nContinua a mirare a 5-10 trigger al giorno. Domani andiamo alla caccia dei tuoi **dream sign personali** — lì il lavoro diventa su misura.\n"
+    },
+    {
+      "day": 6,
+      "phase": "reality-testing",
+      "title": "I tuoi dream sign",
+      "durationMin": 7,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Apri il Giardino e sfoglia gli ultimi sogni.",
+          "Trova 2-3 elementi che si ripetono (luoghi, persone, azioni, oggetti).",
+          "Per ciascuno decidi: quando lo incontrerò da sveglio, farò un check."
+        ]
+      },
+      "body": "# I tuoi dream sign\n\nUn **dream sign** è un elemento che ricorre nei tuoi sogni. Possono essere luoghi (la casa dell'infanzia), persone (un compagno di scuola), oggetti (treni, acqua), oppure stranezze (camminare senza scarpe, volare).\n\nSono oro puro per la lucidità: se sai cosa sogni spesso, sai dove mirare i check.\n\n## Come trovarli\n\nApri il Giardino. Sfoglia gli ultimi sogni. Cerca:\n\n- **Luoghi** che tornano.\n- **Persone** ricorrenti.\n- **Azioni** che ripeti in sogno (inseguire, volare, perderti).\n- **Stranezze** ricorrenti: luce sempre spenta, telefono che non funziona, denti che cadono.\n\nNe bastano **2-3** per ora. Più tardi l'app li rileverà da sola, ma oggi fallo a occhio: conosci i tuoi sogni meglio di qualunque algoritmo.\n\n## Il patto dei dream sign\n\nPer ogni segno che scegli, decidi un **trigger da sveglio**:\n\n> \"Quando vedo l'acqua (lugo ricorrente), faccio il check delle mani.\"\n\nSe sogni spesso i treni, fai il check ogni volta che vedi un treno nella giornata. È l'aggancio diretto tra la veglia e il sogno: lì dentro, quando rivedrai il treno, scatterà il riflesso del check — e con lui il dubbio.\n\n## Anticipa la frustrazione\n\nPer i primi giorni non succederà nulla nei sogni. Bene: il reality check è un lavoro a lungo termine, come imparare uno strumento. La revisione della letteratura concorda: la costanza conta più dell'intensità.\n\nDomani rafforziamo il sistema: i **trigger ambientali** che rendono i check davvero automatici.\n"
+    },
+    {
+      "day": 7,
+      "phase": "reality-testing",
+      "title": "Trigger che non scordi",
+      "durationMin": 6,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Scegli 3 trigger ambientali fissi (es. ogni porta, ogni specchio, ogni drink).",
+          "Ogni volta che li incontr oggi, fai il doppio check (mani + testo/orologio).",
+          "Stasera segna quanti trigger hai rispettato."
+        ]
+      },
+      "body": "# Trigger che non scordi\n\nIl check funziona solo se è **automatico**. Decidere \"oggi farò più check\" non dura una settimana. Decidere \"ogni volta che passo una porta, guardo le mani\" dura per sempre.\n\nL'errore classico è appoggiarsi alla volontà. La volontà al mattino presto, stanchi o distratti, non c'è. I **trigger ambientali** la sostituiscono.\n\n## La formula\n\nScegli oggetti o azioni che incontri più volte al giorno. Per ognuno, attacca un check:\n\n- **Porta.** Passi una porta? Guarda le mani.\n- **Specchio.** Ti vedi in uno specchio? È un sogno?\n- **Bere.** Bevi un sorso d'acqua? Conta le dita.\n- **Telefono.** Sblocca lo schermo? L'ora è giusta?\n\nTre bastano. Di più, e si confondono; di meno, e il check resta troppo raro.\n\n## La regola dei due check\n\nA ogni trigger fai **sempre** il doppio check (mani + testo/orologio), come ieri. Così quando il trigger compare in sogno — e compare, perché fa parte della tua vita — il riflesso fa il resto.\n\n## Metà percorso. Bilancio onesto.\n\nSiamo a un terzo del Sentiero. Se finora non hai avuto sogni lucidi: **è normale**. Il reality testing è una tecnica lenta, a cumulo. Le statistiche di prevalenza mostrano che la maggior parte delle persone arriva al primo sogno lucido con la pratica costante, non in pochi giorni.\n\nDalla prossima settimana passiamo alle tecniche di induzione attiva (MILD, WBTB). Il reality check resta la base: continua a farlo mentre aggiungiamo il resto.\n\nDomani chiudiamo la settimana con la **disciplina del check**: come non perderlo quando la vita si fa fitta.\n"
+    },
+    {
+      "day": 8,
+      "phase": "reality-testing",
+      "title": "Disciplina del check",
+      "durationMin": 6,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "lettura",
+        "steps": [
+          "Leggi la lezione."
+        ]
+      },
+      "body": "# Disciplina del check\n\nSi parte entusiasti: dieci check il primo giorno, otto il secondo, tre il quarto, zero la seconda settimana. È il crollo che uccide ogni tecnica di induzione, ed è normale.\n\nOggi niente tecnica nuova. Parliamo di come **mantenere** il check quando l'entusiasmo cala.\n\n## Il check non è ispirazione, è riflesso\n\nUn check fatto controvoglia vale quanto uno fatto con slancio. Anzi: di più, perché dimostra che il riflesso si sta costruendo. L'obiettivo non è \"essere presenti\", è fare il gesto.\n\nSe ti accorgi a sera di aver fatto solo due check, non sentirti in colpa: domani attaccane tre a tre trigger diversi. Riprendi, senza recriminazioni.\n\n## Anti-abituazione\n\nIl cervello smette di registrare i check che diventano troppo meccanici. Per evitarlo:\n\n- **Cambia trigger** ogni settimana. Se usavi \"porta\", passa a \"specchio\".\n- **Varia la domanda.** Oltre a «sto sognando?», prova «come sono arrivato qui?», «ricordo cosa ho fatto un'ora fa?». La domanda sulla memoria è potentissima in sogno.\n- **Metti un segno.** Un piccolo adesivo sul telefono, sul portafogli: ogni volta che lo vedi, fai il check.\n\n## Il check critico\n\nC'è un momento in cui il check conta più di tutti: appena dopo esserti svegliato. Spesso nei sogni si è convinti di essere svegli. Fare un check nei primi secondi di veglia capovolge questa abitudine e la porta nel sogno.\n\nDa domani entriamo nella **Fase III**: MILD e WBTB, le tecniche con il maggior supporto scientifico per l'induzione attiva della lucidità. Il reality check resta il tuo terreno: non smettere.\n"
+    },
+    {
+      "day": 9,
+      "phase": "reality-testing",
+      "title": "Stato critico, non scettico",
+      "durationMin": 6,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Per ogni check di oggi, prima di rispondere 'no', cerca una prova.",
+          "Prova: 'Come sono arrivato in questa stanza?' Cerca di ricostruire gli ultimi 10 minuti.",
+          "Se non riesci a ricostruirli, è un campanello."
+        ]
+      },
+      "body": "# Stato critico, non scettico\n\nIl check si riduce spesso a un rito superstizioso: guardo le mani, dico \"no, non sto sognando\", passo oltre. In sogno questo esatto gesto può rassicurarti e farti perdere la lucidità.\n\nManca un passaggio: la **vera indagine**.\n\n## Il test della memoria\n\nLa domanda più forte non è «questo è reale?». È **«come sono arrivato qui?»**.\n\n- Da svegli: ricostruisci gli ultimi minuti. C'è un prima logico.\n- In sogno: non c'è. Sei lì, punto. Il \"prima\" manca o salta da una scena all'altra senza continuità.\n\nAggiungi questa domanda a ogni check. Non: «sto sognando?». Ma: «ricordo come sono entrato in questa stanza?».\n\n## La differenza tra critico e scettico\n\n- **Scettico** (inutile): parto dal presupposto di essere sveglio, e cerco conferme.\n- **Critico** (utile): parto dal dubbio onesto, e cerco prove in entrambe le direzioni.\n\nIn sogno lo scettico trova sempre una scusa (\"certo che le dita sembrano strane, è la luce\"). Il critico, invece, accetta l'assurdo quando lo vede.\n\n## Allena il dubbio autentico\n\nPer ogni check di oggi, prima di rispondere \"no\", fermati due secondi in più. Guarda le mani, conta, poi prova a ricordare gli ultimi dieci minuti della tua giornata. Se la catena è solida, sei sveglio. Se c'è un buco, dubita sul serio.\n\nÈ una piccola abitudine mentale che, una volta trasferita nel sogno, è quasi infallibile.\n\nDomani chiudiamo la Fase II con il **bilancio dei dream sign**: ricalibriamo i tuoi segni alla luce di una settimana di pratica.\n"
+    },
+    {
+      "day": 10,
+      "phase": "reality-testing",
+      "title": "Ricalibrare i dream sign",
+      "durationMin": 7,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Apri il Giardino e rileggi i sogni dell'ultima settimana.",
+          "Aggiorna la tua lista di dream sign: cosa è confermato, cosa no, cosa è nuovo.",
+          "Tieni al massimo 4 segni attivi. Allega a ciascuno un trigger da sveglio."
+        ]
+      },
+      "body": "# Ricalibrare i dream sign\n\nUna settimana fa hai scelto i tuoi dream sign a naso. Ora hai sette giorni di sogni in più nel Giardino: è il momento di **verificare**.\n\nI segni cambiano. Quello che sembrava ricorrente magari non lo era; ne sono emersi altri. Ricalibrare ogni settimana è ciò che trasforma un diario in uno strumento.\n\n## Come rileggere\n\nApri il Giardino. Sfoglia i sogni degli ultimi sette giorni. Per ciascuno, segna:\n\n- **Luogo** principale.\n- **Persone** presenti.\n- **Azione** centrale.\n- **Stranezze** notevoli.\n\nPoi cerca i pattern. Qualcosa appare tre o più volte? È un dream sign. Una sola volta? Per ora lascialo perdere.\n\n## La regola dei quattro\n\nTieni al massimo **4 segni attivi**. Più di 4 e il cervello li confonde; meno di 2 e ne perdi la maggior parte. Per ogni segno, un trigger da sveglio:\n\n> Segno: \"acqua\" → Trigger: ogni volta che apro un rubinetto, check delle mani.\n\n## Cosa fare con i segni confermati\n\nPer i segni che tornano davvero, rafforza il legame. Se sogni spesso di inseguire qualcosa, fai un check ogni volta che nella giornata ti viene l'impulso di affrettarti. La vita da svegli offre sempre un equivalente del segno onirico: trovalo.\n\n## Fase II completata\n\nHai finito il reality testing. Hai mani + testo/orologio, tre trigger ambientali, una lista di dream sign ricalibrata. È una base seria.\n\nDomani entra in campo la tecnica più studiata per l'induzione: la **MILD**, l'induzione mnemonica. Edizione serale: ci prepariamo a notte.\n"
+    },
+    {
+      "day": 11,
+      "phase": "mild-wbtb",
+      "title": "MILD: l'intenzione",
+      "durationMin": 7,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Stasera, a letto, prima di dormire: ripeti lentamente la formula MILD.",
+          "Visualizza in dettaglio un sogno recente: cosa avresti fatto se avessi capito di sognare.",
+          "Ripeti la formula finché ti addormenti, o almeno per 5 minuti."
+        ]
+      },
+      "body": "# MILD: l'intenzione\n\nLa **MILD** — *Mnemonic Induction of Lucid Dreams*, induzione mnemonica — è la tecnica più studiata per la lucidità. Si basa su un meccanismo semplice: la **prospective memory**, la memoria di ciò che ci siamo ripromessi di fare.\n\nLa versione sintetica: prima di addormentarti, ti riprometti con forza di riconoscere il sogno. Il cervello porta questa intenzione nella fase REM, dove ha una chance di attivarsi.\n\n## La formula\n\nStasera, a letto, ripetila lentamente:\n\n> «La prossima volta che sogno, mi accorgerò che sto sognando.»\n\nNon come un mantra vuoto. Come una **promessa precisa**. La letteratura scientifica è chiara: l'intenzione esplicita e formulata in prima persona funziona meglio della vaga speranza.\n\n## Due acceleratori\n\nLa sola formula è debole. Si potenzia così:\n\n1. **Visualizza un sogno recente.** Prendi un sogno dal Giardino di ieri. Rivedilo nella mente. Immagina di fermarti dentro quel sogno, fare il check delle mani, scoprire che sogni. Sentilo.\n2. **Collegalo al check.** Mentre visualizzi, immagina di compiere proprio il reality check che alleni da una settimana. Così l'intenzione MILD ha un \"gesto\" a cui attaccarsi.\n\n## Cosa aspettarsi\n\nStasera potresti non accorgerti di nulla. La MILD è una tecnica a cumulo: ogni notte rafforza l'associazione. La differenza con il solo reality check è che qui **lavori sul confine veglia-sonno**, esattamente dove la lucidità nasce.\n\nDomani aggiungiamo la **prova del respiro**, e poi, dalla lezione 13, il WBTB: il tempismo che moltiplica la MILD.\n"
+    },
+    {
+      "day": 12,
+      "phase": "mild-wbtb",
+      "title": "La prova del respiro",
+      "durationMin": 6,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Aggiungi ai tuoi check la prova del respiro: tappa il naso e prova a inspirare.",
+          "Se respiri ugualmente: stai sognando.",
+          "Stasera includi questo check nella visualizzazione MILD."
+        ]
+      },
+      "body": "# La prova del respiro\n\nLe mani e il testo sono check visivi. Il check del **respiro** è diverso: agisce su un sistema che nel sogno continua a funzionare come in veglia, e per questo tradisce il sogno in modo quasi infallibile.\n\n## Come funziona\n\nTappati il naso con due dita. Chiudi la bocca. Prova a inspirare.\n\n- Da svegli: non respiri. Senti il blocco.\n- In sogno: respiri lo stesso. Il corpo fisico continua a inspirare dalla bocca o dal naso; il sogno non lo replica. Senti l'aria passare nonostante le dita.\n\nÈ uno dei check più affidabili perché si appoggia a una funzione involontaria, difficile da simulare nel sogno.\n\n## Come si fa davvero\n\n1. **Non** tapparti il naso in un luogo pubblico imbarazzante. Fallo con discrezione, anche una volta sola a check.\n2. Tappa, inspira piano. Se passi aria: domandati sul serio se stai sognando.\n3. Non fidarti del primo tentativo. Fanne due.\n\n## Inseriscilo nella MILD\n\nStasera, nella visualizzazione della formula, immagina di compiere questo check dentro il sogno: vedi te stesso che si tappa il naso, che sente l'aria passare, che capisce.\n\nPiù i tuoi check sono **multipli e diversi**, più il sogno ha occasioni di tradirsi. Mani + testo + respiro sono un trio robusto.\n\nDomani introduciamo il **WBTB**, il *Wake Back To Bed*: il tempismo notturno che rende la MILD molto più efficace. È il pezzo che, combinato con quello che già fai, fa la differenza.\n"
+    },
+    {
+      "day": 13,
+      "phase": "mild-wbtb",
+      "title": "WBTB: il tempismo",
+      "durationMin": 7,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "lettura",
+        "steps": [
+          "Leggi la lezione.",
+          "Decidi l'orario della sveglia WBTB per la notte: ~5 ore dopo l'addormentamento."
+        ]
+      },
+      "body": "# WBTB: il tempismo\n\nLa **WBTB** — *Wake Back To Bed* — sfrutta una caratteristica del sonno: i sogni più lunghi e vividi arrivano nella **seconda metà della notte**, quando la fase REM domina.\n\nSe ti svegli in quel momento, resti sveglio brevemente e poi torni a dormire con la MILD, le probabilità di lucidità salgono in modo netto. La logica è nel tempismo, non nello sforzo.\n\n## Il protocollo\n\n1. **Vai a letto** alla solita ora.\n2. **Sveglia** dopo circa **5 ore** di sonno. (Es.: se dormi alle 23, sveglia alle 4.)\n3. **Resta sveglio 20-40 minuti.** Non di più, o fai fatica a riaddormentarti.\n4. In quella finestra: **leggi qualcosa di calmo**, bevi un sorso d'acqua, **riepiloga i tuoi dream sign**, ripeti la formula MILD.\n5. **Torna a letto** e dormi con l'intenzione MILD attiva.\n\nIl periodo di veglia breve \"ripristina\" la mente abbastanza da poter essere lucida nella REM successiva, ma non abbastanza da rovinare il sonno.\n\n## Le due insidie\n\n- **Svegliarsi troppo.** Mezz'ora è il limite pratico. Di più, e la stanchezza vince sull'intenzione.\n- **Attività sbagliata.** Niente telefono, niente schermo, niente pensieri lavorativi. È una veglia meditativa, non una pausa caffè.\n\n## La sveglia (preview)\n\nNel Sentiero la sveglia WBTB è gestita da **Notte**, in una futura versione: leggerà l'ora di addormentamento e ti proporrà la sveglia giusta. Per ora impostala a mano. La cosa importante è **provarla una volta ogni tanto**, non ogni notte: il sonno viene prima della tecnica.\n\nDomani raffiniamo: **cosa fare nei 30 minuti di veglia** perché la MILD attecchisca davvero.\n"
+    },
+    {
+      "day": 14,
+      "phase": "mild-wbtb",
+      "title": "La mezz'ora che conta",
+      "durationMin": 6,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Scrivi su carta o nell'app: i tuoi 4 dream sign + la formula MILD.",
+          "Decidi un'azione calma per la veglia WBTB (leggere 10 pagine, riassumere un sogno).",
+          "Prova la WBTB questa notte (o la prossima in cui è possibile)."
+        ]
+      },
+      "body": "# La mezz'ora che conta\n\nIeri hai visto il protocollo WBTB. Oggi entriamo nei 20-40 minuti di veglia: è lì che la tecnica vince o perde.\n\nQuella mezz'ora non è \"tempo perso\": è l'unico momento della giornata in cui sei **a metà tra veglia e sonno REM**, e la mente è ricettiva. Cosa ci fai conta.\n\n## Le tre cose da fare (in ordine)\n\n1. **Ricorda un sogno appena fatto.** Appena sveglio dalla sveglia WBTB, sei uscito da un sogno. Recuperane i frammenti. Anche pochi dettagli bastano.\n2. **Ripassa i dream sign.** Guarda la tua lista (quella ricalibrata al giorno 10). Sono gli elementi da cui arriverà la lucidità.\n3. **Visualizza + formula MILD.** Chiudi gli occhi. Prendi il sogno che hai appena ricordato. Rivedilo nella mente, ma questa volta **immagina di diventare lucido dentro quel sogno**: fai il check delle mani, capisci, decidi. Ripeti la formula.\n\n## Le tre cose da NON fare\n\n- **Schermo.** La luce azzurra resetta la sonnolenza. Niente telefono.\n- **Attività mentale intensa.** Niente lavoro, email, problemi. Sveglia la parte sbagliata del cervello.\n- **Caffè o zuccheri.** Ti tengono sveglio oltre il necessario.\n\n## La regola d'oro\n\nLa veglia WBTB è **calma e focalizzata**. Leggere 10 pagine di un libro cartaceo va benissimo. Riassumere un sogno nel diario anche. L'obiettivo è restare sospesi tra veglia e sonno, non svegliarsi del tutto.\n\n## Provala\n\nStanotte o la prima notte possibile: sveglia a 5 ore, mezz'ora di veglia come sopra, poi MILD tornando a letto. Non ogni notte — il sonno resta la priorità. Ma provarla una volta a settimana, combinata con la pratica quotidiana, è dove le tecniche si incontrano davvero.\n\nDomani parliamo del **ritorno al sogno**: come rientrare in un sogno da cui ti sei appena svegliato senza perdere lo stato.\n"
+    },
+    {
+      "day": 15,
+      "phase": "mild-wbtb",
+      "title": "Rientrare nel sogno",
+      "durationMin": 6,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "lettura",
+        "steps": [
+          "Leggi la lezione."
+        ]
+      },
+      "body": "# Rientrare nel sogno\n\nTi svegli da un sogno vivido alle 4 di mattina. La tentazione è aprire gli occhi, scrivere, salvare il ricordo. Ma c'è un'occasione migliore: **rientrare nello stesso sogno, lucidi**.\n\nÈ la **DEILD** (*Dream Exit Initiated Lucid Dream*): se resti immobili e calmi al risveglio da un sogno, puoi \"scivolare\" di nuovo nella scena onirica, e questa volta con la consapevolezza attiva.\n\n## Il movimento minimo\n\nIl segreto è **non muoversi**. Appena apri gli occhi o ti giri, il sogno sparisce. Se resti fermo, in posizione, con gli occhi chiusi, la scena resiste.\n\nProtocollo:\n\n1. Sveglia da un sogno? **Non aprire gli occhi.** Non muovere un muscolo.\n2. Tieni il sogno nella mente. **Rivivilo**: la scena, l'ultima immagine, l'emozione.\n3. Ripeti mentalmente: «sto per rientrare in questo sogno, e starolta capirò di sognare».\n4. Lascia che la scena si riformi intorno a te. Non forzare: osserva.\n\n## Perché funziona\n\nIl cervello è ancora parzialmente nello stato onirico. Se non lo scuoti con movimenti o luci, scivola di nuovo in REM. La differenza è che ora ci porti dietro la **memoria della veglia** appena intercorsa — l'anello mancante per la lucidità.\n\n## Quando provarla\n\n- Dopo un **sogno vivido** da cui ti svegli in modo naturale (o con la sveglia WBTB).\n- Se ti svegli **calmo**, non con un allarme o un rumore forte.\n- Di **notte o primo mattino**, quando la REM è densa.\n\nNon tutte le notti. Solo quando capita l'occasione. È una tecnica delicata, ma quando funziona è la più diretta: il sogno è già lì, basta rientrarci.\n\nDomani bilanciamo la **Fase III**: MILD + WBTB + reality check insieme, e cosa aspettarsi nei prossimi giorni.\n"
+    },
+    {
+      "day": 16,
+      "phase": "mild-wbtb",
+      "title": "MILD + WBTB + check",
+      "durationMin": 6,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "lettura",
+        "steps": [
+          "Leggi la lezione."
+        ]
+      },
+      "body": "# MILD + WBTB + check\n\nHai tre tecniche in mano: reality check (giornaliero), MILD (serale), WBTB (notturna). Da sole sono deboli. **Insieme** si potenziano: è il nodo della Fase III.\n\n## Il ciclo notturno completo\n\nUna notte \"speciale\" (non ogni notte) si svolge così:\n\n1. **Sera.** Ricalibri i dream sign. Ripeti la formula MILD mentre ti addormenti.\n2. **5 ore dopo.** Sveglia WBTB. 20-30 minuti calmi: ricordo del sogno, dream sign, visualizzazione.\n3. **Ritorno a letto.** MILD attiva. Eventuale DEILD se ti svegli da un sogno.\n4. **Mattino.** Appena sveglio: check delle mani (il sospetto di aver sognato è massimo in quel momento).\n\nNessuno fa tutto questo ogni notte. Ma una o due notti a settimana con il ciclo completo valgono settimane di pratica blanda.\n\n## La questione delle probabilità\n\nQuanto aumenta la chance di lucidità? La ricerca su queste tecniche riporta che la combinazione MILD + WBTB, praticata con costanza, è una delle induzioni con i risultati migliori nella letteratura; i tassi variano molto tra studi e individui. Quello che possiamo dirti con onestà: **funziona più spesso del reality check da solo**, soprattutto nelle persone che ricordano bene i sogni.\n\nIl che riporta al punto iniziale: il ricordo. Se la tua pratica non funziona, il colpevole quasi sempre è il ricordo debole, non la tecnica.\n\n## Da domani\n\nEntra in scena la **TLR** — *Targeted Lucidity Reactivation* — la tecnica più recente nello studio Northwestern del 2024. Lavora con **cue sonori** che associ allo stato lucido. È ciò che completerà il tuo arsenale per gli ultimi cinque giorni del Sentiero.\n\nSe finora non hai avuto un sogno lucido, **non è un fallimento**. Le ultime due settimane sono state la preparazione. La Fase IV è dove le tecniche si combinano in modo nuovo.\n"
+    },
+    {
+      "day": 17,
+      "phase": "tlr",
+      "title": "TLR: il cue sonoro",
+      "durationMin": 8,
+      "sources": [
+        {
+          "label": "Studio Northwestern 2024 — Targeted Lucidity Reactivation",
+          "ref": "studio-northwestern-2024-tlr"
+        },
+        {
+          "label": "Northwestern News — TLR sensory cues (ott. 2024)",
+          "ref": "northwestern-news-study-tlr-sensory-cues"
+        }
+      ],
+      "practice": {
+        "type": "lettura",
+        "steps": [
+          "Leggi la lezione.",
+          "Scegli un suono neutro da usare come cue (un tintinnio, una nota di piano)."
+        ]
+      },
+      "body": "# TLR: il cue sonoro\n\nLa **TLR** — *Targeted Lucidity Reactivation* — è la tecnica più recente tra quelle che ti diamo. Viene da uno studio del gruppo di ricerca di Ken Paller, alla Northwestern University, pubblicato nel 2024.\n\nL'idea, in due frasi: associ un **suono neutro** a uno **stato di consapevolezza** da svegli; poi, durante la notte, lo stesso suono riproposto in determinate fasi del sonno ha buone probabilità di riattivare quella consapevolezza, e con essa la lucidità.\n\n## Il risultato dello studio\n\nNel trial, i partecipanti hanno aumentato la frequenza dei sogni lucidi: in media da meno di uno a circa due per settimana. Il numero va letto con cautela — riguarda quella coorte, in quelle condizioni — ma il segnale è chiaro: un **cue** precedentemente associato può attivare la lucidità durante il sonno.\n\n## Come funziona il protocollo (semplificato)\n\n1. **Fase di associazione (sera).** Per una ventina di minuti, ascolti un suono specifico mentre **ti alleni a pensare \"sto sognando\"**. Ripeti: ogni volta che senti il cue, fai un check delle mani e ti confermi \"se questo fosse un sogno, lo saprei\".\n2. **Fase di riattivazione (notte).** Lo stesso suono viene riproposto durante la fase di sonno in cui è più probabile che induca lucidità (vedremo meglio domani).\n3. **Mattoni che già conosci.** Reality check, MILD, WBTB non si buttano: la TLR si appoggia su di essi.\n\n## Cosa serve\n\nUn **cue**. Per ora scegli un suono neutro, breve, riconoscibile: un tintinnio, una nota di pianoforte, un piccolo campanello. Domani costruiremo l'associazione.\n\nAvvertenza onesta: la versione completa (cue riprodotto in REM da un dispositivo) richiede strumenti che nel Sentiero arriveranno con **Notte**. Per ora costruiamo la parte che sta a te: l'**associazione serale**, che è il cuore della tecnica.\n"
+    },
+    {
+      "day": 18,
+      "phase": "tlr",
+      "title": "Costruire l'associazione",
+      "durationMin": 12,
+      "sources": [
+        {
+          "label": "Studio Northwestern 2024 — Targeted Lucidity Reactivation",
+          "ref": "studio-northwestern-2024-tlr"
+        },
+        {
+          "label": "Northwestern News — TLR sensory cues (ott. 2024)",
+          "ref": "northwestern-news-study-tlr-sensory-cues"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Siediti in un luogo calmo per 20 minuti.",
+          "Fai partire il tuo cue (o immagina il suono) a intervalli di ~30 secondi.",
+          "A ogni cue: fai il check delle mani, ripeti la formula, visualizza la lucidità.",
+          "Ripeti per tutta la sessione senza distrarti."
+        ]
+      },
+      "body": "# Costruire l'associazione\n\nIeri hai scelto il cue. Oggi costruiamo l'**associazione** tra quel suono e lo stato di consapevolezza. È la fase più importante della TLR: senza di essa, il cue di notte non significa nulla.\n\n## La sessione serale (20 minuti)\n\nSiediti comodo, in un luogo calmo, preferibilmente prima di dormire. Il protocollo:\n\n1. **Chiudi gli occhi.** Respira piano per un minuto.\n2. **Fai partire il cue** a intervalli di circa 30 secondi. Se non hai un suono registrato, **immaginalo** vividamente: la mente risponde anche all'immaginazione sonora.\n3. **A ogni cue**:\n   - Fai il **check delle mani** (mani + respiro).\n   - Ripeti la **formula MILD**: «La prossima volta che sogno, mi accorgerò di sognare».\n   - **Visualizza** per qualche secondo: vedi te stesso in un sogno, senti il cue, diventi lucido.\n4. **Continua per 20 minuti.** Senza telefono, senza musica di fondo. Solo tu, il cue, il check.\n\n## Perché venti minuti\n\nNon è una scelta casuale. Il protocollo originale della Northwestern prevede sessioni prolungate di associazione, ripetute più sere, prima di passare alla fase notturna. Più l'associazione è **forte e univoca**, più il cue di notte ha una chance di riattivarla.\n\n## L'ingrediente nascosto: l'emozione\n\nIl cue deve essere associato non solo al gesto, ma a uno **stato mentale**: calma, attenzione, dubbio onesto. Se fai la sessione come un compito meccanico, l'associazione sarà debole. Se la fai **presente**, associ il suono a un vero stato di veglia attenta — ed è questo che la mente ritroverà in sogno.\n\n## Stasera, fallo davvero\n\nTrova 20 minuti. È l'investimento più alto di una singola lezione del Sentiero, ed è quello che rende la TLR diversa dalle tecniche che già conosci. Domani lavoreremo sull'**integrazione notturna**.\n"
+    },
+    {
+      "day": 19,
+      "phase": "tlr",
+      "title": "TLR di notte",
+      "durationMin": 7,
+      "sources": [
+        {
+          "label": "Studio Northwestern 2024 — Targeted Lucidity Reactivation",
+          "ref": "studio-northwestern-2024-tlr"
+        },
+        {
+          "label": "Northwestern News — TLR sensory cues (ott. 2024)",
+          "ref": "northwestern-news-study-tlr-sensory-cues"
+        }
+      ],
+      "practice": {
+        "type": "lettura",
+        "steps": [
+          "Leggi la lezione."
+        ]
+      },
+      "body": "# TLR di notte\n\nIeri hai costruito l'associazione cue→lucidità. La domanda ora è: come arriva, il cue, nel sogno?\n\nNel protocollo Northwestern, il suono viene **riprodotto automaticamente** durante specifiche fasi del sonno, rilevate da sensori. Nel Sentiero completo, questo sarà gestito da **Notte** con un dispositivo. Per ora, due versioni pratiche che puoi usare da solo.\n\n## Versione 1: sveglia WBTB con cue\n\nQuando fai il WBTB (giorno 13-14), nella mezz'ora di veglia **riattiva l'associazione**:\n\n- Fai suonare il cue alcune volte.\n- Ripeti il check delle mani a ogni cue.\n- Ripeti la formula MILD.\n- Torna a letto pensando al cue.\n\nNon è una riattivazione \"in REM\", ma la combinazione WBTB + cue + MILD è già potente: porta l'associazione nel momento in cui la REM è più densa.\n\n## Versione 2: cue ripetuto mentre ti addormenti\n\nSe non fai il WBTB, usa il cue mentre scivoli nel sonno. Fai partire il suono a basso volume, ripetuto lentamente, e mantieni l'intenzione MILD. Man mano che perdi coscienza, l'associazione può restare attiva nell'addormentamento — talvolta entrando nei primi sogni.\n\n## Onestà sui limiti\n\nSenza un dispositivo che rilevi la REM e suoni in quel momento, **non riproduciamo il protocollo originale al completo**. Quello che facciamo è sfruttare la parte che sta a te (l'associazione serale) e combinarla con WBTB/MILD, che sono già potenti. Il risultato dipende da molti fattori e varia molto da persona a persona.\n\nLo studio Northwestern riporta che anche con il protocollo completo non tutti diventano lucidi, e non ogni notte. La TLR **aumenta la probabilità**, non la garantisce.\n\n## Cosa cambia davvero\n\nLa TLR introduce un principio nuovo rispetto a MILD e check: un **segnale esterno** che lavora per te mentre dormi. È un alleato in più, non una bacchetta magica.\n\nDomani: il **sistema completo**, tutto insieme, per le ultime due notti del Sentiero.\n"
+    },
+    {
+      "day": 20,
+      "phase": "tlr",
+      "title": "Il sistema completo",
+      "durationMin": 10,
+      "sources": [
+        {
+          "label": "Studio Northwestern 2024 — Targeted Lucidity Reactivation",
+          "ref": "studio-northwestern-2024-tlr"
+        },
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Pianifica una 'notte speciale' entro 3 giorni: MILD + WBTB + cue.",
+          "Sera: 20 min di associazione TLR + formula MILD prima di dormire.",
+          "Notte: sveglia WBTB alle 5 ore, riattiva cue + MILD, torna a letto.",
+          "Mattino: check immediato al risveglio, diario in Alba."
+        ]
+      },
+      "body": "# Il sistema completo\n\nCi siamo. Per le ultime due notti del Sentiero metti insieme **tutto**: reality check, MILD, WBTB, TLR. È il protocollo integrale, la versione più potente di ciò che hai imparato.\n\nNon lo fai ogni notte — sarebbe insostenibile per il sonno. Lo fai una o due volte, come culmine del percorso.\n\n## La sera\n\n1. **Ricalibra i dream sign** (5 min). Guarda i sogni dell'ultima settimana nel Giardino.\n2. **Sessione TLR (20 min).** Cue + check + formula + visualizzazione, come al giorno 18.\n3. **A letto: MILD.** Formula + visualizzazione di un sogno recente in cui diventi lucido. Finché non dormi.\n\n## La notte\n\n4. **Sveglia WBTB** 5 ore dopo l'addormentamento.\n5. **20-30 minuti di veglia calma.** Ricordo del sogno da cui ti sei svegliato, dream sign, **riattivazione del cue**, formula MILD.\n6. **Ritorno a letto.** MILD attiva. Eventuale DEILD se ti svegli da un sogno.\n\n## Il mattino dopo\n\n7. **Check immediato** appena apri gli occhi — prima di tutto, anche prima del diario.\n8. **Diario in Alba.** Anche se non ricordi nulla, scrivi. Anche se il sogno non era lucido, segna i dream sign che sono apparsi.\n\n## L'atteggiamento\n\nNon è una prova da superare. Se non diventi lucido, **non hai fallito**: hai praticato il protocollo integrale, e l'effetto si accumula nelle notti successive. La revisione scientifica mostra che la lucidità arriva spesso nelle notti **dopo** una pratica intensa, non per forza durante.\n\nL'unica cosa che ti sconsigliamo è l'**ansia da prestazione**. Più ti pesa la voglia di \"farcela\", più il sonno peggiora e la lucidità si allontana. L'atteggiamento giusto è: **curiosità**, non risultato.\n\nDomani chiudiamo il Sentiero. Con quello che ti porti a casa, indipendentemente da cosa sia successo stanotte.\n"
+    },
+    {
+      "day": 21,
+      "phase": "tlr",
+      "title": "Dopo il Sentiero",
+      "durationMin": 7,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        },
+        {
+          "label": "Studio Northwestern 2024 — Targeted Lucidity Reactivation",
+          "ref": "studio-northwestern-2024-tlr"
+        }
+      ],
+      "practice": {
+        "type": "lettura",
+        "steps": [
+          "Leggi la lezione."
+        ]
+      },
+      "body": "# Dopo il Sentiero\n\nVentuno giorni. Hai costruito un sistema: diario, reality check, dream sign, MILD, WBTB, TLR. È un arsenale serio — non quello di un'app generica, quello di chi ha studiato il fenomeno.\n\nOra la domanda vera: **cosa porti a casa**.\n\n## Se hai avuto sogni lucidi\n\nNon fermarti. La lucidità si perde senza pratica, come ogni abilità. Tieni il reality check quotidiano (anche solo i tre trigger), una MILD ogni tanto, una notte WBTB a settimana. La sessione TLR serale diventi un'abitudine settimanale quando vuoi forzare.\n\nTieni il diario. Senza ricordo, tutto decade.\n\n## Se NON hai avuto sogni lucidi\n\nLa cosa più probabile, onestamente: 21 giorni non bastano per tutti. **Non è un fallimento tuo né della tecnica**. Le variabili che contano sono molte:\n\n- **Qualità del sonno.** Poco sonno = poca REM = poca lucidità.\n- **Ricordo.** Se ricordi meno di un sogno a notte, lavora lì prima di tutto.\n- **Costanza reale.** Cinque minuti un giorno sì e uno no rendono meno di tre minuti ogni giorno.\n- **Stress e sostanze.** Alcol e stress pesante riducono drasticamente la lucidità.\n\nLa ricerca indica che la maggior parte delle persone arriva al primo sogno lucido dopo settimane o mesi di pratica regolare, non giorni. Hai costruito la base giusta.\n\n## Cosa NON smettere di fare\n\nAnche se abbandoni il resto, **non smettere**:\n\n1. Il **diario del mattino** in Alba.\n2. Il **check delle mani** almeno 3-5 volte al giorno.\n3. La **ricalibrazione settimanale** dei dream sign.\n\nQuesti tre bastano, da soli, a coltivare la lucidità nel lungo termine. Tutto il resto è acceleratore, non motore.\n\n## Il patto continua\n\nIl Sentiero è finito, la pratica no. Torna quando vuoi: il Giardino tiene i tuoi sogni, Notte terrà le tue sveglie, Alba ti aspetta al risveglio. La lucidità non è una conquista una tantum, è una coltivazione. \n\nBuon cammino.\n"
+    }
+  ],
+  "extras": [
+    {
+      "day": 7.5,
+      "phase": "fondamenti",
+      "title": "Richiamo: il ricordo che manca",
+      "durationMin": 8,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Stasera riduci la luce 30 minuti prima di dormire (schermo off o filtro caldo).",
+          "Metti il telefono fuori portata dal letto.",
+          "Decidi la prima parola che dirai in Alba domani, anche prima di sapere il sogno."
+        ]
+      },
+      "body": "# Richiamo: il ricordo che manca\n\nQuesta lezione è stata inserita perché il tuo **recall score** degli ultimi giorni è basso. È un campanello utile: senza ricordo, nessuna delle tecniche del Sentiero può attecchire.\n\nNon è un extra da saltare. È la lezione più importante per te, adesso.\n\n## Perché il ricordo è crollato\n\nLe cause più comuni:\n\n- **Schermo al mattino.** Appena sveglio, guardi il telefono: il sogno sparisce in secondi.\n- **Risveglio brusco.** Sveglia forte, salti giù dal letto, luce accesa.\n- **Sonno frammentato.** Risvegli frequenti nella notte cancellano la REM finale.\n- **Stanchezza accumulata.** Meno sonno, meno REM, meno sogni da ricordare.\n\n## Tre cambiamenti, stasera\n\n1. **Luce calda.** Filtro giallo/ambra sul telefono, mezz'ora prima di dormire. La luce blu ritarda la melatonina e frammenta i sogni.\n2. **Telefono fuori portata.** Non deve essere la prima cosa che tocchi al mattino. Alba arriva dopo il sogno, non prima delle notifiche.\n3. **Prima parola già decisa.** Prima di dormire, decidi cosa dirai aprendo Alba: «Ho sognato…» o anche solo l'emozione che cercherai. La mente si prepara a conservare.\n\n## Al mattino\n\n- **Movimento minimo.** Resta immobile, occhi chiusi, dieci secondi.\n- **Cerca l'emozione**, non la storia.\n- **Apri Alba e parla**, anche per una frase. La voce è più veloce della scrittura e coglie dettagli che la mano perde.\n\nPer una settimana metti il ricordo **davanti a tutto**. Anche davanti al reality check: se non ricordi, il check non ha materia su cui lavorare. Quando il recall score risale, riprendi il Sentiero dal punto in cui eri.\n\nIl ricordo è la radice. Tutto il resto è ramo.\n"
+    },
+    {
+      "day": 14.5,
+      "phase": "fondamenti",
+      "title": "Secondo richiamo: consolidare",
+      "durationMin": 8,
+      "sources": [
+        {
+          "label": "Saunders et al. 2016",
+          "ref": "saunders-2016"
+        }
+      ],
+      "practice": {
+        "type": "esercizio",
+        "steps": [
+          "Apri Alba e rileggi i sogni degli ultimi 3 giorni.",
+          "Per ciascuno, aggiungi un dettaglio che avevi tralasciato (colore, suono, parola).",
+          "Stasera: diario + 5 minuti di ripasso dei dream sign prima di dormire."
+        ]
+      },
+      "body": "# Secondo richiamo: consolidare\n\nIl recall score è ancora basso alla seconda metà del Sentiero. Hai già visto l'extra della prima settimana: qui andiamo oltre, perché il problema non è solo \"ricordare di più\" ma **consolidare**.\n\nConsolidare significa: il sogno, una volta ricordato, **non svanisce** entro l'ora. È la differenza tra un sogno che ti resta per giorni e uno che muore prima di colazione.\n\n## La rilettura attiva\n\nApri Alba. Scegli i sogni degli ultimi tre giorni. Per ciascuno:\n\n1. **Rileggi** quello che hai scritto.\n2. **Chiudi gli occhi e rivedilo.** Prova a ricostruirlo come una scena, non come un elenco.\n3. **Aggiungi un dettaglio** che avevi tralasciato. C'è quasi sempre: un colore, una parola detta, una sensazione fisica. Recuperarlo ora consolida la traccia.\n\nQuesto esercizio, fatto ogni due-tre giorni, allena la mente a **trattenere**, non solo a catturare.\n\n## La regola delle tre riletture\n\nUn sogno rivisto tre volte si fissa:\n\n1. **Subito** al risveglio (in Alba).\n2. **A sera**, prima di dormire — basta rileggere la trascrizione.\n3. **Dopo due giorni**, nella rilettura attiva di oggi.\n\nNon serve riviverlo: basta rileggerlo. Il cervello lo marca come \"materiale da conservare\".\n\n## Sera: ripasso dei dream sign\n\nPrima di dormire, 5 minuti. Guarda la tua lista di dream sign. Per ciascuno, richiama alla mente un sogno in cui è apparso. È una forma di MILD leggera: prepari la mente a riconoscere quegli elementi nel sogno che verrà.\n\n## Perché ci tenevamo\n\nA metà del Sentiero, con MILD e WBTB in gioco, un ricordo debole **annulla** le tecniche. Potresti diventare lucido in sogno e non ricordarlo al risveglio — il caso più frustrante. Consolidare il ricordo è l'assicurazione che, se la lucidità arriva, la ritrovi.\n\nQuando il recall score sarà sopra soglia, tornerai al Sentiero regolare. Con un ricordo solido, tutto ciò che hai imparato funziona meglio.\n"
+    }
+  ]
+}

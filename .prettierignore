@@ -1,0 +1,10 @@
+build/
+dist/
+.svelte-kit/
+.turbo/
+.vercel/
+coverage/
+native/ios/
+native/android/
+pnpm-lock.yaml
+*.md

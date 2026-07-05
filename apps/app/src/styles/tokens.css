@@ -1,0 +1,17 @@
+/* tokens.css dell'app — re-esporta il tokens.css GENERATO da @lucidme/ui
+ * (packages/ui/src/tokens/tokens.css, prodotto da `pnpm --filter ui gen:tokens`).
+ *
+ * TS (packages/ui/src/tokens/*.ts) resta la fonte unica di verità; questo file
+ * è un thin re-export così l'app ha un solo punto d'ingresso per i token.
+ * Rigenerare con `pnpm --filter @lucidme/ui gen:tokens` dopo aver modificato i .ts.
+ */
+@import '$ui/tokens/tokens.css';
+@import './night.css';
+
+/* Safe area per iPhone notch / Android gesture nav (mantiene il reset Step 0). */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
