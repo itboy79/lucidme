@@ -1,159 +1,151 @@
 /**
  * Backend browser basato su `@sqlite.org/sqlite-wasm` (SQLite ufficiale, WASM).
  *
- * Usa l'API `sqlite3Worker1Promiser` (Promise-based wrapper del Worker #1):
- * è il path raccomandato per OPFS, gestisce internamente il Worker, lo SharedArrayBuffer,
- * il proxy OPFS. Funziona in Chromium/Firefox/Safari (con requisiti contesto sicuro).
+ * Usa l'**OO1 API diretta** (sqlite3.oo1.OpfsDb / DB) sul main thread — NON
+ * l'API Worker1/Promiser (deprecata 2026-04-15, "actively discouraged" per
+ * software non-toy secondo la doc ufficiale). L'oo1 API è la via raccomandata.
  *
  * Strategia persistenza:
- *  - **OPFS** (`/lucidme.sqlite3` nell'OPFS): persistenza reale su file. Richiede
- *    secure context (https o localhost).
- *  - Se OPFS non disponibile: il worker cade su kvvfs (IndexedDB-backed) — più lento
- *    ma persistente.
- *  - Se sqlite-wasm non caricabile: fallback InMemoryDB + AVVISO (dato non persistente).
+ *  - **OPFS** (`sqlite3.oo1.OpfsDb`): persistenza reale su file. Richiede
+ *    secure context (https o localhost). File: 'lucidme.sqlite3' nell'OPFS.
+ *  - **kvvfs fallback** (`sqlite3.oo1.DB` con vfs kvvfs): persistenza via
+ *    IndexedDB. Più lento ma funziona ovunque.
+ *  - Se sqlite-wasm non caricabile: fallback InMemoryDB + AVVISO forte.
  *
- * IMPORTANTE: questa integrazione va validata su device/browser reali (Safari iOS,
- * Chrome Android, Firefox). Il wiring è corretto secondo la doc sqlite-wasm 3.53,
- * ma i quirks di OPFS per browser/OEM vanno verificati (vedi matrice S4-5 della wiki).
- *
- * Riferimento API: https://sqlite.org/wasm/doc/trunk/md-1-promise.md
+ * Riferimento: https://sqlite.org/wasm/doc/trunk/api-oo1.md
  */
 import type { DB } from './client.js';
 
 export interface BrowserSqliteOptions {
-  /** Nome del DB file in OPFS. Default 'lucidme.sqlite3'. */
+  /** Nome del DB file. Default 'lucidme.sqlite3'. */
   dbName?: string;
 }
 
-interface PromiserMessage {
-  type: string;
-  args?: Record<string, unknown>;
-  result?: {
-    dbId?: string;
-    rows?: unknown[];
-    columnNames?: string[];
+interface Sqlite3Oo1Db {
+  exec: (
+    sql:
+      | string
+      | {
+          sql: string;
+          bind?: unknown[];
+          resultRows?: unknown[];
+          columnNames?: string[];
+          rowMode?: 'array' | 'object' | 'stmt';
+        },
+  ) => void;
+  prepare: (sql: string) => Sqlite3Stmt;
+  close: () => void;
+  filename: string;
+}
+interface Sqlite3Stmt {
+  bind: (params: unknown[]) => void;
+  step: () => boolean;
+  get: <T = unknown>() => T;
+  columnNames: () => string[];
+  finalize: () => void;
+  reset: () => void;
+}
+
+interface Sqlite3Module {
+  oo1: {
+    OpfsDb: new (filename: string, flags?: string) => Sqlite3Oo1Db;
+    DB: new (filename: string, flags?: string, options?: { vfs?: string }) => Sqlite3Oo1Db;
   };
-  dbId?: string;
+  capi: {
+    SQLITE_ROW: number;
+    SQLITE_DONE: number;
+  };
 }
 
-type Promiser = (msg: PromiserMessage) => Promise<{ result?: PromiserMessage['result'] }>;
+let sqlite3Promise: Promise<Sqlite3Module> | null = null;
 
-interface Sqlite3Worker {
-  sqlite3Worker1Promiser: (config: {
-    onready?: (promiser: Promiser) => void;
-    onerror?: (e: unknown) => void;
-    worker?: () => Worker;
-  }) => Promiser;
+async function loadSqlite3(): Promise<Sqlite3Module> {
+  if (sqlite3Promise) return sqlite3Promise;
+  sqlite3Promise = (async () => {
+    const mod = (await import('@sqlite.org/sqlite-wasm')) as unknown as {
+      // default è `sqlite3InitModule`: una FUNZIONE che ritorna Promise<Sqlite3Module>.
+      // Va chiamata (opzionalmente con config locateFile) e la sua Promise await-ata.
+      default?: Sqlite3InitFn | Promise<Sqlite3Module> | Sqlite3Module;
+    };
+    const def = mod.default;
+    if (!def) throw new Error('sqlite-wasm default export mancante');
+    // Se è una funzione (sqlite3InitModule), chiamala per ottenere la Promise.
+    if (typeof def === 'function') {
+      const initFn = def as Sqlite3InitFn;
+      return await initFn();
+    }
+    // Se è già una Promise, await. Se è già il modulo, usalo.
+    return def instanceof Promise ? await def : def;
+  })();
+  return sqlite3Promise;
 }
 
-let promiserPromise: Promise<Promiser> | null = null;
+type Sqlite3InitFn = (config?: { locateFile?: (file: string) => string }) => Promise<Sqlite3Module>;
 
-async function getPromiser(): Promise<Promiser> {
-  if (promiserPromise) return promiserPromise;
-  promiserPromise = new Promise<Promiser>((resolve, reject) => {
-    (async () => {
-      try {
-        const mod = (await import('@sqlite.org/sqlite-wasm')) as unknown as {
-          default?: Promise<Sqlite3Worker> | Sqlite3Worker;
-          sqlite3Worker1Promiser?: Sqlite3Worker['sqlite3Worker1Promiser'];
-        };
-        const def = mod.default;
-        const sqliteMod = def instanceof Promise ? await def : def;
-        const factory = mod.sqlite3Worker1Promiser ?? sqliteMod?.sqlite3Worker1Promiser;
-        if (!factory) {
-          reject(new Error('sqlite3Worker1Promiser non trovato in sqlite-wasm'));
-          return;
-        }
-        factory({
-          onready: (p) => resolve(p),
-          onerror: (e) => reject(e),
-        });
-      } catch (e) {
-        reject(e);
-      }
-    })();
-  });
-  return promiserPromise;
+function opfsAvailable(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  return typeof navigator.storage?.getDirectory === 'function';
 }
 
 export class BrowserSqliteDB implements DB {
   readonly backend = 'sqlite-wasm';
-  private dbId: string | null = null;
-  private dbName: string;
+  private handle!: Sqlite3Oo1Db;
+  private ready: Promise<void>;
+  private readonly dbName: string;
 
   constructor(opts: BrowserSqliteOptions = {}) {
     this.dbName = opts.dbName ?? 'lucidme.sqlite3';
+    this.ready = this.init();
   }
 
-  private async p(msg: PromiserMessage): Promise<unknown> {
-    const promiser = await getPromiser();
-    return promiser(msg);
+  private async init(): Promise<void> {
+    const sqlite3 = await loadSqlite3();
+    // Tenta OPFS (file reale, persistente, performante). OpfsDb è disponibile
+    // solo se il build include il supporto OPFS e il contesto lo permette.
+    if (opfsAvailable() && typeof sqlite3.oo1.OpfsDb === 'function') {
+      try {
+        this.handle = new sqlite3.oo1.OpfsDb(this.dbName);
+        return;
+      } catch (e) {
+        console.warn('[browser-sqlite] OPFS non disponibile, fallback kvvfs:', e);
+      }
+    }
+    // Fallback kvvfs: usa localStorage come storage (filename speciale ':localStorage:').
+    // Persistente tra reload/chiusura, più lento di OPFS ma funziona ovunque.
+    try {
+      this.handle = new sqlite3.oo1.DB(':localStorage:', 'c');
+    } catch (e) {
+      throw new Error('nessun backend SQLite browser disponibile: ' + String(e));
+    }
   }
 
-  /** Apre (o crea) il DB. Idempotente. Tenta OPFS, poi kvvfs (IndexedDB). */
-  private async ensureOpen(): Promise<string> {
-    if (this.dbId) return this.dbId;
-    // Tenta prima OPFS (file reale, più veloce).
-    try {
-      const result = (await this.p({
-        type: 'open',
-        args: { filename: this.dbName, vfs: 'opfs' },
-      })) as { result?: { dbId?: string } };
-      this.dbId = result?.result?.dbId ?? null;
-      if (this.dbId) return this.dbId;
-    } catch {
-      // OPFS non disponibile (contesto non isolato / browser senza OPFS).
-      // Procediamo con kvvfs (IndexedDB-backed) — più lento ma persistente.
-    }
-    // Fallback kvvfs: filename speciale ':kvvfs:' o path locale.
-    try {
-      const result = (await this.p({
-        type: 'open',
-        args: { filename: 'local:' + this.dbName, vfs: 'kvvfs' },
-      })) as { result?: { dbId?: string } };
-      this.dbId = result?.result?.dbId ?? null;
-      if (this.dbId) return this.dbId;
-    } catch {
-      // nemmeno kvvfs: fallimento totale.
-    }
-    throw new Error('apertura DB browser fallita: né OPFS né kvvfs disponibili');
+  private async ensureReady(): Promise<void> {
+    await this.ready;
   }
 
   async exec(sql: string, params: unknown[] = []): Promise<void> {
-    const dbId = await this.ensureOpen();
-    // DDL/multi-statement senza binding → 'exec' con sql solo.
-    // Statement con binding → 'exec' con bind (array posizionale).
+    await this.ensureReady();
+    // DDL/multi-statement senza binding → exec(string) nativa.
     if (params.length === 0 && !sql.includes('?')) {
-      await this.p({
-        type: 'exec',
-        args: { dbId, sql },
-      });
+      this.handle.exec(sql);
       return;
     }
-    await this.p({
-      type: 'exec',
-      args: { dbId, sql, bind: params },
-    });
+    // Statement con binding → exec({sql, bind}).
+    this.handle.exec({ sql, bind: params });
   }
 
   async query<T = Record<string, unknown>>(sql: string, params: unknown[] = []): Promise<T[]> {
-    const dbId = await this.ensureOpen();
-    // Il promiser popola resultRows per side effect. Lo passiamo come array vuoto
-    // e leggiamo result.result.resultRows.
+    await this.ensureReady();
     const resultRows: unknown[] = [];
     const columnNames: string[] = [];
-    await this.p({
-      type: 'exec',
-      args: {
-        dbId,
-        sql,
-        bind: params.length > 0 ? params : undefined,
-        resultRows,
-        columnNames,
-      },
+    this.handle.exec({
+      sql,
+      bind: params.length > 0 ? params : undefined,
+      resultRows,
+      columnNames,
+      rowMode: 'array',
     });
-    // resultRows è ora popolato per side effect (array di array posizionali).
-    // Mappiamo in oggetti per nome colonna.
+    // resultRows è popolato per side-effect; rowMode 'array' → array posizionali.
     return resultRows.map((row) => {
       if (Array.isArray(row)) {
         const obj: Record<string, unknown> = {};
@@ -168,12 +160,11 @@ export class BrowserSqliteDB implements DB {
   }
 
   async close(): Promise<void> {
-    if (!this.dbId) return;
+    await this.ensureReady();
     try {
-      await this.p({ type: 'close', args: { dbId: this.dbId } });
+      this.handle.close();
     } catch {
       // ignore
     }
-    this.dbId = null;
   }
 }

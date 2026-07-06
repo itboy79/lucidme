@@ -25,11 +25,14 @@ describe('openDb / getDb', () => {
     expect(c).not.toBe(a);
   });
 
-  it('openDb({ opfs: true }) in test (wa-sqlite non inizializzato) → fallback InMemoryDB', async () => {
-    // forziamo opfs: true in node: il path wa-sqlite tenta l'import che cade
-    // sul fallback robusto InMemoryDB (vedi openDb try/catch).
+  it('openDb({ opfs: true }) → backend sqlite-wasm o fallback robusto', async () => {
+    // forziamo opfs: true in node: ora sqlite-wasm ha un path node nell'exports map
+    // e potrebbe caricarsi (BrowserSqliteDB). Se non caricabile, cade su InMemoryDB.
+    // L'invariante: openDb NON throwa mai, ritorna sempre un DB usabile.
     const db = await openDb({ opfs: true });
-    expect(db).toBeInstanceOf(InMemoryDB);
+    expect(db).toBeDefined();
+    expect(typeof db.exec).toBe('function');
+    expect(typeof db.query).toBe('function');
   });
 });
 

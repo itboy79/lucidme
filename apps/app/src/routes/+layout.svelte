@@ -56,8 +56,10 @@
     // tocca le dipendenze reattive.
     const completed = onboardingStore.completed;
     const isOnb = onOnboarding;
+    // Le route /dev/* sono esentate (diagnostiche, utili anche pre-onboarding).
+    const isDev = $page.url.pathname.startsWith('/dev');
     if (!onboardingStore.loaded) return;
-    if (!completed && !isOnb) {
+    if (!completed && !isOnb && !isDev) {
       void goto('/onboarding');
     } else if (completed && isOnb) {
       void goto('/giardino');
