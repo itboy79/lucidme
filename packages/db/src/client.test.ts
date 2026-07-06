@@ -1,18 +1,19 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { InMemoryDB, _resetDbCache, getDb, openDb, type DB } from './client.js';
+import { NodeSqliteDB } from './node-sqlite.js';
 
 describe('openDb / getDb', () => {
   afterEach(() => _resetDbCache());
 
-  it('openDb({ opfs: false }) ritorna InMemoryDB', async () => {
+  it('openDb({ opfs: false }) in node ritorna NodeSqliteDB (SQLite reale)', async () => {
     const db = await openDb({ opfs: false });
-    expect(db).toBeInstanceOf(InMemoryDB);
+    expect(db).toBeInstanceOf(NodeSqliteDB);
   });
 
-  it('openDb() in node (no window) ritorna InMemoryDB', async () => {
-    // ambiente vitest/node: hasOpfs() false
+  it('openDb() in node (no window) ritorna NodeSqliteDB (SQLite reale)', async () => {
+    // ambiente vitest/node: hasOpfs() false → path NodeSqliteDB
     const db = await openDb();
-    expect(db).toBeInstanceOf(InMemoryDB);
+    expect(db).toBeInstanceOf(NodeSqliteDB);
   });
 
   it('getDb cachea il singleton', async () => {
@@ -25,8 +26,8 @@ describe('openDb / getDb', () => {
   });
 
   it('openDb({ opfs: true }) in test (wa-sqlite non inizializzato) → fallback InMemoryDB', async () => {
-    // hasOpfs() è false in node, ma forziamo opfs: true; il path wa-sqlite
-    // cade sul fallback robusto InMemoryDB (vedi openDb).
+    // forziamo opfs: true in node: il path wa-sqlite tenta l'import che cade
+    // sul fallback robusto InMemoryDB (vedi openDb try/catch).
     const db = await openDb({ opfs: true });
     expect(db).toBeInstanceOf(InMemoryDB);
   });

@@ -245,6 +245,31 @@ export const it = {
   'rc.btn_sveglio': 'Ero sveglio',
   'rc.sognando_toast': 'Segnale interessante — lo tengo da conto',
   'rc.sveglio_toast': 'Bene. Continua la giornata',
+
+  // ---- Onboarding primo avvio (S8-2) ----
+  // Slide 1 — benvenuto + promessa di valore.
+  'onboarding.slide1_eyebrow': 'Lucid Me',
+  'onboarding.slide1_titolo_pre': 'Benvenutə in',
+  'onboarding.slide1_titolo_em': 'Lucid Me',
+  'onboarding.slide1_sub':
+    'Un diario per i tuoi sogni e una pratica del sognare lucido. Ogni sogno che scrivi diventa un organismo nel tuo giardino.',
+  'onboarding.inizia': 'Inizia',
+  // Slide 2 — come funziona (3 mini-card).
+  'onboarding.slide2_titolo': 'Come cresce',
+  'onboarding.slide2_alba_t': 'Alba',
+  'onboarding.slide2_alba_d': 'Appena svegliə, raccogli il sogno finché è vivo.',
+  'onboarding.slide2_sentiero_t': 'Sentiero',
+  'onboarding.slide2_sentiero_d': 'Un percorso di ventuno giorni di pratica.',
+  'onboarding.slide2_giardino_t': 'Giardino',
+  'onboarding.slide2_giardino_d': 'Ogni sogno piantato diventa un organismo unico.',
+  // Slide 3 — primo sogno guidato.
+  'onboarding.slide3_titolo_pre': 'Pianta il tuo',
+  'onboarding.slide3_titolo_em': 'primo sogno',
+  'onboarding.slide3_sub':
+    'Anche un frammento basta. Scegli un’emozione e scrivi cosa resta del sogno di stanotte.',
+  'onboarding.slide3_primo': 'Pianta il primo sogno',
+  'onboarding.salta': 'Salta',
+  'onboarding.avanti': 'Avanti',
 } as const;
 
 export type I18nKey = keyof typeof it;

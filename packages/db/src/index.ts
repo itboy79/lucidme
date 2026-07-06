@@ -5,6 +5,10 @@ export { DB_VERSION } from './version.js';
 // Client
 export type { DB, OpenDbOptions } from './client.js';
 export { openDb, getDb, InMemoryDB, _resetDbCache } from './client.js';
+export { NodeSqliteDB } from './node-sqlite.js';
+export type { NodeSqliteOptions } from './node-sqlite.js';
+export { BrowserSqliteDB } from './browser-sqlite.js';
+export type { BrowserSqliteOptions } from './browser-sqlite.js';
 
 // Migrations
 export { runMigrations, MIGRATIONS, SCHEMA_VERSION, splitStatements } from './migrations/runner.js';

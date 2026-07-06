@@ -15,17 +15,21 @@
     "clean": "rm -rf build .svelte-kit dist .turbo"
   },
   "dependencies": {
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/core": "^6.1.0",
+    "@capacitor/haptics": "^6.0.0",
+    "@capacitor/local-notifications": "^6.1.0",
+    "@lucidme/content": "workspace:*",
     "@lucidme/core": "workspace:*",
     "@lucidme/db": "workspace:*",
-    "@lucidme/ui": "workspace:*",
     "@lucidme/generative": "workspace:*",
-    "@lucidme/content": "workspace:*"
+    "@lucidme/ui": "workspace:*"
   },
   "devDependencies": {
+    "@sentry/sveltekit": "^8.40.0",
     "@sveltejs/adapter-static": "^3.0.6",
     "@sveltejs/kit": "^2.8.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
-    "@sentry/sveltekit": "^8.40.0",
     "svelte": "^5.1.0",
     "svelte-check": "^4.0.0",
     "typescript": "^5.6.3",

@@ -10,7 +10,12 @@ import { expect, test } from '@playwright/test';
  */
 test.describe('Smoke — app base', () => {
   test('l\'app si avvia e mostra il brand + nav', async ({ page }) => {
+    // Al primo avvio l'app reindirizza a /onboarding. Completiamolo (skip) così
+    // la nav diventa visibile e possiamo verificarne il contenuto.
     await page.goto('/');
+    await expect(page).toHaveURL(/\/onboarding/);
+    await page.getByRole('button', { name: /salta/i }).click();
+    await expect(page).toHaveURL(/\/giardino/);
     // La nav è sempre presente; contiene le 5 lune.
     await expect(page.locator('nav')).toBeVisible();
     // Almeno un pulsante nav con testo "Giardino" o "Alba".

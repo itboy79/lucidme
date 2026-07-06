@@ -50,6 +50,12 @@ export default defineConfig({
     port: 4173,
     host: true,
   },
+  // better-sqlite3 è Node-only (binding nativi): non deve MAI essere ottimizzato
+  // o risolto nel bundle browser. Il path browser passa per sqlite-wasm
+  // (BrowserSqliteDB); NodeSqliteDB è importato dinamicamente solo in node/test.
+  optimizeDeps: {
+    exclude: ['better-sqlite3', '@sqlite.org/sqlite-wasm'],
+  },
   build: {
     target: 'es2022',
     sourcemap: true,
@@ -58,12 +64,15 @@ export default defineConfig({
       // solo su nativo (`isNative()`). Sul web non vanno mai caricati: li
       // esternalizziamo dal bundle PWA così Rollup non tenta di risolverli.
       // A runtime, il path web non entra mai in quei rami (guard isNative()).
+      // Stesso discorso per better-sqlite3 (Node-only) e wa-sqlite/sqlite-wasm
+      // (caricati dinamicamente solo dal path browser pertinente).
       external: [
         '@capacitor/core',
         '@capacitor/local-notifications',
         '@capacitor/haptics',
         '@capacitor/app',
         '@capacitor/filesystem',
+        'better-sqlite3',
       ],
     },
   },

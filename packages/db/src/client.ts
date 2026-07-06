@@ -66,21 +66,29 @@ function hasOpfs(): boolean {
  * stub in memoria.
  */
 export async function openDb(options: OpenDbOptions = {}): Promise<DB> {
+  // Path Node/test: SQLite nativo via better-sqlite3. Vero FTS5, veri trigger,
+  // vero rollback. Solo se non siamo in browser.
+  if (!hasOpfs() && options.opfs !== true) {
+    const { NodeSqliteDB } = await import('./node-sqlite.js');
+    return new NodeSqliteDB({ path: ':memory:' });
+  }
   const wantOpfs = options.opfs ?? hasOpfs();
   if (wantOpfs) {
-    // Path browser/production: wa-sqlite. Import dinamico per non sporcare node.
-    // L'integrazione OPFS concreta (registrazione VFS, Database) vive in
-    // apps/app (S2-3+): qui tentiamo l'inizializzazione e, se wa-sqlite non è
-    // disponibile (es. test in node senza install), cadiamo robustamente sullo
-    // stub in memoria. Questo mantiene openDb sempre utilizzabile.
+    // Path browser/production: @sqlite.org/sqlite-wasm con OPFS (persistenza reale)
+    // o fallback kvvfs (IndexedDB). Se sqlite-wasm non è caricabile, cadiamo sullo
+    // stub in memoria AVVISANDO che i dati NON sopravvivono al reload (caso limite,
+    // da non accettare in produzione — l'app lo segnala all'utente).
     try {
-      const mod = (await import('wa-sqlite')).default;
-      const sqlite3 = await (mod as unknown as { SQLite3: unknown }).SQLite3;
-      void sqlite3; // placeholder: il wiring reale è in apps/app.
-      // In attesa del wiring OPFS, usiamo lo stub (identica interfaccia `DB`).
-      return new InMemoryDB();
-    } catch {
-      // wa-sqlite non installato/inizializzato → fallback in memoria.
+      const { BrowserSqliteDB } = await import('./browser-sqlite.js');
+      const db = new BrowserSqliteDB({ dbName: 'lucidme.sqlite3' });
+      await db.query<{ test: number }>('SELECT 1 as test'); // smoke init
+      return db;
+    } catch (e) {
+      console.error(
+        '[db] sqlite-wasm non inizializzabile in browser. ' +
+          'I dati NON saranno persistenti — contesto non sicuro o browser non supportato.',
+        e,
+      );
       return new InMemoryDB();
     }
   }

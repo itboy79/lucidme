@@ -1,0 +1,25 @@
+# Privacy policy URLs — placeholder
+#
+# Required by Apple App Store (App Privacy / Privacy Policy URL) and Google Play
+# (Data safety / Privacy policy). The URL must be publicly reachable.
+#
+# ⚠️ D-008 PENDING: the domain is awaiting the naming decision
+# (wiki/08-piano-sviluppo.md §8.0). Confirm the domain before submitting to the
+# stores. The values below are placeholders.
+
+[IT]
+Privacy policy:      https://lucidme.app/privacy
+Termini di servizio: https://lucidme.app/termini
+
+[EN]
+Privacy policy:      https://lucidme.app/privacy
+Terms of service:    https://lucidme.app/termini
+
+# The policy content lives in-app at the routes /privacy and /termini
+# (apps/app/src/routes/privacy/+page.svelte,
+#  apps/app/src/routes/termini/+page.svelte). These public URLs will serve the
+# same content (or a static mirror) once the domain is live.
+#
+# TODO (D-008): replace "lucidme.app" with the confirmed domain and verify the
+# pages are reachable. Consider a static export for the legal pages so they are
+# indexable even when the SPA shell is disabled (e.g. for crawlers).

@@ -10,6 +10,7 @@
   import { Nav, Toast, t, googleFontsHref } from '@lucidme/ui';
   import Starfield from '$lib/components/Starfield.svelte';
   import { settingsStore } from '$lib/stores/settings.svelte.js';
+  import { onboardingStore } from '$lib/stores/onboarding.svelte.js';
   import { startNightModeEffect } from '$lib/night/mode.js';
 
   let { children } = $props();
@@ -29,6 +30,9 @@
     return seg;
   });
 
+  // True se ci troviamo sulla route di onboarding (fullscreen, senza Nav).
+  const onOnboarding = $derived($page.url.pathname === '/onboarding');
+
   function handleSelect(id: string): void {
     goto(`/${id}`);
   }
@@ -39,6 +43,30 @@
     void settingsStore.ensureLoaded();
     const stop = startNightModeEffect();
     return stop;
+  });
+
+  // ---- Root guard (onboarding primo avvio, S8-2) ----
+  // Client-side only (ssr=false ovunque, ma qui siamo sicuri). Aspettiamo che
+  // il flag di completamento sia stato letto dal DB, poi:
+  //  - se NON completato E la rotta non è /onboarding → /onboarding
+  //  - se completato E la rotta è /onboarding → /giardino
+  // Usiamo un guard reattivo: quando `completed`/`onOnboarding` cambiano
+  // (es. dopo markCompleted o dopo il load async), rivaluta.
+  $effect(() => {
+    // tocca le dipendenze reattive.
+    const completed = onboardingStore.completed;
+    const isOnb = onOnboarding;
+    if (!onboardingStore.loaded) return;
+    if (!completed && !isOnb) {
+      void goto('/onboarding');
+    } else if (completed && isOnb) {
+      void goto('/giardino');
+    }
+  });
+
+  // Avvia la lettura del flag di onboarding al primo render.
+  $effect(() => {
+    void onboardingStore.ensureLoaded();
   });
 </script>
 
@@ -56,7 +84,9 @@
     {@render children?.()}
   </main>
 
-  <Nav {items} active={active} onselect={handleSelect} />
+  {#if !onOnboarding}
+    <Nav {items} active={active} onselect={handleSelect} />
+  {/if}
   <Toast />
 </div>
 

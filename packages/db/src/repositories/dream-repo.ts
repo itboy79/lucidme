@@ -194,7 +194,7 @@ export class DreamRepo {
       const rows = await this.db.query<DreamRow>(
         `SELECT d.id, d.created_at, d.dreamed_on, d.title, d.body, d.emotion, d.lucidity, d.seed, d.deleted_at
            FROM dream d
-          WHERE d.id IN (SELECT rowid FROM dream_fts WHERE dream_fts MATCH ?)
+          WHERE d.rowid IN (SELECT rowid FROM dream_fts WHERE dream_fts MATCH ?)
             AND d.deleted_at IS NULL
           ORDER BY d.dreamed_on DESC`,
         [term],
