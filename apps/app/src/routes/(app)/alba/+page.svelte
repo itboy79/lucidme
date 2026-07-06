@@ -279,6 +279,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Alba — Lucid Me</title>
+</svelte:head>
+
 <div class="eyebrow">{eyebrow}</div>
 <h1>{t('alba.titolo_pre')} <em>{t('alba.titolo_em')}</em>?</h1>
 

@@ -135,6 +135,10 @@
   };
 </script>
 
+<svelte:head>
+  <title>Sentiero — Lucid Me</title>
+</svelte:head>
+
 <div class="eyebrow">{t('sentiero.eyebrow_giorno', undefined, { n: currentDay })}</div>
 <h1>
   {#if currentDay > PATH_MAX_DAY}

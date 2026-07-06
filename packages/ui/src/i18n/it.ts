@@ -234,6 +234,7 @@ export const it = {
   'impostazioni.sonno_wbtb_time': 'Orario WBTB',
   'impostazioni.sonno_sound': 'Suoneria',
   'impostazioni.sonno_salvato': 'Impostazioni sonno salvate',
+  'impostazioni.sonno_salva_btn': 'Salva ritmo',
   'impostazioni.sound_marea': 'Marea',
   'impostazioni.sound_bosco': 'Bosco',
   'impostazioni.sound_campana': 'Campana',

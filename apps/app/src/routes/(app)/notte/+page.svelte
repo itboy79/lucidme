@@ -102,6 +102,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Notte — Lucid Me</title>
+</svelte:head>
+
 <div class="eyebrow notte">{t('notte.eyebrow')}</div>
 <h1 class="notte">{t('notte.titolo_pre')} <em>{t('notte.titolo_em')}</em></h1>
 <p class="sub">{t('notte.sub_vuoto')}</p>

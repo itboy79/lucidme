@@ -129,6 +129,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Impostazioni — Lucid Me</title>
+</svelte:head>
+
 <div class="eyebrow">{t('impostazioni.eyebrow')}</div>
 <h1>{t('impostazioni.titolo_pre')} <em>{t('impostazioni.titolo_em')}</em></h1>
 <p class="sub">{t('impostazioni.sub')}</p>
@@ -191,7 +195,7 @@
   {/if}
 
   <button type="button" class="save-btn" onclick={saveSleep}>
-    {t('impostazioni.sonno_salvato')}
+    {t('impostazioni.sonno_salva_btn')}
   </button>
 </div>
 

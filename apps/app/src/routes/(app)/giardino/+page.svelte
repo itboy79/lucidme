@@ -228,37 +228,59 @@
 
 <svelte:window onclick={onToastTap} />
 
+<svelte:head>
+  <title>Giardino — Lucid Me</title>
+</svelte:head>
+
 <div class="giardino">
-  <header class="head">
-    <div class="eyebrow">{t('giardino.eyebrow')}</div>
-    <div class="title-row">
-      <h1>
-        {dreamsThisMoon}
-        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-        <em>{dreamsThisMoon === 1 ? t('giardino.titolo_singolare') : t('giardino.titolo')}</em><br />
-        {t('giardino.titolo_questa')}
-      </h1>
-      <div class="head-actions">
-        <button class="icon-btn" type="button" aria-label={t('giardino.cerca')} onclick={openSearch}>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="11" cy="11" r="7" />
-            <path d="M21 21l-4.3-4.3" />
-          </svg>
-        </button>
-        <button
-          class="icon-btn"
-          type="button"
-          aria-label={t('giardino.impostazioni')}
-          onclick={() => goto('/impostazioni')}
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="3" />
-            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
-          </svg>
-        </button>
+  {#if dreams.length > 0}
+    <header class="head">
+      <div class="eyebrow">{t('giardino.eyebrow')}</div>
+      <div class="title-row">
+        <h1>
+          {dreamsThisMoon}
+          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+          <em>{dreamsThisMoon === 1 ? t('giardino.titolo_singolare') : t('giardino.titolo')}</em><br />
+          {t('giardino.titolo_questa')}
+        </h1>
+        <div class="head-actions">
+          <button class="icon-btn" type="button" aria-label={t('giardino.cerca')} onclick={openSearch}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" />
+              <path d="M21 21l-4.3-4.3" />
+            </svg>
+          </button>
+          <button
+            class="icon-btn"
+            type="button"
+            aria-label={t('giardino.impostazioni')}
+            onclick={() => goto('/impostazioni')}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
+            </svg>
+          </button>
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
+  {:else}
+    <!-- Stato vuoto: nav ridotta (solo impostazioni, la ricerca non serve
+         ancora). Header dedicato per evitare overlap con il CTA centrato. -->
+    <header class="head empty-head">
+      <button
+        class="icon-btn"
+        type="button"
+        aria-label={t('giardino.impostazioni')}
+        onclick={() => goto('/impostazioni')}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="3" />
+          <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
+        </svg>
+      </button>
+    </header>
+  {/if}
 
   {#if dreams.length === 0}
     <!-- Stato vuoto -->
@@ -453,6 +475,12 @@
     50% {
       opacity: 0.95;
     }
+  }
+
+  /* Header nello stato vuoto: solo icona impostazioni, allineata a destra. */
+  .empty-head {
+    display: flex;
+    justify-content: flex-end;
   }
 
   /* Stato vuoto. */
