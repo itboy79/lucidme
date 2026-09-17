@@ -1,14 +1,18 @@
 <!--
-  Onboarding primo avvio (S8-2) — 3 schermate fullscreen + primo sogno guidato.
+  Onboarding primo avvio (S8-2) — 4 schermate fullscreen + primo sogno guidato.
 
   Slide:
     1. Benvenuto: eyebrow + h1 "Benvenutə in *Lucid Me*" + value prop + CTA "Inizia".
     2. Come funziona: 3 mini-card (Alba / Sentiero / Giardino) in Panel blob + "Avanti".
-    3. Primo sogno guidato: EmotionPicker (required) + LucidityPicker + TextEntry
-       + "Pianta il primo sogno". Al save: markCompleted() + goto('/giardino').
+    3. Notifiche (pre-prompt S8-2): spiegazione valore + "Sì, attiva" che richiede
+       il permesso SOLO al tap; "Non ora" avanza senza toccare l'API Notification
+       (non si "brucia" il prompt di sistema).
+    4. Primo sogno guidato: EmotionPicker (required) + LucidityPicker + TextEntry
+       + "Pianta il primo sogno" + ghost "Non ricordo il sogno" (noRecall: body
+       vuoto ammesso, lucidity forzata a 0). Al save: markCompleted() + goto('/giardino').
 
   Navigazione: tap sulle CTA per avanzare; swipe orizzontale (touch) avanti/indietro;
-  indicatore a 3 punti (tap per saltare a una slide già vista); link "Salta" in basso
+  indicatore a 4 punti (tap per saltare a una slide già vista); link "Salta" in basso
   a destra → markCompleted() + goto('/giardino').
 
   Visual = Organico Generativo: dark, titoli Fraunces serif, blob Panel, accenti
@@ -25,15 +29,16 @@
     showToast,
   } from '@lucidme/ui';
   import { createDream } from '@lucidme/core';
-  import type { Emotion, Lucidity } from '@lucidme/core';
+  import type { Dream, Emotion, Lucidity } from '@lucidme/core';
   import { goto } from '$app/navigation';
   import { onboardingStore } from '$lib/stores/onboarding.svelte.js';
   import { dreamsStore } from '$lib/stores/dreams.svelte.js';
   import { getDbClient } from '$lib/db/client.svelte.js';
+  import { track } from '$lib/analytics/index.js';
 
   // ---- Stato slide ----
-  // step 0 = benvenuto, 1 = come funziona, 2 = primo sogno.
-  const TOTAL = 3;
+  // step 0 = benvenuto, 1 = come funziona, 2 = notifiche, 3 = primo sogno.
+  const TOTAL = 4;
   let step = $state(0);
   // Massima slide raggiunta: i puntini oltre questa sono disabilitati (non si
   // salta avanti senza vedere). Si può sempre tornare indietro.
@@ -75,6 +80,7 @@
   async function finishToGarden(): Promise<void> {
     if (finishing) return;
     finishing = true;
+    void track('onboarding_completed');
     try {
       await onboardingStore.markCompleted();
     } catch {
@@ -83,39 +89,51 @@
     await goto('/giardino');
   }
 
-  // ---- Primo sogno (slide 3) ----
+  // ---- Slide notifiche (pre-prompt S8-2) ----
+  // Il permesso viene richiesto SOLO al tap esplicito su "Sì, attiva": il
+  // bottone "Non ora" non tocca mai Notification.requestPermission, così il
+  // prompt di sistema non viene bruciato in caso di rinvio.
+  async function enableNotifications(): Promise<void> {
+    try {
+      if (typeof Notification !== 'undefined') await Notification.requestPermission();
+    } catch {
+      /* headless/vecchi browser: prosegui comunque */
+    }
+    next();
+  }
+
+  // ---- Primo sogno (slide 4) ----
   let emotion = $state<Emotion | null>(null);
   let lucidity = $state<Lucidity>(1);
   let body = $state('');
   let planting = $state(false);
 
-  // Bottone "Pianta" abilitato solo con emozione scelta (come Alba).
+  // Bottone "Pianta" (e "Non ricordo il sogno") abilitato solo con emozione
+  // scelta (come Alba).
   const canPlant = $derived(emotion !== null && !planting && !finishing);
 
-  async function plant(): Promise<void> {
-    if (planting || emotion === null) return;
-    if (body.trim() === '') {
-      showToast(t('alba.errore_body'));
-      return;
-    }
-    planting = true;
-    // Creazione + persistenza best-effort: se il backend SQLite non è
-    // disponibile (es. test headless senza cross-origin isolation), lo stato
-    // locale del dream store viene comunque aggiornato e l'onboarding viene
-    // marcato completato.
+  // Flusso condiviso tra plant normale e "Non ricordo il sogno": persistenza
+  // best-effort + toast + completamento onboarding. Se il backend SQLite non
+  // è disponibile (es. test headless senza cross-origin isolation), lo stato
+  // locale del dream store viene comunque aggiornato e l'onboarding viene
+  // marcato completato.
+  async function plantCommon(dream: Dream): Promise<void> {
     try {
-      const dream = createDream({ body: body.trim(), emotion, lucidity });
-      try {
-        const { dreamRepo } = await getDbClient();
-        await dreamRepo.insert(dream);
-        dreamsStore.add(dream);
-      } catch {
-        /* DB non disponibile: l'onboarding va comunque a buon fine */
-      }
-      showToast(t('alba.toast_piantato'));
+      const { dreamRepo } = await getDbClient();
+      await dreamRepo.insert(dream);
+      dreamsStore.add(dream);
     } catch {
-      /* createDream può lanciare VALIDATION: proseguiamo comunque */
+      /* DB non disponibile: l'onboarding va comunque a buon fine */
     }
+    showToast(t('alba.toast_piantato'));
+    void track('dream_saved', { has_voice: false, lucidity: dream.lucidity });
+    await completeOnboarding();
+  }
+
+  // Chiusura condivisa con il path "Salta": evento anonimo + flag onboarding
+  // + navigazione al giardino.
+  async function completeOnboarding(): Promise<void> {
+    void track('onboarding_completed');
     try {
       await onboardingStore.markCompleted();
     } catch {
@@ -125,13 +143,42 @@
     await goto('/giardino');
   }
 
-  // Ricalcolo del titolo/eyebrow per slide.
+  async function plant(): Promise<void> {
+    if (planting || emotion === null) return;
+    if (body.trim() === '') {
+      showToast(t('alba.errore_body'));
+      return;
+    }
+    planting = true;
+    // createDream può lanciare VALIDATION: in tal caso si salta il plant ma
+    // l'onboarding viene comunque completato (comportamento storico).
+    try {
+      await plantCommon(createDream({ body: body.trim(), emotion, lucidity }));
+    } catch {
+      await completeOnboarding();
+    }
+  }
+
+  // "Non ricordo il sogno" (S8-2): entry noRecall con body vuoto ammesso e
+  // lucidity forzata a 0 dal dominio; l'emozione resta obbligatoria (canPlant).
+  async function plantNoRecall(): Promise<void> {
+    if (planting || emotion === null) return;
+    planting = true;
+    try {
+      await plantCommon(createDream({ body: '', emotion, lucidity: 0, noRecall: true }));
+    } catch {
+      await completeOnboarding();
+    }
+  }
+
+  // Ricalcolo del titolo/eyebrow per slide (indice 3 = primo sogno).
   const titles = [
     {
       pre: t('onboarding.slide1_titolo_pre'),
       em: t('onboarding.slide1_titolo_em'),
     },
     null,
+    null, // slide 3 (notifiche): titolo semplice, senza em.
     {
       pre: t('onboarding.slide3_titolo_pre'),
       em: t('onboarding.slide3_titolo_em'),
@@ -182,12 +229,24 @@
 
       <Button variant="primary" onclick={next}>{t('onboarding.avanti')}</Button>
     </div>
+  {:else if step === 2}
+    <!-- Slide 3 — Notifiche (pre-prompt S8-2) -->
+    <div class="slide slide-notif">
+      <div class="eyebrow">{t('onboarding.slide1_eyebrow')}</div>
+      <h1 class="title">{t('onboarding.notif_titolo')}</h1>
+      <p class="sub">{t('onboarding.notif_sub')}</p>
+
+      <Button variant="primary" onclick={enableNotifications}>
+        {t('onboarding.notif_attiva')}
+      </Button>
+      <Button variant="ghost" onclick={next}>{t('onboarding.notif_dopo')}</Button>
+    </div>
   {:else}
-    <!-- Slide 3 — Primo sogno guidato -->
+    <!-- Slide 4 — Primo sogno guidato -->
     <div class="slide slide-dream">
       <div class="eyebrow">{t('onboarding.slide1_eyebrow')}</div>
       <h1 class="title">
-        {titles[2].pre} <em>{titles[2].em}</em>
+        {titles[3].pre} <em>{titles[3].em}</em>
       </h1>
       <p class="sub">{t('onboarding.slide3_sub')}</p>
 
@@ -207,10 +266,13 @@
       <Button variant="primary" disabled={!canPlant} onclick={plant}>
         {t('onboarding.slide3_primo')}
       </Button>
+      <Button variant="ghost" disabled={!canPlant} onclick={plantNoRecall}>
+        {t('onboarding.non_ricordo')}
+      </Button>
     </div>
   {/if}
 
-  <!-- Indicatore a 3 punti -->
+  <!-- Indicatore a 4 punti -->
   <div class="dots" role="tablist" aria-label="Avanzamento onboarding">
     {#each Array(TOTAL) as _, i (i)}
       <button
@@ -317,7 +379,7 @@
     font-family: var(--lm-font-sans);
   }
 
-  /* ---- Slide 3: form ---- */
+  /* ---- Slide 4: form primo sogno ---- */
   .field-label {
     display: block;
     font-family: var(--lm-font-sans);
@@ -328,7 +390,7 @@
     margin: 22px 0 12px;
   }
 
-  /* ---- Indicatore a 3 punti ---- */
+  /* ---- Indicatore a 4 punti ---- */
   .dots {
     display: flex;
     gap: 10px;

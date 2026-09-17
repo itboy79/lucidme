@@ -2,9 +2,11 @@
  * Backup / export (§S2-2).
  *
  * - `exportJSON`: payload versionato con tutti i sogni (incl. soft-deleted,
- *   così il backup è completo) e i sign.
- * - `exportMarkdown`: un unico documento, una sezione per sogno.
+ *   così il backup è completo) e i sign. Include `noRecall` (S8-2).
+ * - `exportMarkdown`: un unico documento, una sezione per sogno; per le entry
+ *   noRecall il body è renderizzato come `_(sogno non ricordato)_`.
  * - `importJSON`: validazione shape + idempotenza su `id` (skip se esiste già).
+ *   Accetta payload legacy senza `noRecall` (normalizzato a false).
  *
  * Privacy (§8.5.4): nessun log di body/title; gli errori di import riportano
  * solo l'id o l'indice.
@@ -76,6 +78,11 @@ function validateDream(d: unknown, ctx: string): string | null {
   if (typeof x.lucidity !== 'number' || !LUCIDITY_SET.has(x.lucidity as Lucidity)) {
     return `${ctx}: lucidity fuori range 0..3`;
   }
+  // noRecall (S8-2): assente = legacy pre-005 (default false); se presente
+  // deve essere boolean. Il repo normalizza a 0/1 in scrittura.
+  if (x.noRecall !== undefined && typeof x.noRecall !== 'boolean') {
+    return `${ctx}: noRecall non boolean`;
+  }
   if (typeof x.seed !== 'string') return `${ctx}: seed non valido`;
   if (x.deletedAt !== null && typeof x.deletedAt !== 'string') {
     return `${ctx}: deletedAt non valido (null o stringa)`;
@@ -123,7 +130,10 @@ export function exportMarkdown(dreams: Dream[]): string {
 function markdownSection(d: Dream): string {
   const label = lucidityLabel(d.lucidity);
   const meta = `*${d.dreamedOn} · ${d.emotion} · ${label}*`;
-  return `## ${d.title}\n\n${meta}\n\n${d.body}\n`;
+  // Entry noRecall (S8-2): il body (di regola vuoto) non viene renderizzato,
+  // al suo posto il segnaposto — mai contenuti di sogni inventati.
+  const body = d.noRecall ? '_(sogno non ricordato)_' : d.body;
+  return `## ${d.title}\n\n${meta}\n\n${body}\n`;
 }
 
 /** Etichetta italiana del livello di lucidità, importata da core. */
@@ -158,7 +168,9 @@ export async function importJSON(
       skipped++;
       continue;
     }
-    await repo.insert(d);
+    // Payload legacy pre-005 (S8-2): senza `noRecall` → false. Il validator
+    // accetta l'assenza ma non un tipo sbagliato.
+    await repo.insert({ ...d, noRecall: d.noRecall ?? false });
     inserted++;
   }
   return { inserted, skipped };

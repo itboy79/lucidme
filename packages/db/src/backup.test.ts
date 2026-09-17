@@ -79,6 +79,46 @@ describe('exportJSON / importJSON round-trip', () => {
     ).rejects.toThrow();
   });
 
+  it('exportJSON include noRecall e il roundtrip lo preserva (S8-2)', async () => {
+    const dbSrc = await makeTestDb();
+    const src = new DreamRepo(dbSrc);
+    const dbDst = await makeTestDb();
+    const dst = new DreamRepo(dbDst);
+
+    const nr = mkDream({ id: 'P'.repeat(26), body: '', noRecall: true, lucidity: 0 });
+    const normal = mkDream({ id: 'Q'.repeat(26) });
+    await src.insert(nr);
+    await src.insert(normal);
+
+    const payload = await exportJSON(src);
+    const exportedNr = payload.dreams.find((d) => d.id === nr.id);
+    const exportedNormal = payload.dreams.find((d) => d.id === normal.id);
+    expect(exportedNr?.noRecall).toBe(true);
+    expect(exportedNormal?.noRecall).toBe(false);
+
+    await importJSON(payload, dst);
+    const got = await dst.listAll({ includeDeleted: true });
+    expect(got.find((d) => d.id === nr.id)?.noRecall).toBe(true);
+    expect(got.find((d) => d.id === normal.id)?.noRecall).toBe(false);
+  });
+
+  it('importJSON accetta payload legacy senza noRecall (→ false)', async () => {
+    const db = await makeTestDb();
+    const repo = new DreamRepo(db);
+    const legacy = mkDream({ id: 'R'.repeat(26) });
+    const payload = {
+      version: 1 as const,
+      exportedAt: '2025-06-01T00:00:00.000Z',
+      // simula un export pre-005: campo noRecall assente
+      dreams: [{ ...legacy, noRecall: undefined }],
+      signs: [],
+    };
+    const res = await importJSON(payload, repo);
+    expect(res.inserted).toBe(1);
+    const got = await repo.listAll();
+    expect(got[0]?.noRecall).toBe(false);
+  });
+
   it('exportJSON include i soft-deleted e i sign', async () => {
     const db = await makeTestDb();
     const repo = new DreamRepo(db);
@@ -125,6 +165,23 @@ describe('exportMarkdown', () => {
       mkDream({ id: 'B'.repeat(26), title: 'B', body: 'b' }),
     ]);
     expect(md.match(/^## /gm)?.length).toBe(2);
+  });
+
+  it('entry noRecall: body renderizzato come segnaposto (S8-2)', () => {
+    const md = exportMarkdown([
+      mkDream({ id: 'A'.repeat(26), title: 'Mattina', body: '', noRecall: true, lucidity: 0 }),
+    ]);
+    expect(md).toContain('_(sogno non ricordato)_');
+    // meta con emotion e label lucidità (0 = non lucido)
+    expect(md).toMatch(/\*2025-06-01 · calma · non lucido\*/);
+  });
+
+  it('entry noRecall con body non vuoto: prevale il segnaposto', () => {
+    const md = exportMarkdown([
+      mkDream({ id: 'B'.repeat(26), body: 'frammento residuo', noRecall: true }),
+    ]);
+    expect(md).toContain('_(sogno non ricordato)_');
+    expect(md).not.toContain('frammento residuo');
   });
 });
 
@@ -226,6 +283,51 @@ describe('validateExportPayload', () => {
       signs: [],
     });
     expect(err).toContain('lucidity');
+  });
+
+  it('noRecall non boolean → errore', () => {
+    const err = validateExportPayload({
+      version: 1,
+      exportedAt: 'x',
+      dreams: [
+        {
+          id: 'id1',
+          createdAt: 'x',
+          dreamedOn: '2025-06-01',
+          title: 't',
+          body: 'b',
+          emotion: 'calma',
+          lucidity: 0,
+          noRecall: 1,
+          seed: 's',
+          deletedAt: null,
+        },
+      ],
+      signs: [],
+    });
+    expect(err).toContain('noRecall');
+  });
+
+  it('dream legacy senza noRecall → valido (default false in import)', () => {
+    const err = validateExportPayload({
+      version: 1,
+      exportedAt: 'x',
+      dreams: [
+        {
+          id: 'id1',
+          createdAt: '2025-06-01T00:00:00.000Z',
+          dreamedOn: '2025-06-01',
+          title: 't',
+          body: 'b',
+          emotion: 'calma',
+          lucidity: 0,
+          seed: 's',
+          deletedAt: null,
+        },
+      ],
+      signs: [],
+    });
+    expect(err).toBeNull();
   });
 
   it('deletedAt non valido (numero) → errore', () => {

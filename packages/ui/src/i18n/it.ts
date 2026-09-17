@@ -132,6 +132,7 @@ export const it = {
   'detail.ripristinato_toast': 'Sogno tornato nel giardino ✶',
   'detail.signs_label': 'Segni ricorrenti',
   'detail.nessun_sign': 'Nessun segno ricorrente ancora visibile',
+  'detail.no_recall': 'sogno non ricordato',
 
   // ---- Toast generici ----
   'toast.sentiero_sessione': 'Sessione guidata · 6 min ▸',
@@ -178,6 +179,7 @@ export const it = {
   'impostazioni.esporta_errore': 'Export non riuscito, riprova',
   'impostazioni.versione': 'Versione app',
   'impostazioni.privacy': 'Privacy',
+  'impostazioni.termini': 'Termini',
   'impostazioni.privacy_link': 'Come proteggiamo i tuoi sogni',
 
   // ---- Privacy (placeholder) ----
@@ -238,6 +240,42 @@ export const it = {
   'impostazioni.sound_marea': 'Marea',
   'impostazioni.sound_bosco': 'Bosco',
   'impostazioni.sound_campana': 'Campana',
+  'impostazioni.analytics_label': 'Statistiche anonime',
+  'impostazioni.analytics_sub':
+    'Ci aiuti a capire come viene usata l\u2019app. Mai contenuti dei sogni, mai dati personali. Attivo solo con il tuo consenso.',
+
+  // ---- Pro / paywall (S8-1) ----
+  'pro.eyebrow': 'Lucid Me Pro',
+  'pro.titolo_pre': 'Il diario resta',
+  'pro.titolo_em': 'sempre libero',
+  'pro.sub':
+    'Pro apre il percorso completo e gli strumenti pi\u00f9 profondi. Ci\u00f2 che \u00e8 gratis oggi resta gratis per sempre.',
+  'pro.piano_mese': 'Mensile',
+  'pro.piano_mese_prezzo': '4,99 $/mese',
+  'pro.piano_anno': 'Annuale',
+  'pro.piano_anno_prezzo': '49,99 $/anno',
+  'pro.piano_trial': '7 giorni di prova inclusi',
+  'pro.cta_mese': 'Abbonati mensile',
+  'pro.cta_anno': 'Abbonati annuale',
+  'pro.ripristina': 'Ripristina acquisti',
+  'pro.non_disponibile': 'Gli acquisti non sono ancora attivi in questa build',
+  'pro.f0': 'Journal, giardino ed export: illimitati, per tutti',
+  'pro.f1': 'Percorso completo, giorni 8\u201321 + training TLR',
+  'pro.f2': 'Trend Lume fino a 12 settimane',
+  'pro.f3': 'Reality check fino a 8 al giorno',
+  'pro.f4': 'Suonerie sveglia personalizzate',
+  'pro.torna': 'Torna al giardino',
+
+  // ---- Feedback beta (S9-2) ----
+  'feedback.bottone': 'Feedback',
+  'feedback.titolo': 'Dicci tutto',
+  'feedback.sub': 'Qualcosa non torna? Un\u2019idea? I beta tester guidano il prossimo ciclo di miglioramenti.',
+  'feedback.placeholder': 'Racconta com\u2019è andata\u2026',
+  'feedback.invia': 'Invia',
+  'feedback.annulla': 'Annulla',
+  'feedback.inviato': 'Feedback ricevuto, grazie \u2726',
+  'feedback.accodato': 'Feedback salvato: sar\u00e0 inviato appena possibile',
+  'feedback.errore': 'Invio non riuscito, riprova',
 
   // ---- Reality check (S5-3) ----
   'rc.overlay_titolo': 'Reality check',
@@ -263,12 +301,19 @@ export const it = {
   'onboarding.slide2_sentiero_d': 'Un percorso di ventuno giorni di pratica.',
   'onboarding.slide2_giardino_t': 'Giardino',
   'onboarding.slide2_giardino_d': 'Ogni sogno piantato diventa un organismo unico.',
-  // Slide 3 — primo sogno guidato.
+  // Slide 3 — notifiche (pre-prompt pattern S8-2).
+  'onboarding.notif_titolo': 'Un piccolo segnale',
+  'onboarding.notif_sub':
+    'Ti avvisiamo quando è il momento di un reality check e per il risveglio WBTB. Nessuna notifica di marketing, mai.',
+  'onboarding.notif_attiva': 'Sì, attiva le notifiche',
+  'onboarding.notif_dopo': 'Non ora',
+  // Slide 4 — primo sogno guidato.
   'onboarding.slide3_titolo_pre': 'Pianta il tuo',
   'onboarding.slide3_titolo_em': 'primo sogno',
   'onboarding.slide3_sub':
     'Anche un frammento basta. Scegli un’emozione e scrivi cosa resta del sogno di stanotte.',
   'onboarding.slide3_primo': 'Pianta il primo sogno',
+  'onboarding.non_ricordo': 'Non ricordo il sogno',
   'onboarding.salta': 'Salta',
   'onboarding.avanti': 'Avanti',
 } as const;

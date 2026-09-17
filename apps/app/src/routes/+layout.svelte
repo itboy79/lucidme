@@ -9,9 +9,11 @@
   import { goto } from '$app/navigation';
   import { Nav, Toast, t, googleFontsHref } from '@lucidme/ui';
   import Starfield from '$lib/components/Starfield.svelte';
+  import FeedbackButton from '$lib/components/FeedbackButton.svelte';
   import { settingsStore } from '$lib/stores/settings.svelte.js';
   import { onboardingStore } from '$lib/stores/onboarding.svelte.js';
   import { startNightModeEffect } from '$lib/night/mode.js';
+  import { track } from '$lib/analytics/index.js';
 
   let { children } = $props();
 
@@ -70,6 +72,12 @@
   $effect(() => {
     void onboardingStore.ensureLoaded();
   });
+
+  // Evento anonimo di apertura app (S8-3): il layout radice monta una sola
+  // volta per sessione. No-op finché l'utente non attiva le statistiche.
+  $effect(() => {
+    void track('app_opened');
+  });
 </script>
 
 <svelte:head>
@@ -89,6 +97,8 @@
   {#if !onOnboarding}
     <Nav {items} active={active} onselect={handleSelect} />
   {/if}
+  <!-- Feedback in-app: visibile SOLO nelle build beta (PUBLIC_BETA=true, S9-2). -->
+  <FeedbackButton />
   <Toast />
 </div>
 

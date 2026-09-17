@@ -121,6 +121,14 @@ CREATE TABLE IF NOT EXISTS settings (
 CREATE INDEX IF NOT EXISTS idx_rc_event_fired
   ON reality_check_event(fired_at);`,
   },
+  {
+    version: 5,
+    name: '005-norecall',
+    // Flag "sogno non ricordato" (S8-2). Copia testuale di `005-norecall.sql`.
+    // Nota: SQLite non supporta `ADD COLUMN IF NOT EXISTS`; l'idempotenza è
+    // garantita dal tracking versione in schema_version (mai rieseguita).
+    sql: `ALTER TABLE dream ADD COLUMN no_recall INTEGER NOT NULL DEFAULT 0;`,
+  },
 ];
 
 /** Versione corrente dello schema (max tra le migration). */

@@ -191,6 +191,73 @@ describe('createDream — dreamedOn default', () => {
   });
 });
 
+describe('createDream — noRecall (S8-2)', () => {
+  it('default: noRecall false su dream normale', () => {
+    const d = createDream({ ...base, title: 'x' });
+    expect(d.noRecall).toBe(false);
+  });
+
+  it('noRecall true accetta body vuoto', () => {
+    const d = createDream({ ...base, body: '', noRecall: true });
+    expect(d.noRecall).toBe(true);
+    expect(d.body).toBe('');
+  });
+
+  it('senza noRecall il body vuoto resta rifiutato', () => {
+    expect(() => createDream({ ...base, body: '' })).toThrowError(DomainError);
+    expect(() => createDream({ ...base, body: '', noRecall: false })).toThrowError(
+      DomainError,
+    );
+  });
+
+  it('noRecall forza lucidity a 0 qualunque valore valido sia passato', () => {
+    const d = createDream({ ...base, noRecall: true, lucidity: 3 });
+    expect(d.lucidity).toBe(0);
+    expect(d.noRecall).toBe(true);
+  });
+
+  it('noRecall con lucidity 0 esplicita resta 0', () => {
+    const d = createDream({ ...base, noRecall: true, lucidity: 0, body: '' });
+    expect(d.lucidity).toBe(0);
+  });
+
+  it('noRecall: emotion resta obbligatoria (non valida → errore)', () => {
+    expect(() =>
+      createDream({ ...base, body: '', noRecall: true, emotion: 'ronfante' as never }),
+    ).toThrowError(DomainError);
+    try {
+      createDream({ ...base, body: '', noRecall: true, emotion: 'ronfante' as never });
+    } catch (e) {
+      expect((e as DomainError).code).toBe('VALIDATION');
+    }
+  });
+
+  it('noRecall: lucidity fuori range resta rifiutata (validazione input)', () => {
+    expect(() =>
+      createDream({ ...base, noRecall: true, lucidity: 4 as never }),
+    ).toThrowError(DomainError);
+  });
+
+  it('noRecall: body oltre BODY_MAX resta rifiutato', () => {
+    const tooLong = 'a'.repeat(BODY_MAX + 1);
+    expect(() =>
+      createDream({ ...base, noRecall: true, body: tooLong }),
+    ).toThrowError(DomainError);
+  });
+
+  it('noRecall: title resta opzionale e il seed resta deterministico', () => {
+    const d = createDream({
+      ...base,
+      body: '',
+      noRecall: true,
+      id: '01HWTESTID0000000000000000',
+      createdAt: '2025-06-07T08:00:00.000Z',
+    });
+    expect(typeof d.title).toBe('string');
+    expect(d.seed).toBe(seedHex(d.id, d.createdAt));
+  });
+});
+
 describe('resolveTitle / firstWords (internal helpers)', () => {
   it('resolveTitle: fallback quando vuoto', () => {
     expect(resolveTitle('', 'uno due tre')).toBe('uno due tre…');

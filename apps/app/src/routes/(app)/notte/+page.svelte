@@ -13,13 +13,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { t, showToast } from '@lucidme/ui';
-  import { detectSigns } from '@lucidme/core';
+  import { can, detectSigns } from '@lucidme/core';
   import type { SignHit } from '@lucidme/core';
+  import { goto } from '$app/navigation';
   import { dreamsStore } from '$lib/stores/dreams.svelte.js';
   import { nightStore } from '$lib/stores/night.svelte.js';
   import { settingsStore } from '$lib/stores/settings.svelte.js';
   import { getAlarmBackend } from '$lib/alarm/index.js';
   import { scheduleWBTB, cancelWBTB, getScheduled } from '$lib/alarm/scheduler.js';
+  import { track } from '$lib/analytics/index.js';
+  import { entitlementStore } from '$lib/entitlements.svelte.js';
   import TLRPlayer from '$lib/components/TLRPlayer.svelte';
 
   let showTlr = $state(false);
@@ -36,6 +39,7 @@
   const sleep = $derived.by(() => settingsStore.current);
 
   onMount(() => {
+    void entitlementStore.ensureLoaded();
     void nightStore.ensureLoaded();
     void settingsStore.ensureLoaded();
     void dreamsStore.ensureLoaded();
@@ -57,7 +61,14 @@
     showToast(t('notte.ritual_done'));
   }
 
+  // Gating S8-1: il training TLR è Pro (`path_full`, matrice S8-1). Il tap
+  // sul gesto apre il paywall invece del player.
   function openTlr(): void {
+    if (!can('path_full', entitlementStore.tier)) {
+      void track('paywall_viewed');
+      void goto('/pro');
+      return;
+    }
     showTlr = true;
   }
 
@@ -67,6 +78,7 @@
     if (scheduled) {
       await cancelWBTB(backend);
       scheduled = null;
+      void track('wbtb_dismissed');
       showToast(t('notte.disattiva'));
       return;
     }
@@ -87,6 +99,7 @@
         body: t('notte.rientro'),
       });
       scheduled = at;
+      void track('wbtb_fired');
       showToast(
         t('notte.wbtb_programmato', undefined, {
           time: sleep.wbtbTime,

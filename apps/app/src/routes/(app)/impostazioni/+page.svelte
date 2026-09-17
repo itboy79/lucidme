@@ -18,6 +18,7 @@
     defaultWbtbTime,
   } from '$lib/stores/settings.svelte.js';
   import type { SleepSettings } from '$lib/stores/settings.svelte.js';
+  import { isAnalyticsEnabled, setAnalyticsEnabled, track } from '$lib/analytics/index.js';
 
   // Versione app — allineata a apps/app/package.json (import non disponibile a
   // runtime senza risolvere JSON; usiamo la costante del build).
@@ -31,6 +32,15 @@
   let wbtbError = $state(false);
 
   const sounds = ALARM_SOUNDS;
+
+  // --- Statistiche anonime (opt-in, S8-3) ---
+  let analyticsOn = $state(isAnalyticsEnabled());
+
+  function onAnalyticsToggle(ev: Event): void {
+    const target = ev.currentTarget as HTMLInputElement;
+    setAnalyticsEnabled(target.checked);
+    analyticsOn = target.checked;
+  }
 
   onMount(() => {
     void settingsStore.ensureLoaded().then(() => {
@@ -80,6 +90,7 @@
     if (exporting) return;
     exporting = true;
     try {
+      void track('export_used');
       const { dreamRepo, signRepo } = await getDbClient();
       const payload = await exportJSON(dreamRepo, signRepo);
       const ok = downloadText({
@@ -99,6 +110,7 @@
     if (exporting) return;
     exporting = true;
     try {
+      void track('export_used');
       const { dreamRepo } = await getDbClient();
       const dreams = await dreamRepo.listAll();
       const md = exportMarkdown(dreams);
@@ -197,6 +209,19 @@
   <button type="button" class="save-btn" onclick={saveSleep}>
     {t('impostazioni.sonno_salva_btn')}
   </button>
+</div>
+
+<!-- ===== Sezione ANALYTICS (opt-in, S8-3) ===== -->
+<div class="analytics-box">
+  <label class="field toggle">
+    <span class="field-label">{t('impostazioni.analytics_label')}</span>
+    <input
+      type="checkbox"
+      checked={analyticsOn}
+      onchange={onAnalyticsToggle}
+    />
+  </label>
+  <p class="wbtb-hint">{t('impostazioni.analytics_sub')}</p>
 </div>
 
 <div class="section">
@@ -327,7 +352,9 @@
   }
 
   /* ===== Sonno (§S4-2) ===== */
-  .sonno {
+  /* `.analytics-box` condivide lo stile pannello del blocco Sonno. */
+  .sonno,
+  .analytics-box {
     margin-top: 28px;
     padding: 22px 18px;
     border: 1px solid rgba(139, 136, 166, 0.16);

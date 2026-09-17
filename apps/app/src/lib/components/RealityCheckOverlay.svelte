@@ -9,6 +9,7 @@
   import { t, showToast } from '@lucidme/ui';
   import { getDbClient } from '$lib/db/client.svelte.js';
   import { getPromptById } from '$lib/reality-check/prompt-pool.js';
+  import { track } from '$lib/analytics/index.js';
 
   interface Props {
     /** Id del prompt da mostrare. */
@@ -24,6 +25,8 @@
   const prompt = $derived.by(() => getPromptById(promptId));
 
   async function answer(wasDreaming: boolean): Promise<void> {
+    // Evento anonimo S8-3: SOLO il booleano, mai il testo del prompt.
+    void track('rc_answered', { inDream: wasDreaming });
     try {
       const { rcRepo } = await getDbClient();
       await rcRepo.acknowledge(eventId, wasDreaming);

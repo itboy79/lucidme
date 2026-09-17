@@ -24,6 +24,7 @@ interface DreamRow {
   body: string;
   emotion: string;
   lucidity: number;
+  no_recall: number;
   seed: string;
   deleted_at: string | null;
 }
@@ -33,7 +34,7 @@ interface RevisionRow {
   saved_at: string;
 }
 
-/** Snake → camel. */
+/** Snake → camel. `no_recall` è INTEGER 0/1: converte in boolean. */
 function rowToDream(r: DreamRow): Dream {
   return {
     id: r.id,
@@ -43,6 +44,7 @@ function rowToDream(r: DreamRow): Dream {
     body: r.body,
     emotion: r.emotion as Emotion,
     lucidity: r.lucidity as Lucidity,
+    noRecall: r.no_recall === 1,
     seed: r.seed,
     deletedAt: r.deleted_at,
   };
@@ -65,8 +67,8 @@ export class DreamRepo {
     try {
       await this.db.exec(
         `INSERT OR IGNORE INTO dream
-          (id, created_at, dreamed_on, title, body, emotion, lucidity, seed, deleted_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          (id, created_at, dreamed_on, title, body, emotion, lucidity, no_recall, seed, deleted_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           d.id,
           d.createdAt,
@@ -75,6 +77,7 @@ export class DreamRepo {
           d.body,
           d.emotion,
           d.lucidity,
+          d.noRecall ? 1 : 0,
           d.seed,
           d.deletedAt,
         ],
@@ -108,7 +111,7 @@ export class DreamRepo {
       await this.db.exec(
         `UPDATE dream
            SET created_at = ?, dreamed_on = ?, title = ?, body = ?,
-               emotion = ?, lucidity = ?, deleted_at = ?
+               emotion = ?, lucidity = ?, no_recall = ?, deleted_at = ?
          WHERE id = ?`,
         [
           d.createdAt,
@@ -117,6 +120,7 @@ export class DreamRepo {
           d.body,
           d.emotion,
           d.lucidity,
+          d.noRecall ? 1 : 0,
           d.deletedAt,
           d.id,
         ],
@@ -161,7 +165,7 @@ export class DreamRepo {
   /** Restituisce un sogno per id (anche se soft-deleted), o null. */
   async getById(id: string): Promise<Dream | null> {
     const rows = await this.db.query<DreamRow>(
-      'SELECT id, created_at, dreamed_on, title, body, emotion, lucidity, seed, deleted_at FROM dream WHERE id = ?',
+      'SELECT id, created_at, dreamed_on, title, body, emotion, lucidity, no_recall, seed, deleted_at FROM dream WHERE id = ?',
       [id],
     );
     const r = rows[0];
@@ -174,8 +178,8 @@ export class DreamRepo {
    */
   async listAll(opts: ListOptions = {}): Promise<Dream[]> {
     const sql = opts.includeDeleted
-      ? 'SELECT id, created_at, dreamed_on, title, body, emotion, lucidity, seed, deleted_at FROM dream ORDER BY dreamed_on DESC'
-      : 'SELECT id, created_at, dreamed_on, title, body, emotion, lucidity, seed, deleted_at FROM dream WHERE deleted_at IS NULL ORDER BY dreamed_on DESC';
+      ? 'SELECT id, created_at, dreamed_on, title, body, emotion, lucidity, no_recall, seed, deleted_at FROM dream ORDER BY dreamed_on DESC'
+      : 'SELECT id, created_at, dreamed_on, title, body, emotion, lucidity, no_recall, seed, deleted_at FROM dream WHERE deleted_at IS NULL ORDER BY dreamed_on DESC';
     const rows = await this.db.query<DreamRow>(sql);
     return rows.map(rowToDream);
   }
@@ -192,7 +196,7 @@ export class DreamRepo {
     // su LIKE. Rileviamo via try/catch sul MATCH.
     try {
       const rows = await this.db.query<DreamRow>(
-        `SELECT d.id, d.created_at, d.dreamed_on, d.title, d.body, d.emotion, d.lucidity, d.seed, d.deleted_at
+        `SELECT d.id, d.created_at, d.dreamed_on, d.title, d.body, d.emotion, d.lucidity, d.no_recall, d.seed, d.deleted_at
            FROM dream d
           WHERE d.rowid IN (SELECT rowid FROM dream_fts WHERE dream_fts MATCH ?)
             AND d.deleted_at IS NULL
@@ -204,7 +208,7 @@ export class DreamRepo {
       // fallback LIKE (stub InMemoryDB / FTS5 non disponibile)
       const like = `%${term}%`;
       const rows = await this.db.query<DreamRow>(
-        `SELECT id, created_at, dreamed_on, title, body, emotion, lucidity, seed, deleted_at
+        `SELECT id, created_at, dreamed_on, title, body, emotion, lucidity, no_recall, seed, deleted_at
            FROM dream
           WHERE (title LIKE ? OR body LIKE ?) AND deleted_at IS NULL
           ORDER BY dreamed_on DESC`,

@@ -103,7 +103,12 @@
     <canvas bind:this={canvas} class="dcanvas" aria-hidden="true"></canvas>
 
     <h2 class="dtitle">{dream.title}</h2>
-    <div class="dmeta">{meta}</div>
+    <div class="dmeta">
+      {meta}
+      {#if dream.noRecall}
+        <span class="drecall">{t('detail.no_recall')}</span>
+      {/if}
+    </div>
 
     {#if signsForDream.length > 0}
       <div class="field-label">{t('detail.signs_label')}</div>
@@ -199,6 +204,21 @@
     text-transform: uppercase;
     color: var(--lm-ink-faint);
     margin-top: 10px;
+  }
+
+  /* Badge discreto per entry "non ricordo il sogno" (S8-2): resetta
+     uppercase/letter-spacing della meta, bordo puntinato come altri dettagli. */
+  .drecall {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    font-style: italic;
+    font-size: 11px;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--lm-ink-faint);
+    border: 1px dotted rgba(139, 136, 166, 0.4);
+    border-radius: 8px;
   }
 
   .field-label {

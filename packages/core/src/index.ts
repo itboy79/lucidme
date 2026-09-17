@@ -3,6 +3,10 @@
 // Build constants
 export { CORE_VERSION } from './version.js';
 
+// Entitlements (ticket S8-1)
+export { can, FEATURE_MATRIX, RC_DAILY_LIMIT } from './entitlements.js';
+export type { Tier, Feature } from './entitlements.js';
+
 // Privacy
 export { SCRUB_FIELDS, isScrubField } from './privacy/scrub-fields.js';
 

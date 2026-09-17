@@ -29,6 +29,32 @@ describe('DreamRepo', () => {
     expect(got).toEqual(d); // campi camelCase preservati, deletedAt null
   });
 
+  it('round trip preserva noRecall (true e false, S8-2)', async () => {
+    const db = await makeTestDb();
+    const repo = new DreamRepo(db);
+    const nr = mkDream({ id: 'Z'.repeat(26), body: '', noRecall: true, lucidity: 0 });
+    const normal = mkDream({ id: 'Y'.repeat(26) });
+    await repo.insert(nr);
+    await repo.insert(normal);
+
+    expect((await repo.getById(nr.id))?.noRecall).toBe(true);
+    expect((await repo.getById(normal.id))?.noRecall).toBe(false);
+    const all = await repo.listAll();
+    expect(all.find((d) => d.id === nr.id)?.noRecall).toBe(true);
+    expect(all.find((d) => d.id === normal.id)?.noRecall).toBe(false);
+  });
+
+  it('update persiste noRecall (0/1)', async () => {
+    const db = await makeTestDb();
+    const repo = new DreamRepo(db);
+    const d = mkDream({ body: 'ricordato parzialmente' });
+    await repo.insert(d);
+    await repo.update({ ...d, noRecall: true });
+    expect((await repo.getById(d.id))?.noRecall).toBe(true);
+    await repo.update({ ...d, noRecall: true, body: '' });
+    expect((await repo.getById(d.id))?.body).toBe('');
+  });
+
   it('getById ritorna null se inesistente', async () => {
     const db = await makeTestDb();
     const repo = new DreamRepo(db);
@@ -187,6 +213,7 @@ describe('DreamRepo', () => {
       body: 'acqua',
       emotion: 'calma',
       lucidity: 0,
+      no_recall: 0,
       seed: 'abcd1234',
       deleted_at: null,
     };

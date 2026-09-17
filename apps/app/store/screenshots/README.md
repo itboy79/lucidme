@@ -4,7 +4,16 @@
 > App Store and Google Play. The actual artwork must be **generated from the real
 > app** (deferred to design — not a code task). This file is the brief.
 
-**Status:** 🔲 deferred to design. No PNGs yet.
+**Status:** 🟡 PLACEHOLDER CATTURATI (S8-4 prep, 2026-09-17). In `6.7/` e `6.1/`
+trovi 6 screenshot reali dell'app per dimensione (onboarding, alba, sentiero,
+notte, giardino, pro), generati con `e2e/store-shots.mjs` (preview build :4173).
+Sono **placeholder onesti** — screenshot "as-is" senza headline di marketing.
+Il brief qui sotto resta il target di design: sovrapporre headline/subcopy e
+rigenerare con contenuto più ricco (giardino con 8-12 organismi, sentiero a
+giorno 9, notte in modalità notte).
+
+**Rigenerare i placeholder:** `pnpm --filter @lucidme/app build && pnpm --filter @lucidme/app preview &` poi `cd e2e && node store-shots.mjs`.
+
 **Source of truth for visuals:** the design system "Organico Generativo"
 (`wiki/07-product-design.md` §7.5) and the live `dev/ui` catalog route.
 

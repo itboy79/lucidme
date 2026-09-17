@@ -25,6 +25,7 @@ function mkDream(partial: Partial<Dream> & { dreamedOn: string }): Dream {
     body: partial.body ?? 'test test test', // 3 token
     emotion: partial.emotion ?? 'calma',
     lucidity: partial.lucidity ?? 0,
+    noRecall: partial.noRecall ?? false,
     seed: partial.seed ?? 'seed',
     deletedAt: partial.deletedAt ?? null,
   };

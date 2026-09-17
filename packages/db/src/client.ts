@@ -167,6 +167,12 @@ export class InMemoryDB implements DB {
   private tables = new Map<string, Row[]>();
   /** Colonne PRIMARY KEY per tabella (per INSERT OR IGNORE / ON CONFLICT). */
   private pks = new Map<string, string[]>();
+  /**
+   * DEFAULT per colonna, per tabella (da CREATE TABLE / ALTER TABLE ADD COLUMN).
+   * Applicati alle INSERT che omettono la colonna — coerente con SQLite reale
+   * (es. `no_recall` dopo la migration 005).
+   */
+  private colDefaults = new Map<string, Row>();
   private txnSnapshot: Map<string, Row[]> | null = null;
   private inTxn = false;
 
@@ -191,6 +197,12 @@ export class InMemoryDB implements DB {
     // --- CREATE TABLE ---
     if (upper.startsWith('CREATE TABLE')) {
       this.createTable(stmt);
+      return;
+    }
+
+    // --- ALTER TABLE (ADD COLUMN, migration 005) ---
+    if (upper.startsWith('ALTER TABLE')) {
+      this.doAlterTable(stmt);
       return;
     }
 
@@ -290,6 +302,7 @@ export class InMemoryDB implements DB {
     if (!this.tables.has(name)) {
       this.tables.set(name, []);
     }
+    this.recordDefaults(name, bodyRaw);
     // Estrai PRIMARY KEY: inline `col TYPE PRIMARY KEY` o `PRIMARY KEY (a, b)`.
     if (!this.pks.has(name)) {
       const pks: string[] = [];
@@ -303,6 +316,58 @@ export class InMemoryDB implements DB {
       }
       this.pks.set(name, pks);
     }
+  }
+
+  // --- ALTER TABLE ---
+
+  /**
+   * `ALTER TABLE name ADD COLUMN col TYPE [NOT NULL] [DEFAULT x]` (migration
+   * 005: `no_recall`). Lo stub non ha schema: applica il backfill del DEFAULT
+   * alle righe esistenti (coerente con SQLite reale) e registra il DEFAULT
+   * per le INSERT future che omettono la colonna. Idempotente: se la colonna
+   * è già presente non fa nulla.
+   */
+  private doAlterTable(stmt: string): void {
+    const m = stmt.match(
+      /ALTER\s+TABLE\s+(\w+)\s+ADD\s+COLUMN\s+(\w+)\s+\w+(?:\([^)]*\))?([\s\S]*)$/i,
+    );
+    if (!m) throw new Error(`InMemoryDB: ALTER TABLE malformato: ${stmt.slice(0, 60)}`);
+    const [table, col, rest] = groups<[string, string, string]>(m);
+    const rows = this.tables.get(table);
+    if (!rows) throw new Error(`InMemoryDB: tabella inesistente: ${table}`);
+
+    const first = rows[0];
+    if (first !== undefined && col in first) return; // colonna già presente
+
+    // DEFAULT x (NULL | numero | 'stringa'); se omesso, NULL.
+    const defM = rest.match(/DEFAULT\s+(NULL|-?\d+(?:\.\d+)?|'[^']*')/i);
+    const def = defM ? this.evalValue(groups<[string]>(defM)[0]) : null;
+
+    const defs = this.colDefaults.get(table) ?? {};
+    defs[col] = def;
+    this.colDefaults.set(table, defs);
+
+    for (const r of rows) {
+      if (!(col in r)) r[col] = def;
+    }
+  }
+
+  /**
+   * Estrae i `DEFAULT` dalle definizioni di colonna di un CREATE TABLE
+   * (`col TYPE [NOT NULL] DEFAULT x`). Regex globale sul body: non serve lo
+   * split sulle virgole (che romperebbe sui `PRIMARY KEY (a, b)`).
+   */
+  private recordDefaults(table: string, bodyRaw: string): void {
+    const defs = this.colDefaults.get(table) ?? {};
+    const re =
+      /(\w+)\s+(?:INTEGER|TEXT|REAL|BLOB|NUMERIC)\s*(?:\([^)]*\))?(?:\s+NOT\s+NULL)?\s+DEFAULT\s+(NULL|'[^']*'|-?\d+(?:\.\d+)?)/gi;
+    let m: RegExpExecArray | null = re.exec(bodyRaw);
+    while (m !== null) {
+      const [col, vRaw] = m.slice(1) as [string, string];
+      defs[col] = this.evalValue(vRaw);
+      m = re.exec(bodyRaw);
+    }
+    this.colDefaults.set(table, defs);
   }
 
   // --- INSERT ---
@@ -334,6 +399,14 @@ export class InMemoryDB implements DB {
     } else {
       // senza lista colonne: ricostruisci dall'ordine (non usato dai nostri repo)
       row = { _v: vals };
+    }
+
+    // Colonne omesse → DEFAULT dichiarato in CREATE/ALTER (come SQLite reale).
+    const defs = this.colDefaults.get(table);
+    if (defs) {
+      for (const k of Object.keys(defs)) {
+        if (!(k in row)) row[k] = defs[k];
+      }
     }
 
     // Conflict detection su PK o colonne ON CONFLICT(...).

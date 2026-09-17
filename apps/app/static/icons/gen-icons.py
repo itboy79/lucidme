@@ -98,6 +98,9 @@ def main():
         ("icon-192.png", 192, False),
         ("icon-512.png", 512, False),
         ("maskable-512.png", 512, True),
+        # 1024 per Apple App Store (S8-4; da sostituire con l'icona definitiva a
+        # risoluzione piena dopo D-008 naming / design finale).
+        ("icon-1024.png", 1024, False),
     ]
     for name, size, maskable in targets:
         write_png(os.path.join(here, name), size, maskable)

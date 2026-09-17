@@ -7,8 +7,10 @@
   Stati: < 7 giorni di dati → "pochi dati" (nessun numero grande deprimente).
 -->
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { t, Panel, TrendChart, Button } from '@lucidme/ui';
   import {
+    can,
     computeWeekly,
     lucidityRate,
     lucidityDelta,
@@ -19,7 +21,10 @@
     addDays,
     toDateStr,
   } from '@lucidme/core';
+  import { goto } from '$app/navigation';
   import { dreamsStore } from '$lib/stores/dreams.svelte';
+  import { track } from '$lib/analytics/index.js';
+  import { entitlementStore } from '$lib/entitlements.svelte.js';
   import { generateShareCard, shareCard } from '$lib/share/card';
 
   const WEEKS_SHORT = 4;
@@ -103,6 +108,21 @@
     weekly.map((w, i) => (rangeWeeks === WEEKS_SHORT ? `sett ${i + 1}` : i % 3 === 0 ? `+${i}` : '')),
   );
   const trendData = $derived(weekly.map((w) => w.lucidCount));
+
+  onMount(() => {
+    void entitlementStore.ensureLoaded();
+  });
+
+  // Gating S8-1: trend > 4 settimane è Pro. Il tap sul 12-settimane apre il
+  // paywall (senza cambiare il range attivo).
+  function onLongRange(): void {
+    if (!can('trend_long', entitlementStore.tier)) {
+      void track('paywall_viewed');
+      void goto('/pro');
+      return;
+    }
+    rangeWeeks = WEEKS_LONG;
+  }
 </script>
 
 <svelte:head>
@@ -131,7 +151,7 @@
     <button class:active={rangeWeeks === WEEKS_SHORT} onclick={() => (rangeWeeks = WEEKS_SHORT)}>
       {t('lume.settimane_4')}
     </button>
-    <button class:active={rangeWeeks === WEEKS_LONG} onclick={() => (rangeWeeks = WEEKS_LONG)}>
+    <button class:active={rangeWeeks === WEEKS_LONG} onclick={onLongRange}>
       {t('lume.settimane_12')}
     </button>
   </div>

@@ -16,8 +16,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { t, Panel, Button } from '@lucidme/ui';
+  import { can } from '@lucidme/core';
   import { getDb, PathRepo, type PathProgress, PATH_MAX_DAY } from '@lucidme/db';
   import { PHASE_LABEL, type Lesson, type Phase } from '@lucidme/content';
+  import { goto } from '$app/navigation';
+  import { track } from '$lib/analytics/index.js';
+  import { entitlementStore } from '$lib/entitlements.svelte.js';
   import LessonPlayer from '$lib/components/LessonPlayer.svelte';
   interface PhaseInfo { phase: Phase; dayRange: [number, number] }
 
@@ -43,6 +47,7 @@
   }
 
   onMount(async () => {
+    void entitlementStore.ensureLoaded();
     const db = await getDb();
     repo = new PathRepo(db);
     await refresh();
@@ -90,6 +95,12 @@
   function onNodeClick(day: number): void {
     const st = nodeState(day);
     if (st === 'locked') return; // futuro: non apribile
+    // Gating S8-1: anche il tap sul nodo "oggi" ≥ 8 passa dal paywall.
+    if (day > 7 && !can('path_full', entitlementStore.tier)) {
+      void track('paywall_viewed');
+      void goto('/pro');
+      return;
+    }
     // today o done: apri in player (done = rilettura read-only)
     const lesson = data.lessons.find((l: Lesson) => l.day === day);
     if (!lesson) return;
@@ -97,8 +108,15 @@
     activeLesson = lesson;
   }
 
+  // Gating S8-1: i giorni 8–21 sono Pro (`path_full`). Il paywall si apre
+  // SOLO dal tap sul CTA di oggi (mai interstitial automatico).
   function onStart(): void {
     if (!todayLesson) return;
+    if (currentDay > 7 && !can('path_full', entitlementStore.tier)) {
+      void track('paywall_viewed');
+      void goto('/pro');
+      return;
+    }
     readonlyReview = false;
     activeLesson = todayLesson;
   }
@@ -113,8 +131,10 @@
       activeLesson = null;
       return;
     }
+    const day = activeLesson.day;
     try {
-      await repo.markComplete(activeLesson.day);
+      await repo.markComplete(day);
+      void track('lesson_completed', { day });
     } catch {
       // regola bloccante violata (es. stesso giorno solare): nessuna scrittura.
       // il toast di completamento è già stato mostrato dal player; qui non

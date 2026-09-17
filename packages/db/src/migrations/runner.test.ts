@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { createDream } from '@lucidme/core';
 import { InMemoryDB } from '../client.js';
+import { DreamRepo } from '../repositories/dream-repo.js';
 import { MIGRATIONS, runMigrations, SCHEMA_VERSION, splitStatements } from './runner.js';
 
 describe('runMigrations', () => {
@@ -90,8 +92,49 @@ describe('runMigrations', () => {
     expect(r[0]?.id).toBe('rc_1');
   });
 
-  it('SCHEMA_VERSION riflette le migration 003/004', () => {
-    expect(SCHEMA_VERSION).toBeGreaterThanOrEqual(4);
+  it('005 aggiunge no_recall a dream (DEFAULT 0) e il roundtrip preserva il flag', async () => {
+    const db = new InMemoryDB();
+    await runMigrations(db);
+    // Riga "legacy" senza no_recall: il DEFAULT della colonna deve valere 0.
+    await db.exec(
+      `INSERT INTO dream (id, created_at, dreamed_on, title, body, emotion, lucidity, seed, deleted_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ['L'.repeat(26), '2025-07-01T00:00:00.000Z', '2025-07-01', 'x', 'y', 'calma', 0, 'abcd1234', null],
+    );
+    const legacy = await db.query<{ no_recall: number }>('SELECT no_recall FROM dream');
+    expect(legacy[0]?.no_recall).toBe(0);
+
+    // Roundtrip insert→listAll via repo: il flag sopravvive (true e false).
+    const repo = new DreamRepo(db);
+    await repo.insert(
+      createDream({
+        body: '',
+        emotion: 'calma',
+        lucidity: 0,
+        noRecall: true,
+        dreamedOn: '2025-07-02',
+        createdAt: '2025-07-02T08:00:00.000Z',
+        id: 'M'.repeat(26),
+      }),
+    );
+    await repo.insert(
+      createDream({
+        body: 'Sogno ricordato',
+        emotion: 'gioia',
+        lucidity: 2,
+        dreamedOn: '2025-07-03',
+        createdAt: '2025-07-03T08:00:00.000Z',
+        id: 'N'.repeat(26),
+      }),
+    );
+    const all = await repo.listAll();
+    expect(all.find((d) => d.id === 'M'.repeat(26))?.noRecall).toBe(true);
+    expect(all.find((d) => d.id === 'N'.repeat(26))?.noRecall).toBe(false);
+    expect(all.find((d) => d.id === 'L'.repeat(26))?.noRecall).toBe(false);
+  });
+
+  it('SCHEMA_VERSION riflette le migration 003/004/005', () => {
+    expect(SCHEMA_VERSION).toBeGreaterThanOrEqual(5);
   });
 });
 

@@ -13,7 +13,20 @@ import { describe, expect, it, vi } from 'vitest';
 import { NodeSqliteDB } from './node-sqlite.js';
 import { runMigrations } from './migrations/runner.js';
 import { DreamRepo } from './repositories/dream-repo.js';
-import type { Dream } from '@lucidme/core';
+import { createDream, type Dream } from '@lucidme/core';
+
+/** Dream noRecall (S8-2): body vuoto, lucidity forzata a 0 da createDream. */
+function mkDreamNR(id: string, noRecall: boolean): Dream {
+  return createDream({
+    body: noRecall ? '' : 'Sogno ricordato',
+    emotion: 'calma',
+    lucidity: noRecall ? 3 : 2, // con noRecall la factory forza 0
+    noRecall,
+    dreamedOn: '2025-07-01',
+    createdAt: '2025-07-01T08:00:00.000Z',
+    id,
+  });
+}
 
 // Skip pulito se better-sqlite3 non è disponibile (es. ambiente senza build nativa).
 let sqliteAvailable = true;
@@ -46,7 +59,7 @@ describeOrSkip('SQLite reale (better-sqlite3)', { timeout: 10000 }, () => {
     db.close();
   });
 
-  it('migrations 001-004 applicano su SQLite reale', async () => {
+  it('migrations 001-005 applicano su SQLite reale', async () => {
     const db = new NodeSqliteDB();
     await expect(runMigrations(db)).resolves.toBeUndefined();
     // Verifica che le tabelle esistano.
@@ -62,6 +75,27 @@ describeOrSkip('SQLite reale (better-sqlite3)', { timeout: 10000 }, () => {
     expect(names).toContain('path_progress');
     expect(names).toContain('night_ritual');
     expect(names).toContain('reality_check_event');
+    db.close();
+  });
+
+  it('005: colonna no_recall NOT NULL DEFAULT 0 e roundtrip insert→listAll', async () => {
+    const db = new NodeSqliteDB();
+    await runMigrations(db);
+    const cols = db.pragma<{ name: string; notnull: number; dflt_value: string }>(
+      'table_info(dream)',
+    );
+    const col = cols.find((c) => c.name === 'no_recall');
+    expect(col).toBeDefined();
+    expect(col?.notnull).toBe(1);
+    expect(col?.dflt_value).toBe('0');
+
+    const repo = new DreamRepo(db);
+    await repo.insert(mkDreamNR('nr-1', true));
+    await repo.insert(mkDreamNR('nr-2', false));
+    const all = await repo.listAll();
+    expect(all.find((d) => d.id === 'nr-1')?.noRecall).toBe(true);
+    expect(all.find((d) => d.id === 'nr-1')?.lucidity).toBe(0); // forzata da createDream
+    expect(all.find((d) => d.id === 'nr-2')?.noRecall).toBe(false);
     db.close();
   });
 
@@ -91,10 +125,22 @@ describeFts('FTS5 search su SQLite reale', { timeout: 10000 }, () => {
       body,
       emotion: 'calma',
       lucidity: 0,
+      noRecall: false,
       seed: `seed-${i}`,
       deletedAt: null,
     };
   }
+
+  it('insert con body vuoto (noRecall) non rompe i trigger FTS', async () => {
+    const { db, repo } = makeRepo();
+    await runMigrations(db);
+    await repo.insert(mkDreamNR('nr-fts', true));
+    await repo.insert(mkDream(1, 'Sogno con la parola farfalla', 'Farfalla'));
+    // la search continua a funzionare; il doc FTS vuoto è lecito
+    expect((await repo.search('farfalla')).length).toBe(1);
+    expect((await repo.search('nonesisto')).length).toBe(0);
+    db.close();
+  });
 
   it('search trova sogni per parola chiave via FTS5', async () => {
     const { db, repo } = makeRepo();

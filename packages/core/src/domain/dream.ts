@@ -43,6 +43,12 @@ export interface Dream {
   body: string;
   emotion: Emotion;
   lucidity: Lucidity;
+  /**
+   * Entry "non ricordo il sogno" (S8-2): true = il sogno non è stato
+   * ricordato al risveglio. In questo caso `body` può essere vuoto e
+   * `lucidity` è forzata a 0.
+   */
+  noRecall: boolean;
   seed: string;
   deletedAt: string | null;
 }
@@ -52,6 +58,7 @@ export interface CreateDreamInput {
   body: string;
   emotion: Emotion;
   lucidity: Lucidity;
+  noRecall?: boolean;
   dreamedOn?: string;
   createdAt?: string;
   id?: string;
@@ -67,11 +74,23 @@ export interface CreateDreamInput {
  * - emotion deve essere in EMOTIONS; lucidity in 0..3.
  * - `dreamedOn` default = oggi (`YYYY-MM-DD`, timezone locale).
  * - `createdAt` default = now ISO8601.
+ *
+ * Regole noRecall (S8-2, "non ricordo il sogno"):
+ * - `noRecall` default `false`.
+ * - con `noRecall: true` il body PUÒ essere stringa vuota (si salta la
+ *   validazione "body non-vuoto"; il limite BODY_MAX resta valido).
+ * - con `noRecall: true` la `lucidity` è FORZATA a 0 (niente recall =
+ *   niente lucidità), qualunque valore valido sia passato.
+ * - `emotion` resta obbligatoria anche con noRecall (la palette emozione
+ *   si sceglie anche al mattino senza ricordo).
+ * - il `seed` è generato come al solito (deterministico, immutabile).
  */
 export function createDream(input: CreateDreamInput): Dream {
   const { body, emotion, lucidity } = input;
+  const noRecall = input.noRecall ?? false;
 
-  if (typeof body !== 'string' || body.length === 0) {
+  // Body vuoto ammesso SOLO per entry noRecall (S8-2).
+  if (typeof body !== 'string' || (!noRecall && body.length === 0)) {
     throw new DomainError('VALIDATION', 'body vuoto');
   }
   if (body.length > BODY_MAX) {
@@ -97,7 +116,9 @@ export function createDream(input: CreateDreamInput): Dream {
     title,
     body,
     emotion,
-    lucidity,
+    // Niente recall = niente lucidità: forzata a 0 (S8-2).
+    lucidity: noRecall ? 0 : lucidity,
+    noRecall,
     seed,
     deletedAt: null,
   };

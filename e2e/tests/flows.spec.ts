@@ -42,10 +42,10 @@ async function navTo(page: Page, sec: string): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
-// 1. Onboarding flow — click through 3 slides → /giardino
+// 1. Onboarding flow — click through 4 slides → /giardino
 // ---------------------------------------------------------------------------
 test.describe('Onboarding flow', () => {
-  test('3 schermate + primo sogno guidato → /giardino', async ({ page }) => {
+  test('4 schermate + primo sogno guidato → /giardino', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveURL(/\/onboarding/);
 
@@ -60,7 +60,12 @@ test.describe('Onboarding flow', () => {
     await expect(page.getByText('Giardino').first()).toBeVisible();
     await page.getByRole('button', { name: /^avanti$/i }).click();
 
-    // Slide 3 — primo sogno guidato.
+    // Slide 3 — notifiche (pre-prompt): "Non ora" NON tocca il permesso di
+    // sistema, avanza e basta (S8-2).
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(/piccolo segnale/i);
+    await page.getByRole('button', { name: /^non ora$/i }).click();
+
+    // Slide 4 — primo sogno guidato.
     await expect(page.getByRole('heading', { level: 1 })).toContainText(/primo sogno/i);
 
     // Il bottone "Pianta" è disabled finché non si sceglie un'emozione.
@@ -78,6 +83,26 @@ test.describe('Onboarding flow', () => {
     await expect(page).toHaveURL(/\/giardino/);
   });
 
+  test('"Non ricordo il sogno" pianta una entry noRecall → /giardino', async ({ page }) => {
+    await page.goto('/');
+    await expect(page).toHaveURL(/\/onboarding/);
+
+    await page.getByRole('button', { name: /^inizi[ae]$/i }).click();
+    await page.getByRole('button', { name: /^avanti$/i }).click();
+    await page.getByRole('button', { name: /^non ora$/i }).click();
+
+    // Slide 4: il ghost "Non ricordo il sogno" è disabled senza emozione.
+    const noRecallBtn = page.getByRole('button', { name: /non ricordo il sogno/i });
+    await expect(noRecallBtn).toBeDisabled();
+    await page.getByRole('radio', { name: 'paura' }).click();
+    await expect(noRecallBtn).toBeEnabled();
+
+    await noRecallBtn.click();
+    await expect(page).toHaveURL(/\/giardino/);
+    // Nel giardino NON compare il messaggio empty (c'è la entry noRecall).
+    await expect(page.getByText(/attende il primo sogno/i)).toHaveCount(0);
+  });
+
   test('"Salta" porta direttamente a /giardino', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveURL(/\/onboarding/);
@@ -85,10 +110,10 @@ test.describe('Onboarding flow', () => {
     await expect(page).toHaveURL(/\/giardino/);
   });
 
-  test('l\'indicatore a 3 punti mostra l\'avanzamento', async ({ page }) => {
+  test('l\'indicatore a 4 punti mostra l\'avanzamento', async ({ page }) => {
     await page.goto('/onboarding');
-    const dots = page.getByRole('tab', { name: /schermata \d di 3/i });
-    await expect(dots).toHaveCount(3);
+    const dots = page.getByRole('tab', { name: /schermata \d di 4/i });
+    await expect(dots).toHaveCount(4);
     // La prima è selezionata.
     await expect(dots.first()).toHaveAttribute('aria-selected', 'true');
     // Si avanza di uno: la seconda diventa selezionata.
@@ -208,5 +233,33 @@ test.describe('Sentiero — path 21 giorni', () => {
     // Almeno un nodo-giorno cliccabile (il giorno 1 = oggi).
     const todayNode = page.locator('g[role="button"]').filter({ hasText: /1/ });
     await expect(todayNode.first()).toBeVisible();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 7. Paywall (S8-1) — il trigger da feature bloccata apre /pro
+// ---------------------------------------------------------------------------
+test.describe('Paywall — gating feature Pro', () => {
+  test('tap su "Training TLR" (free) apre il paywall /pro', async ({ page }) => {
+    await enterApp(page);
+    await navTo(page, 'notte');
+
+    // Il gesto 2 (Training TLR) è Pro: il tap apre /pro invece del player.
+    await page.getByRole('button', { name: /training audio tlr/i }).click();
+    await expect(page).toHaveURL(/\/pro/);
+
+    // Il paywall mostra i due piani e la nota "gratis resta gratis".
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(/sempre libero/i);
+    await expect(page.getByText(/4,99/).first()).toBeVisible();
+    await expect(page.getByText(/49,99/).first()).toBeVisible();
+    await expect(page.getByText(/resta gratis per sempre/i)).toBeVisible();
+
+    // Lo stub billing: ogni CTA → toast "acquisti non ancora attivi".
+    await page.getByRole('button', { name: /abbonati annuale/i }).click();
+    await expect(page.getByText(/acquisti non sono ancora attivi/i)).toBeVisible();
+
+    // "Torna al giardino" riporta alla home.
+    await page.getByRole('button', { name: /torna al giardino/i }).click();
+    await expect(page).toHaveURL(/\/giardino/);
   });
 });

@@ -23,7 +23,8 @@
     "@lucidme/core": "workspace:*",
     "@lucidme/db": "workspace:*",
     "@lucidme/generative": "workspace:*",
-    "@lucidme/ui": "workspace:*"
+    "@lucidme/ui": "workspace:*",
+    "posthog-js": "^1.433.10"
   },
   "devDependencies": {
     "@sentry/sveltekit": "^8.40.0",
