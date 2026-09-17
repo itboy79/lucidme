@@ -22,8 +22,9 @@ import { getLesson, getAllLessons, getExtras, loadBundle, getPhases } from './in
 const here = dirname(fileURLToPath(import.meta.url));
 const lessonsDir = join(here, '..', 'lessons');
 const extraDir = join(lessonsDir, 'extra');
-// wiki-os è fratello di lucidme: da packages/content/src → 4 risalite.
-const wikiPath = join(here, '..', '..', '..', '..', 'wiki-os', '99-fonti.md');
+// Copia vendorizzata nel repo (stessa che usa scripts/build.mjs): il test
+// gira anche su CI/clone dove la wiki-os sibling non esiste.
+const wikiPath = join(here, '..', 'wiki', '99-fonti.md');
 
 function readMdFiles(dir: string): { name: string; content: string }[] {
   if (!existsSync(dir)) return [];
