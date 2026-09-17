@@ -9,8 +9,13 @@
  *
  * Path risolti relativamente a questo file:
  *   lessons/      → ../lessons/
- *   99-fonti.md   → ../../../wiki-os/99-fonti.md
+ *   99-fonti.md   → ../wiki/99-fonti.md  (copiata nel repo: build self-contained)
  *   bundle.json   → ../src/bundle.json
+ *
+ * Se esiste ANCHE la wiki-os sibling (setup dev originale:
+ * <root-repo>/../wiki-os/99-fonti.md), le due copie devono coincidere: se
+ * divergono il build FALLISCE con l'istruzione di sync, così la copia
+ * vendorizzata non marcia in silenzio.
  *
  * Exit codes: 0 = build OK, 1 = errore di validazione.
  */
@@ -21,7 +26,8 @@ import { dirname, join } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const lessonsDir = join(here, '..', 'lessons');
 const extraDir = join(lessonsDir, 'extra');
-const wikiPath = join(here, '..', '..', '..', '..', 'wiki-os', '99-fonti.md');
+const vendoredPath = join(here, '..', 'wiki', '99-fonti.md');
+const wikiSiblingPath = join(here, '..', '..', '..', '..', 'wiki-os', '99-fonti.md');
 const bundleOut = join(here, '..', 'src', 'bundle.json');
 
 // ---------------------------------------------------------------------------
@@ -228,11 +234,23 @@ function readLessons(dir) {
 }
 
 function main() {
-  if (!existsSync(wikiPath)) {
-    console.error(`✗ Fonti wiki non trovate: ${wikiPath}`);
+  // Fonti: la copia vendorizzata nel repo rende la build self-contained
+  // (CI, clone puliti). La copia sibling della wiki-os, se presente, deve
+  // coincidere (check di sync esplicito, niente drift silenzioso).
+  if (!existsSync(vendoredPath)) {
+    console.error(`✗ Fonti vendorizzate non trovate: ${vendoredPath}`);
     process.exit(1);
   }
-  const wikiMd = readFileSync(wikiPath, 'utf8');
+  const wikiMd = readFileSync(vendoredPath, 'utf8');
+  if (existsSync(wikiSiblingPath)) {
+    const siblingMd = readFileSync(wikiSiblingPath, 'utf8');
+    if (siblingMd !== wikiMd) {
+      console.error('✗ 99-fonti.md divisa tra repo e wiki-os: sincronizzare con');
+      console.error('    cp ../wiki-os/99-fonti.md packages/content/wiki/99-fonti.md');
+      console.error('  (o viceversa) e rilanciare. La validazione fonti usa la copia nel repo.');
+      process.exit(1);
+    }
+  }
   const known = parseWikiSources(wikiMd);
   console.log(`ℹ Trovate ${known.size} chiavi fonte in 99-fonti.md`);
 
