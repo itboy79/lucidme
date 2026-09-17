@@ -8,6 +8,7 @@ import './landing.css';
 import { applyBrand } from './brand';
 import { initHero } from './hero';
 import { initWaitlistForm } from './form';
+import { flushQueue } from './waitlist';
 
 applyBrand();
 
@@ -15,3 +16,7 @@ const heroCanvas = document.querySelector<HTMLCanvasElement>('#hero-canvas');
 if (heroCanvas) initHero(heroCanvas);
 
 initWaitlistForm();
+
+// Retry delle email accodate in visite precedenti (quando l'endpoint non era
+// ancora configurato): senza questo flush la coda non verrebbe mai svuotata.
+void flushQueue();

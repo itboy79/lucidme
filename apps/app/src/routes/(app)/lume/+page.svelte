@@ -23,7 +23,6 @@
   } from '@lucidme/core';
   import { goto } from '$app/navigation';
   import { dreamsStore } from '$lib/stores/dreams.svelte';
-  import { track } from '$lib/analytics/index.js';
   import { entitlementStore } from '$lib/entitlements.svelte.js';
   import { generateShareCard, shareCard } from '$lib/share/card';
 
@@ -114,10 +113,10 @@
   });
 
   // Gating S8-1: trend > 4 settimane è Pro. Il tap sul 12-settimane apre il
-  // paywall (senza cambiare il range attivo).
+  // paywall (senza cambiare il range attivo). `paywall_viewed` è emesso
+  // dall'onMount di /pro.
   function onLongRange(): void {
     if (!can('trend_long', entitlementStore.tier)) {
-      void track('paywall_viewed');
       void goto('/pro');
       return;
     }

@@ -275,7 +275,6 @@ export const it = {
   'feedback.annulla': 'Annulla',
   'feedback.inviato': 'Feedback ricevuto, grazie \u2726',
   'feedback.accodato': 'Feedback salvato: sar\u00e0 inviato appena possibile',
-  'feedback.errore': 'Invio non riuscito, riprova',
 
   // ---- Reality check (S5-3) ----
   'rc.overlay_titolo': 'Reality check',
@@ -314,6 +313,9 @@ export const it = {
     'Anche un frammento basta. Scegli un’emozione e scrivi cosa resta del sogno di stanotte.',
   'onboarding.slide3_primo': 'Pianta il primo sogno',
   'onboarding.non_ricordo': 'Non ricordo il sogno',
+  'onboarding.aria_root': 'Onboarding',
+  'onboarding.aria_dots': 'Avanzamento onboarding',
+  'onboarding.aria_slide': 'Schermata {n} di {total}',
   'onboarding.salta': 'Salta',
   'onboarding.avanti': 'Avanti',
 } as const;

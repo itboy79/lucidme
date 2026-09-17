@@ -13,6 +13,14 @@
   let open = $state(false);
   let text = $state('');
   let sending = $state(false);
+  let textEl: HTMLTextAreaElement | undefined = $state();
+
+  // Convenzione dell'app (DreamDetail, SearchOverlay, LessonPlayer, TLRPlayer):
+  // Escape chiude il dialog; il focus entra nella textarea all'apertura
+  // (utenti keyboard/SR — review finding #3).
+  $effect(() => {
+    if (open) textEl?.focus();
+  });
 
   async function submit(): Promise<void> {
     if (sending) return;
@@ -26,6 +34,8 @@
     open = false;
   }
 </script>
+
+<svelte:window onkeydown={(e) => e.key === 'Escape' && (open = false)} />
 
 {#if isBetaBuild()}
   <button
@@ -50,6 +60,7 @@
         <p class="sub">{t('feedback.sub')}</p>
         <textarea
           class="text"
+          bind:this={textEl}
           bind:value={text}
           placeholder={t('feedback.placeholder')}
           rows="4"

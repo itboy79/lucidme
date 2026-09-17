@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   can,
   FEATURE_MATRIX,
+  PATH_FREE_DAYS,
   RC_DAILY_LIMIT,
   type Feature,
   type Tier,
@@ -60,10 +61,18 @@ describe('RC_DAILY_LIMIT', () => {
   });
 });
 
+describe('PATH_FREE_DAYS', () => {
+  it('= 7 (giorni 1–7 free, oltre pro — coerente con path_full gated)', () => {
+    expect(PATH_FREE_DAYS).toBe(7);
+    expect(FEATURE_MATRIX.path_full.free).toBe(false);
+    expect(FEATURE_MATRIX.path_full.pro).toBe(true);
+  });
+});
+
 describe('purezza del modulo', () => {
   it('non esporta side-effect: namespace = sole 3 esportazioni runtime', async () => {
     const ns = await import('./entitlements.js');
-    expect(Object.keys(ns).sort()).toEqual(['FEATURE_MATRIX', 'RC_DAILY_LIMIT', 'can']);
+    expect(Object.keys(ns).sort()).toEqual(['FEATURE_MATRIX', 'PATH_FREE_DAYS', 'RC_DAILY_LIMIT', 'can']);
   });
 
   it('can è privo di stato: ripetere le chiamate non muta la matrice', () => {

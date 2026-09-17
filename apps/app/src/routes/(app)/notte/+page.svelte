@@ -62,10 +62,10 @@
   }
 
   // Gating S8-1: il training TLR è Pro (`path_full`, matrice S8-1). Il tap
-  // sul gesto apre il paywall invece del player.
+  // sul gesto apre il paywall invece del player. (L'evento `paywall_viewed`
+  // lo emette l'onMount di /pro: mai duplicarlo qui — review finding #1.)
   function openTlr(): void {
     if (!can('path_full', entitlementStore.tier)) {
-      void track('paywall_viewed');
       void goto('/pro');
       return;
     }
@@ -99,7 +99,9 @@
         body: t('notte.rientro'),
       });
       scheduled = at;
-      void track('wbtb_fired');
+      // Semantica onesta (review #5): l'evento conta la PROGRAMMAZIONE,
+      // non lo scocciare — chi cancella prima non deve gonfiare la metrica.
+      void track('wbtb_scheduled');
       showToast(
         t('notte.wbtb_programmato', undefined, {
           time: sleep.wbtbTime,

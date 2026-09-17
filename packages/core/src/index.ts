@@ -4,7 +4,7 @@
 export { CORE_VERSION } from './version.js';
 
 // Entitlements (ticket S8-1)
-export { can, FEATURE_MATRIX, RC_DAILY_LIMIT } from './entitlements.js';
+export { can, FEATURE_MATRIX, PATH_FREE_DAYS, RC_DAILY_LIMIT } from './entitlements.js';
 export type { Tier, Feature } from './entitlements.js';
 
 // Privacy

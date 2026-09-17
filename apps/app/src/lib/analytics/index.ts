@@ -19,7 +19,7 @@ export type AnalyticsEvent =
   | 'app_opened'
   | 'dream_saved'
   | 'lesson_completed'
-  | 'wbtb_fired'
+  | 'wbtb_scheduled'
   | 'wbtb_dismissed'
   | 'rc_answered'
   | 'paywall_viewed'
@@ -27,8 +27,11 @@ export type AnalyticsEvent =
   | 'onboarding_completed'
   | 'export_used';
 
-/** Props permesse: primitive, nessun testo libero. */
-export type AnalyticsProps = Record<string, string | number | boolean>;
+/** Stringhe CHIUSE ammesse nelle props (nessun testo libero: review S8). */
+export type AnalyticsPropString = 'monthly' | 'yearly';
+
+/** Props permesse: numeri, booleani e le sole stringhe chiuse sopra. */
+export type AnalyticsProps = Record<string, number | boolean | AnalyticsPropString>;
 
 const STORAGE_KEY = 'lucidme:analytics:enabled';
 
@@ -59,9 +62,10 @@ function readEnabled(): boolean {
   }
 }
 
-// Stato del modulo: cache del flag + init posthog una sola volta.
+// Stato del modulo: cache del flag + init posthog una sola volta (la promise
+// memorizzata evita che due track() concorrenti eseguano entrambi init).
 let enabled = readEnabled();
-let initialized = false;
+let initPromise: Promise<void> | null = null;
 
 export function isAnalyticsEnabled(): boolean {
   return enabled;
@@ -90,16 +94,21 @@ export async function track(event: AnalyticsEvent, props?: AnalyticsProps): Prom
   const env = readEnv();
   if (!env.PUBLIC_POSTHOG_KEY) return;
   try {
-    const { default: posthog } = await import('posthog-js');
-    if (!initialized) {
-      posthog.init(env.PUBLIC_POSTHOG_KEY, {
-        api_host: env.PUBLIC_POSTHOG_HOST ?? 'https://eu.i.posthog.com',
+    const key = env.PUBLIC_POSTHOG_KEY;
+    const host = env.PUBLIC_POSTHOG_HOST;
+    // Init una volta sola: la promise è condivisa, i track() concorrenti
+    // aspettano la stessa inizializzazione (nessun doppio init).
+    initPromise ??= (async () => {
+      const { default: posthog } = await import('posthog-js');
+      posthog.init(key, {
+        api_host: host ?? 'https://eu.i.posthog.com',
         autocapture: false,
         capture_pageview: false,
         disable_session_recording: true,
       });
-      initialized = true;
-    }
+    })();
+    await initPromise;
+    const { default: posthog } = await import('posthog-js');
     posthog.capture(event, props);
   } catch {
     // silenzioso: l'analytics non deve mai impattare l'UX.

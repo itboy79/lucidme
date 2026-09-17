@@ -43,6 +43,13 @@ export const FEATURE_MATRIX: Readonly<Record<Feature, Readonly<Record<Tier, bool
 /** Reality check al giorno per tier (engine RC, ticket S8-1). */
 export const RC_DAILY_LIMIT: Readonly<Record<Tier, number>> = { free: 4, pro: 8 };
 
+/**
+ * Giorni del Sentiero accessibili al tier free: i giorni 1–PATH_FREE_DAYS
+ * sono free, oltre è Pro (`path_full`). Fonte unica per il gating in UI
+ * (evita magic number duplicati — review finding #11).
+ */
+export const PATH_FREE_DAYS = 7;
+
 /** Il tier può usare la feature? Puro lookup nella matrice. */
 export function can(feature: Feature, tier: Tier): boolean {
   return FEATURE_MATRIX[feature][tier];

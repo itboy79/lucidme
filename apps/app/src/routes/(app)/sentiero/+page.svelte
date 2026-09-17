@@ -16,7 +16,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { t, Panel, Button } from '@lucidme/ui';
-  import { can } from '@lucidme/core';
+  import { can, PATH_FREE_DAYS } from '@lucidme/core';
   import { getDb, PathRepo, type PathProgress, PATH_MAX_DAY } from '@lucidme/db';
   import { PHASE_LABEL, type Lesson, type Phase } from '@lucidme/content';
   import { goto } from '$app/navigation';
@@ -95,9 +95,9 @@
   function onNodeClick(day: number): void {
     const st = nodeState(day);
     if (st === 'locked') return; // futuro: non apribile
-    // Gating S8-1: anche il tap sul nodo "oggi" ≥ 8 passa dal paywall.
-    if (day > 7 && !can('path_full', entitlementStore.tier)) {
-      void track('paywall_viewed');
+    // Gating S8-1: anche il tap sul nodo "oggi" oltre il limite free passa
+    // dal paywall.
+    if (day > PATH_FREE_DAYS && !can('path_full', entitlementStore.tier)) {
       void goto('/pro');
       return;
     }
@@ -108,12 +108,12 @@
     activeLesson = lesson;
   }
 
-  // Gating S8-1: i giorni 8–21 sono Pro (`path_full`). Il paywall si apre
-  // SOLO dal tap sul CTA di oggi (mai interstitial automatico).
+  // Gating S8-1: i giorni oltre PATH_FREE_DAYS sono Pro (`path_full`). Il
+  // paywall si apre SOLO dal tap sul CTA di oggi (mai interstitial automatico).
+  // `paywall_viewed` lo emette l'onMount di /pro (niente doppio conteggio).
   function onStart(): void {
     if (!todayLesson) return;
-    if (currentDay > 7 && !can('path_full', entitlementStore.tier)) {
-      void track('paywall_viewed');
+    if (currentDay > PATH_FREE_DAYS && !can('path_full', entitlementStore.tier)) {
       void goto('/pro');
       return;
     }

@@ -26,6 +26,8 @@ class EntitlementStore {
   isPro = $derived(this.tier === 'pro');
 
   #loading: Promise<void> | null = null;
+  /** True dopo un setTier: una lettura in-flight non deve sovrascriverlo. */
+  #dirty = false;
 
   /** Carica il tier dal DB una sola volta (idempotente). */
   async ensureLoaded(): Promise<void> {
@@ -34,7 +36,9 @@ class EntitlementStore {
       try {
         const { settingsRepo } = await getDbClient();
         const stored = await settingsRepo.get<Tier>(TIER_KEY);
-        if (isTier(stored)) this.tier = stored;
+        // Race guard (review finding #4): se un setTier è arrivato mentre la
+        // lettura era in-flight, la lettura stale NON deve tornare a free.
+        if (!this.#dirty && isTier(stored)) this.tier = stored;
       } catch {
         // DB non disponibile (es. fallback in memoria): tier free, silenzioso.
       } finally {
@@ -46,7 +50,10 @@ class EntitlementStore {
 
   /** Aggiorna e persiste il tier (chiamato dal provider billing). */
   async setTier(tier: Tier): Promise<void> {
+    this.#dirty = true;
     this.tier = tier;
+    this.loaded = true;
+    this.#loading ??= Promise.resolve();
     try {
       const { settingsRepo } = await getDbClient();
       await settingsRepo.set(TIER_KEY, tier);

@@ -192,7 +192,7 @@
 
 <section
   class="onb"
-  aria-label="Onboarding"
+  aria-label={t('onboarding.aria_root')}
   ontouchstart={onTouchStart}
   ontouchend={onTouchEnd}
 >
@@ -273,7 +273,7 @@
   {/if}
 
   <!-- Indicatore a 4 punti -->
-  <div class="dots" role="tablist" aria-label="Avanzamento onboarding">
+  <div class="dots" role="tablist" aria-label={t('onboarding.aria_dots')}>
     {#each Array(TOTAL) as _, i (i)}
       <button
         type="button"
@@ -281,7 +281,7 @@
         class="dot"
         class:on={step === i}
         aria-selected={step === i}
-        aria-label={`Schermata ${i + 1} di ${TOTAL}`}
+        aria-label={t('onboarding.aria_slide', undefined, { n: i + 1, total: TOTAL })}
         disabled={i > furthest}
         onclick={() => go(i)}
       ></button>

@@ -68,16 +68,42 @@ export async function joinWaitlist(email: string): Promise<'sent' | 'queued'> {
   }
 
   try {
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: clean }), // SOLO l'email
-    });
-    if (!res.ok) throw new Error(`status ${res.status}`);
+    const res = await postQueue(endpoint, [...readQueue().map((e) => e.email), clean]);
+    void res; // postQueue lancia se non ok
     writeQueue([]); // svuota eventuali code precedenti dopo un invio riuscito
     return 'sent';
   } catch {
     enqueue(clean);
     return 'queued';
   }
+}
+
+/**
+ * Svuota la coda locale al load della pagina (review finding #2): il form è
+ * one-shot, quindi senza questo flush le email accodate quando l'endpoint
+ * non era ancora configurato resterebbero perse per sempre. No-op senza
+ * endpoint o con coda vuota; silenziosa su errore (riproverà al load dopo).
+ */
+export async function flushQueue(): Promise<void> {
+  const endpoint = import.meta.env.PUBLIC_WAITLIST_ENDPOINT;
+  if (!endpoint) return;
+  const queue = readQueue();
+  if (queue.length === 0) return;
+  try {
+    await postQueue(endpoint, queue.map((e) => e.email));
+    writeQueue([]);
+  } catch {
+    // coda intatta: riprova al prossimo load.
+  }
+}
+
+/** POST dell'array di email; lancia se la risposta non è ok. */
+async function postQueue(endpoint: string, emails: string[]): Promise<Response> {
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(emails), // SOLO le email
+  });
+  if (!res.ok) throw new Error(`status ${res.status}`);
+  return res;
 }

@@ -23,30 +23,47 @@
 
   onMount(() => {
     void entitlementStore.ensureLoaded();
-    // Il paywall conta come "visto" quando viene aperto da un trigger.
+    // Unico emettitore di `paywall_viewed`: i trigger delle feature fanno
+    // solo goto('/pro') — niente doppio conteggio (review finding #1).
     void track('paywall_viewed');
   });
 
+  // Guard anti doppio tap: con il provider reale (RevenueCat) un secondo tap
+  // durante l'acquisto non deve aprire due flussi (review finding #10).
+  let busy = $state(false);
+
   async function onPurchase(plan: Plan): Promise<void> {
-    const res = await billing.purchase(plan);
-    if (res.ok) {
-      // Stub: mai ok. Con il provider reale: aggiorna il tier e torna.
-      await entitlementStore.setTier(res.tier);
-      void track('purchase_completed', { plan });
-      void goto('/giardino');
-      return;
+    if (busy) return;
+    busy = true;
+    try {
+      const res = await billing.purchase(plan);
+      if (res.ok) {
+        // Stub: mai ok. Con il provider reale: aggiorna il tier e torna.
+        await entitlementStore.setTier(res.tier);
+        void track('purchase_completed', { plan });
+        void goto('/giardino');
+        return;
+      }
+      showToast(t('pro.non_disponibile'));
+    } finally {
+      busy = false;
     }
-    showToast(t('pro.non_disponibile'));
   }
 
   async function onRestore(): Promise<void> {
-    const res = await billing.restore();
-    if (res.ok) {
-      await entitlementStore.setTier(res.tier);
-      void goto('/giardino');
-      return;
+    if (busy) return;
+    busy = true;
+    try {
+      const res = await billing.restore();
+      if (res.ok) {
+        await entitlementStore.setTier(res.tier);
+        void goto('/giardino');
+        return;
+      }
+      showToast(t('pro.non_disponibile'));
+    } finally {
+      busy = false;
     }
-    showToast(t('pro.non_disponibile'));
   }
 </script>
 
@@ -63,7 +80,7 @@
     <div class="plan-name">{t('pro.piano_anno')}</div>
     <div class="plan-price">{t('pro.piano_anno_prezzo')}</div>
     <div class="plan-trial">{t('pro.piano_trial')}</div>
-    <Button variant="primary" onclick={() => onPurchase('yearly')}>
+    <Button variant="primary" disabled={busy} onclick={() => onPurchase('yearly')}>
       {t('pro.cta_anno')}
     </Button>
   </Panel>
@@ -72,7 +89,7 @@
     <div class="plan-name">{t('pro.piano_mese')}</div>
     <div class="plan-price">{t('pro.piano_mese_prezzo')}</div>
     <div class="plan-trial">&nbsp;</div>
-    <Button variant="ghost" onclick={() => onPurchase('monthly')}>
+    <Button variant="ghost" disabled={busy} onclick={() => onPurchase('monthly')}>
       {t('pro.cta_mese')}
     </Button>
   </Panel>
@@ -86,7 +103,7 @@
   <li>{t('pro.f4')}</li>
 </ul>
 
-<button class="restore" type="button" onclick={onRestore}>
+<button class="restore" type="button" disabled={busy} onclick={onRestore}>
   {t('pro.ripristina')}
 </button>
 

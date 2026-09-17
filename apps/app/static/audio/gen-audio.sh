@@ -2,11 +2,12 @@
 # gen-audio.sh — suonerie e cue TLR PLACEHOLDER, sintetizzate con ffmpeg.
 #
 # Sostituibili 1:1 con l'audio di produzione (PM/design): bastano file con lo
-# stesso nome in apps/app/public/audio/. Specifiche di riferimento (wiki 09 §3):
-# suonerie 10-15s loopabili, volume gentile (mai spaventare al risveglio);
-# cue TLR ~2s distinguibile ma morbido; intro TLR 3 min di tono calmo.
+# stesso nome in apps/app/static/audio/ (SvelteKit serve static/, NON public/).
+# Specifiche di riferimento (wiki 09 §3): suonerie 10-15s loopabili, volume
+# gentile (mai spaventare al risveglio); cue TLR ~2s distinguibile ma morbido;
+# intro TLR 3 min di tono calmo.
 #
-# Richiede: ffmpeg. Uso: bash apps/app/public/audio/gen-audio.sh
+# Richiede: ffmpeg. Uso: bash apps/app/static/audio/gen-audio.sh
 set -euo pipefail
 cd "$(dirname "$0")"
 
