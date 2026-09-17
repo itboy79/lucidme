@@ -1,0 +1,459 @@
+/* landing.css — struttura e stile della landing "Lucid Me".
+ *
+ * Stile "Organico Generativo": dark #0a0a14 (--lm-bg1), gradient notturno
+ * sull'hero, Fraunces (serif) per i titoli con UNA parola in <em> viola,
+ * Outfit per il body. Card blob come i Panel dell'app (breathe 7s).
+ * Mobile-first; contrasti testo ≥ 4.5:1 su --lm-bg1
+ * (--lm-ink 13:1, --lm-ink-dim 5.8:1, --lm-violet 8.5:1).
+ */
+
+/* ---- Base ---- */
+html {
+  scroll-behavior: smooth;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--lm-bg1);
+  color: var(--lm-ink);
+  font-family: var(--lm-font-sans);
+  font-weight: 300;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+::selection {
+  background: rgba(182, 156, 255, 0.35);
+}
+
+/* Focus visibile ovunque (tastiera). */
+:focus-visible {
+  outline: 2px solid var(--lm-cyan);
+  outline-offset: 3px;
+}
+
+/* Skip link (accessibilità tastiera). */
+.skip-link {
+  position: fixed;
+  top: -60px;
+  left: 16px;
+  z-index: 10;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--lm-bg2);
+  color: var(--lm-ink);
+  font-family: var(--lm-font-sans);
+  font-size: 14px;
+  text-decoration: none;
+  transition: top 0.2s var(--lm-ease);
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* ---- Tipografia condivisa ---- */
+h1,
+h2,
+h3 {
+  font-family: var(--lm-font-serif);
+  font-weight: 340;
+  line-height: 1.12;
+  color: var(--lm-ink);
+  margin: 0;
+}
+/* La parola chiave di ogni titolo: corsivo viola (come nell'app). */
+h1 em,
+h2 em {
+  font-style: italic;
+  color: var(--lm-violet);
+}
+.eyebrow {
+  font-family: var(--lm-font-sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--lm-ink-dim);
+  margin: 0 0 14px;
+}
+.lead {
+  color: var(--lm-ink-dim);
+  max-width: 62ch;
+  margin: 14px 0 0;
+  font-size: 1.05rem;
+}
+
+/* ---- Sezioni ---- */
+.section {
+  position: relative;
+  padding: clamp(72px, 12vh, 128px) 24px;
+  border-top: 1px solid rgba(139, 136, 166, 0.12);
+}
+.section h2 {
+  font-size: clamp(1.8rem, 4.5vw, 2.9rem);
+}
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+.container-narrow {
+  max-width: 640px;
+}
+
+/* ---- 1. Hero ---- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  /* Gradient notturno come lo stage dell'app (radial dall'alto). */
+  background: radial-gradient(
+    120% 90% at 50% -10%,
+    var(--lm-bg2) 0%,
+    var(--lm-bg1) 45%,
+    var(--lm-bg0) 100%
+  );
+  padding: 0 24px;
+}
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* Velo: protegge il contrasto del testo e fonde il canvas nel fondo pagina. */
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(7, 7, 15, 0.35),
+    transparent 32%,
+    transparent 58%,
+    var(--lm-bg1) 97%
+  );
+}
+.hero-content {
+  position: relative;
+  text-align: center;
+  max-width: 680px;
+  padding-bottom: clamp(72px, 14vh, 140px);
+}
+.hero-content h1 {
+  font-size: clamp(2.5rem, 6vw + 1rem, 4.4rem);
+  letter-spacing: 0.005em;
+}
+.hero-sub {
+  color: var(--lm-ink-dim);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  margin: 18px auto 0;
+  max-width: 46ch;
+}
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin: 30px 0 0;
+}
+
+/* ---- Bottoni (pill, come l'app) ---- */
+.btn {
+  display: inline-block;
+  font-family: var(--lm-font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-align: center;
+  padding: 15px 32px;
+  border-radius: var(--lm-radius-pill);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--lm-ease),
+    box-shadow 0.3s var(--lm-ease),
+    border-color 0.3s var(--lm-ease);
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn-primary {
+  background: var(--lm-cyan);
+  color: #06110f;
+}
+.btn-primary:hover {
+  box-shadow: 0 0 24px rgba(127, 231, 220, 0.35);
+}
+.btn-ghost {
+  background: transparent;
+  border-color: rgba(139, 136, 166, 0.4);
+  color: var(--lm-ink);
+}
+.btn-ghost:hover {
+  border-color: var(--lm-violet);
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ---- 2. Come funziona: card blob (come Panel.svelte dell'app) ---- */
+.cards {
+  display: grid;
+  gap: 20px;
+  margin-top: 36px;
+}
+@media (min-width: 880px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.card {
+  background: linear-gradient(
+    145deg,
+    rgba(182, 156, 255, 0.1),
+    rgba(127, 231, 220, 0.05)
+  );
+  border: 1px solid rgba(182, 156, 255, 0.16);
+  border-radius: var(--lm-blob-b1);
+  padding: 28px 26px;
+  animation: breathe var(--lm-keyframe-breathe) ease-in-out infinite;
+}
+.card.b2 {
+  border-radius: var(--lm-blob-b2);
+  animation-delay: var(--lm-blob-delay-b2);
+}
+.card.b3 {
+  border-radius: var(--lm-blob-b3);
+  animation-delay: var(--lm-blob-delay-b3);
+}
+.card h3 {
+  font-size: 1.45rem;
+  margin: 0 0 10px;
+}
+.card p {
+  margin: 0;
+  color: var(--lm-ink-dim);
+}
+/* `breathe` identico al Panel dell'app. */
+@keyframes breathe {
+  0%,
+  100% {
+    border-radius: var(--lm-blob-b1);
+  }
+  50% {
+    border-radius: 45% 55% 47% 53% / 56% 44% 57% 43%;
+  }
+}
+
+/* ---- 3. Privacy: elenco puntato a stella ---- */
+.points {
+  list-style: none;
+  margin: 30px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.points li {
+  position: relative;
+  padding-left: 30px;
+  color: var(--lm-ink-dim);
+}
+.points li::before {
+  content: '✶';
+  position: absolute;
+  left: 2px;
+  top: 1px;
+  color: var(--lm-violet);
+}
+.points strong {
+  color: var(--lm-ink);
+  font-weight: 500;
+}
+
+/* ---- 4. Evidenza ---- */
+.evidence {
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 26px;
+  counter-reset: evidenza;
+}
+@media (min-width: 880px) {
+  .evidence {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.evidence li {
+  counter-increment: evidenza;
+  border-top: 1px solid rgba(139, 136, 166, 0.25);
+  padding-top: 18px;
+}
+.evidence li::before {
+  content: counter(evidenza, decimal-leading-zero);
+  display: block;
+  font-family: var(--lm-font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--lm-violet);
+  margin-bottom: 10px;
+}
+.evidence h3 {
+  font-size: 1.3rem;
+  margin: 0 0 8px;
+}
+.evidence p {
+  margin: 0;
+  color: var(--lm-ink-dim);
+  font-size: 0.98rem;
+}
+.evidence cite {
+  font-style: italic;
+  color: var(--lm-ink);
+}
+.footnote {
+  margin: 36px 0 0;
+  color: var(--lm-ink-dim);
+  font-size: 0.85rem;
+  max-width: 70ch;
+}
+
+/* ---- 5. Waitlist ---- */
+.section-waitlist {
+  background:
+    radial-gradient(90% 70% at 50% 30%, rgba(182, 156, 255, 0.07), transparent 70%),
+    var(--lm-bg1);
+}
+.section-waitlist .lead {
+  margin-bottom: 30px;
+}
+.field-label {
+  display: block;
+  font-family: var(--lm-font-sans);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lm-ink-dim);
+  margin: 0 0 12px;
+}
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media (min-width: 560px) {
+  .form-row {
+    flex-direction: row;
+  }
+  .form-row input {
+    flex: 1;
+  }
+  .form-row .btn {
+    white-space: nowrap;
+  }
+}
+.form-row input {
+  background: rgba(20, 20, 48, 0.4);
+  border: 1px solid rgba(139, 136, 166, 0.3);
+  border-radius: 18px;
+  padding: 15px 18px;
+  color: var(--lm-ink);
+  font-family: var(--lm-font-sans);
+  font-size: 16px; /* ≥16px: evita lo zoom automatico su iOS. */
+  outline: none;
+  transition: border-color 0.3s var(--lm-ease);
+}
+.form-row input::placeholder {
+  color: var(--lm-ink-dim);
+  opacity: 0.7;
+}
+.form-row input:focus {
+  border-color: rgba(127, 231, 220, 0.6);
+}
+.form-row input[aria-invalid='true'] {
+  border-color: rgba(255, 158, 198, 0.7);
+}
+.hint {
+  margin: 14px 0 0;
+  font-size: 0.85rem;
+  color: var(--lm-ink-dim);
+}
+.form-error {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  color: var(--lm-rose);
+}
+.waitlist-success {
+  padding: 26px 4px 6px;
+}
+.waitlist-success p {
+  font-family: var(--lm-font-serif);
+  font-weight: 340;
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  line-height: 1.3;
+  margin: 0;
+}
+.waitlist-success span {
+  color: var(--lm-violet);
+  padding: 0 0.2em;
+}
+
+/* ---- 6. Footer ---- */
+.footer {
+  border-top: 1px solid rgba(139, 136, 166, 0.12);
+  padding: 34px 24px;
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px 28px;
+}
+.footer-nav {
+  display: flex;
+  gap: 22px;
+}
+.footer-nav a,
+.footer-note,
+.footer-copy {
+  color: var(--lm-ink-dim);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.footer-nav a:hover {
+  color: var(--lm-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.footer-copy {
+  margin: 0;
+}
+.footer-note {
+  margin: 0;
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .card {
+    animation: none;
+  }
+  .btn,
+  .skip-link,
+  .form-row input {
+    transition: none;
+  }
+}

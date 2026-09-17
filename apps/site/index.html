@@ -1,23 +1,198 @@
 <!doctype html>
+<!-- Landing "Lucid Me" — pagina statica (S9-1 waitlist).
+     Il wordmark è isolato: gli span [data-app-name] e il <title> vengono
+     riallineati dalla costante APP_NAME in src/brand.ts (rebrand = 1 riga).
+     TODO(D-008): al rebrand aggiornare anche i meta OG qui sotto (i crawler
+     social non eseguono JS) quando il nome/dominio sarà definitivo. -->
 <html lang="it">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lucid Me — diario per i sogni lucidi</title>
+    <meta
+      name="description"
+      content="Un diario per i sogni lucidi che cresce con te: locale e privato, con tecniche basate sull'evidenza. Entra nella beta di Lucid Me."
+    />
     <meta name="theme-color" content="#0a0a14" />
-    <title>Lucid Me — coming soon</title>
-    <style>
-      :root { color-scheme: dark; }
-      html, body { margin: 0; min-height: 100%; background: #0a0a14; color: #e8e6f2; }
-      body { display: flex; align-items: center; justify-content: center;
-             font-family: 'Fraunces', Georgia, serif; text-align: center; padding: 2rem; }
-      h1 { font-weight: 340; font-size: clamp(2rem, 6vw, 3.5rem); letter-spacing: .01em; margin: 0 0 .5rem; }
-      p { color: #8b88a6; font-family: 'Outfit', system-ui, sans-serif; font-weight: 300; letter-spacing: .14em; text-transform: uppercase; font-size: .8rem; }
-    </style>
+    <meta property="og:title" content="Lucid Me — diario per i sogni lucidi" />
+    <meta
+      property="og:description"
+      content="Il diario dei sogni lucidi che cresce con te. Locale, privato, basato sull'evidenza."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Font: stessi Google Fonts dell'app (googleFontsHref in @lucidme/ui). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Outfit:wght@300..600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <main>
-      <h1>Lucid Me</h1>
-      <p>Coming soon</p>
+    <a class="skip-link" href="#main">Salta al contenuto</a>
+
+    <main id="main">
+      <!-- 1. Hero: canvas organismo generativo dietro (src/hero.ts). -->
+      <section class="hero" aria-labelledby="hero-title">
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-veil" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="eyebrow"><span data-app-name>Lucid Me</span> · Beta</p>
+          <h1 id="hero-title">Il tuo giardino <em>onirico</em></h1>
+          <p class="hero-sub">
+            Un diario per i sogni lucidi che cresce con te. Locale, privato,
+            basato sull'evidenza.
+          </p>
+          <p class="hero-cta">
+            <a class="btn btn-primary" href="#waitlist">Entra nella beta</a>
+            <a class="btn btn-ghost" href="#come">Come funziona</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. Come funziona: tre card blob (stesso linguaggio dei Panel dell'app). -->
+      <section id="come" class="section" aria-labelledby="come-title">
+        <div class="container">
+          <p class="eyebrow">Come funziona</p>
+          <h2 id="come-title">Un rituale in <em>tre gesti</em></h2>
+          <div class="cards">
+            <div class="card b1">
+              <h3>Alba</h3>
+              <p>Appena svegliə, raccogli il sogno finché è vivo.</p>
+            </div>
+            <div class="card b2">
+              <h3>Sentiero</h3>
+              <p>Un percorso di ventuno giorni di pratica, con fonti reali.</p>
+            </div>
+            <div class="card b3">
+              <h3>Giardino</h3>
+              <p>Ogni sogno piantato diventa un organismo unico.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Privacy: il differenziale. -->
+      <section class="section" aria-labelledby="privacy-title">
+        <div class="container">
+          <p class="eyebrow">Privacy</p>
+          <h2 id="privacy-title">I tuoi sogni <em>restano tuoi</em></h2>
+          <p class="lead">
+            Lucid Me nasce local-first: ciò che scrivi al risveglio è tuo,
+            prima di tutto.
+          </p>
+          <ul class="points">
+            <li>
+              <strong>Local-first.</strong> Il database vive solo sul tuo
+              dispositivo.
+            </li>
+            <li>
+              <strong>Nessun cloud di default.</strong> I tuoi sogni non
+              lasciano il telefono.
+            </li>
+            <li>
+              <strong>Export libero.</strong> JSON e Markdown, sempre gratis.
+            </li>
+            <li>
+              <strong>Statistiche anonime opt-in.</strong> Spente di default:
+              la privacy è la base, non un'opzione.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 4. Evidenza: tono sobrio, nessuna promessa di risultato. -->
+      <section class="section" aria-labelledby="evidenza-title">
+        <div class="container">
+          <p class="eyebrow">Evidenza</p>
+          <h2 id="evidenza-title">Pratica, non <em>magia</em></h2>
+          <p class="lead">
+            Nessuna promessa miracolosa: solo tecniche studiate dalla ricerca
+            sui sogni lucidi.
+          </p>
+          <ol class="evidence">
+            <li>
+              <h3>MILD e WBTB</h3>
+              <p>
+                Le tecniche di induzione descritte da Stephen LaBerge in
+                <cite>Exploring the World of Lucid Dreaming</cite> (1990).
+              </p>
+            </li>
+            <li>
+              <h3>TLR</h3>
+              <p>
+                Richiamo mirato alla lucidità, valutato in Konkoly et al.,
+                <cite>Lucid dream instruction</cite> (2024).
+              </p>
+            </li>
+            <li>
+              <h3>Reality check</h3>
+              <p>
+                Promemoria a orari pseudo-casuali per abituarti a chiederti:
+                sto sognando?
+              </p>
+            </li>
+          </ol>
+          <p class="footnote">
+            Lucid Me è uno strumento di pratica e diario: non promette
+            risultati e non è un dispositivo medico.
+          </p>
+        </div>
+      </section>
+
+      <!-- 5. Waitlist (S9-1): form gestito da src/form.ts. -->
+      <section id="waitlist" class="section section-waitlist" aria-labelledby="waitlist-title">
+        <div class="container container-narrow">
+          <p class="eyebrow">Beta</p>
+          <h2 id="waitlist-title">La beta apre <em>presto</em></h2>
+          <p class="lead">
+            Lasciaci la tua email: ti scriviamo una sola volta, quando apre.
+          </p>
+          <form id="waitlist-form" novalidate>
+            <label class="field-label" for="waitlist-email">La tua email</label>
+            <div class="form-row">
+              <input
+                id="waitlist-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                inputmode="email"
+                placeholder="nome@esempio.it"
+                maxlength="254"
+                aria-describedby="waitlist-hint"
+                required
+              />
+              <button id="waitlist-submit" class="btn btn-primary" type="submit">
+                Avvisami
+              </button>
+            </div>
+            <p id="waitlist-hint" class="hint">Solo l'email, nient'altro. Nessuna newsletter.</p>
+            <p id="waitlist-error" class="form-error" role="alert" hidden>
+              Inserisci un indirizzo email valido.
+            </p>
+          </form>
+          <div id="waitlist-success" class="waitlist-success" role="status" tabindex="-1" hidden>
+            <p>Grazie <span aria-hidden="true">✶</span> Ti scriviamo quando apre la beta.</p>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <!-- 6. Footer. -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <nav class="footer-nav" aria-label="Note legali">
+          <!-- TODO(D-008): puntare alle pagine Privacy/Termini dell'app quando il dominio sarà definitivo. -->
+          <a href="#">Privacy</a>
+          <a href="#">Termini</a>
+        </nav>
+        <p class="footer-copy">© 2026 <span data-app-name>Lucid Me</span></p>
+        <p class="footer-note">I tuoi dati restano sul tuo dispositivo.</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

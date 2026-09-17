@@ -97,6 +97,22 @@ importers:
         specifier: ^2.1.5
         version: 2.1.9(@types/node@26.1.0)(terser@5.48.0)
 
+  apps/site:
+    dependencies:
+      '@lucidme/generative':
+        specifier: workspace:*
+        version: link:../../packages/generative
+      '@lucidme/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+    devDependencies:
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vite:
+        specifier: ^5.4.0
+        version: 5.4.21(@types/node@26.1.0)(terser@5.48.0)
+
   e2e:
     devDependencies:
       '@playwright/test':

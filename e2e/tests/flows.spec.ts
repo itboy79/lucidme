@@ -120,6 +120,18 @@ test.describe('Onboarding flow', () => {
     await page.getByRole('button', { name: /^inizi[ae]$/i }).click();
     await expect(dots.nth(1)).toHaveAttribute('aria-selected', 'true');
   });
+
+  test('"Sì, attiva le notifiche" richiede il permesso e avanza comunque', async ({ page }) => {
+    await page.goto('/');
+    await expect(page).toHaveURL(/\/onboarding/);
+    await page.getByRole('button', { name: /^inizi[ae]$/i }).click();
+    await page.getByRole('button', { name: /^avanti$/i }).click();
+
+    // Slide notifiche: il tap su "Sì, attiva" invoca requestPermission (in
+    // headless risolve comunque) e NON blocca l'avanzamento (S8-2).
+    await page.getByRole('button', { name: /sì, attiva le notifiche/i }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(/primo sogno/i);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -212,6 +224,29 @@ test.describe('Impostazioni', () => {
     await expect(page.getByText(/ora-sveglia/i)).toBeVisible();
     // Toggle WBTB.
     await expect(page.getByText(/risveglio wbtb/i)).toBeVisible();
+  });
+
+  test('toggle "Statistiche anonime": default OFF, opt-in persistito (D-010)', async ({ page }) => {
+    await enterApp(page);
+    const gear = page.getByRole('button', { name: /^impostazioni$/i }).first();
+    await gear.dispatchEvent('click');
+    await expect(page).toHaveURL(/\/impostazioni/);
+
+    // La sezione analytics esiste ed è OFF di default (privacy-first).
+    await expect(page.getByText(/statistiche anonime/i)).toBeVisible();
+    const toggle = page.locator('.analytics-box input[type="checkbox"]');
+    await expect(toggle).toBeVisible();
+
+    const stored = () => page.evaluate(() => localStorage.getItem('lucidme:analytics:enabled'));
+    expect(await stored()).toBeNull();
+
+    // Opt-in: il flag viene persistito come "1".
+    await toggle.click();
+    await expect.poll(stored).toBe('1');
+
+    // Opt-out: la chiave viene rimossa.
+    await toggle.click();
+    await expect.poll(stored).toBeNull();
   });
 });
 

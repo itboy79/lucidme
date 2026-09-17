@@ -13,7 +13,7 @@
 
 | Metric | Budget | Measured | Status |
 |---|---|---|---|
-| Initial bundle (gz) | < 200 KB | **~54 KB gz** (26 chunks) | ✅ comfortable, 27% of budget |
+| Initial bundle (gz) | < 200 KB | **~49 KB gz** (2026-09-17, post Step-8) | ✅ comfortable, ~25% of budget |
 | sqlite-wasm + glue in initial | must be lazy | **lazy** (0 references in `index.html`) | ✅ verified |
 | Canvas per-frame | ≤ 8 ms | deferred (S1-4 device bench) | ⏳ not measurable here |
 | TTI on Moto G | < 2 s | ~0.9–1.4 s (estimate) | ✅ likely within budget |
@@ -162,3 +162,11 @@ These keep the initial bundle lean as features land (Step 7 sync, Step 8 paywall
 `build/_app/immutable/**`. Initial bundle = union of `modulepreload`/script paths in
 `build/index.html`. Sizes are minified-output bytes; runtime memory and parse cost
 are not captured by byte size alone.*
+
+## Update 2026-09-17 (post Step 8 + S9-2)
+
+- **Initial: ~49 KB gz** (chunk in `index.html`, misurato sul build e2e preview).
+- **posthog-js è lazy-verificato**: chunks separati (`BRk-67lr`, `D-ciJlxf`), ZERO
+  riferimenti in `index.html`; si carica solo dopo opt-in + `PUBLIC_POSTHOG_KEY`.
+- Nuovi moduli Step 8 (entitlements, billing stub, paywall, feedback) sono
+  nel budget senza regressioni (da ~54 → ~49 KB gz anche per pulizia chunk).

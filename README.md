@@ -1,16 +1,19 @@
 # Lucid Me
 
-> Coach scientifico per la pratica e il tracciamento dei sogni lucidi. Monorepo (fase: Step 0 — fondamenta).
+> Diario dei sogni lucidi — local-first, privacy-first, basato sull'evidenza.
+> PWA (SvelteKit) + shell native Capacitor. *Nome di lavoro: "Lucid Me" (D-008 pending).*
 
-Spec & roadmap in `../wiki-os/` (README, decision log, product design, piano di sviluppo, roadmap step-per-step). **Quel documento è la fonte di verità.** Questo repo è l'esecuzione.
+Spec & roadmap in `../wiki-os/` — **quella è la fonte di verità**; questo repo è l'esecuzione.
+Per "cosa manca per il lancio": [`../wiki-os/09-chiusura-progetto.md`](../wiki-os/09-chiusura-progetto.md).
 
 ## Stack
 
 - **Node 22 LTS + pnpm 9** (lockfile committato; `.tool-versions`/`.nvmrc` vincolano le versioni)
 - **Monorepo pnpm workspaces + Turborepo**
-- **UI:** SvelteKit + TypeScript, PWA via `vite-plugin-pwa`, shell native Capacitor 6
-- **Packages:** `@lucidme/core` (dominio puro), `@lucidme/db` (SQLite/repository), `@lucidme/ui` (design system), `@lucidme/generative` (motore organismi)
-- **Quality:** Vitest + Playwright + ESLint strict + Prettier + Sentry (con scrub del contenuto sogni)
+- **UI:** SvelteKit 2 + Svelte 5 (runes) + TypeScript strict, PWA via `vite-plugin-pwa`, shell native Capacitor 6
+- **Storage:** SQLite WASM (OPFS/kvvfs, fallback InMemoryDB) con FTS5 — local-first, zero cloud in v1 (D-009)
+- **Packages:** `@lucidme/core` (dominio puro + entitlements), `@lucidme/db` (migrazioni/repository/export), `@lucidme/ui` (design system "Organico Generativo" + i18n it), `@lucidme/generative` (motore organismi deterministico), `@lucidme/content` (21+2 lezioni validate)
+- **Quality:** Vitest (coverage gate) + Playwright + ESLint strict + Sentry (scrub del contenuto sogni)
 
 ## Comandi
 
@@ -18,36 +21,49 @@ Spec & roadmap in `../wiki-os/` (README, decision log, product design, piano di 
 pnpm install              # una tantum
 pnpm dev                  # avvia apps/app in dev (parallel)
 pnpm build                # build di tutti i package
-pnpm test                 # vitest su tutti
-pnpm typecheck            # tsc --noEmit ovunque
+pnpm test                 # vitest su tutti (321)
+pnpm typecheck            # tsc --noEmit / svelte-check ovunque
 pnpm lint                 # eslint
-pnpm --filter @lucidme/app preview   # preview build (lo usa Playwright)
-pnpm --filter @lucidme/e2e test      # e2e Playwright
+node scripts/check-coverage.mjs        # gate coverage (core, db)
+pnpm --filter @lucidme/app preview     # preview build (lo usa Playwright)
+cd e2e && npx playwright test          # e2e su build preview (16)
 pnpm native:sync          # build app + cap sync (richiede piattaforme aggiunte)
 ```
+
+Env: vedi `.env.example`. Chiavi pubbliche: `PUBLIC_POSTHOG_KEY` (analytics
+**opt-in, default OFF** — D-010; posthog-js lazy-loaded solo con chiave),
+`PUBLIC_BETA` + `PUBLIC_FEEDBACK_ENDPOINT` (bottone feedback beta),
+`PUBLIC_WAITLIST_ENDPOINT` (landing).
 
 ## Struttura
 
 ```
 lucidme/
 ├── apps/
-│   ├── app/        # SvelteKit PWA (core prodotto)
-│   └── site/       # landing/coming soon
+│   ├── app/        # la PWA — 5 sezioni: giardino, sentiero, alba, notte, lume
+│   └── site/       # landing marketing + waitlist beta (statica, vite vanilla)
 ├── packages/
-│   ├── core/       # dominio (entities, use-case, zero UI/DB)
-│   ├── generative/ # motore organismi (seed → render)
-│   ├── ui/         # design system (token, componenti, i18n)
-│   └── db/         # SQLite, migrazioni, repository
+│   ├── core/       # dominio puro: Dream, metriche, entitlements, privacy scrub
+│   ├── generative/ # motore organismi (PRNG deterministico → canvas/SVG)
+│   ├── ui/         # design system: token, componenti, i18n it
+│   ├── db/         # SQLite: migrazioni 001-005, repository, backup/export
+│   └── content/    # lezioni Sentiero (markdown → bundle validato vs fonti)
 ├── native/         # Capacitor 6 (config + plugin; iOS/Android generati dopo cap add)
-├── e2e/            # Playwright
-├── scripts/        # check-coverage, regen-icons
+├── e2e/            # Playwright (smoke + flows) + store-shots.mjs (screenshot store)
+├── scripts/        # check-coverage
 └── .github/        # CI workflows
 ```
 
-## Stato
+Regole architetturali: `core` non importa da UI/DB; ogni scrittura passa dal
+repository locale; **nessun contenuto di sogni** in log/analytics/crash (scrub attivo).
 
-- **Step 0:** ✅ in corso (questo commit)
-- **Step 1:** ⛔ sbloccato (D-007 = Organico Generativo)
-- Vedi `../wiki-os/roadmap/README.md` per lo stato avanzamento step.
+## Stato (2026-09-17)
+
+- Step 0–6 ✅ · bug bash UX ✅ · **Step 8 code-complete** ✅ (paywall con billing
+  stub — RevenueCat reale ~1gg dopo l'account, onboarding 4 slide + noRecall,
+  analytics opt-in) · S9-2 feedback beta ✅ · D-009 = sync post-lancio
+- **Bloccato solo su PM**: naming (D-008), account esterni (Apple/Google/
+  RevenueCat/Vercel/Sentry/PostHog), screenshot definitivi, beta, matrice sveglia
+- Stato avanzamento step: `../wiki-os/roadmap/README.md`
 
 Vedi [`CONTRIBUTING.md`](./CONTRIBUTING.md) per branch/PR/regole di ingaggio.
