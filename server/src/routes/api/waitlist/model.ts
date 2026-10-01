@@ -12,3 +12,8 @@ export const PostWaitlistResponseSchema = t.Object({
 	ok: t.Literal(true),
 	inserted: t.Integer(),
 })
+
+// GET: SOLO il conteggio (mai le email) — il PM vede la crescita da browser.
+export const GetWaitlistCountResponseSchema = t.Object({
+	count: t.Integer(),
+})
