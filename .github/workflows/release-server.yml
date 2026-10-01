@@ -1,0 +1,63 @@
+name: release-server
+
+on: workflow_dispatch
+
+permissions:
+  contents: write # crea tag e GitHub Release col binario
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        # Il tag conta i tag del giorno corrente: serve la storia dei tag.
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Build landing (waitlist → /api/waitlist)
+        run: PUBLIC_WAITLIST_ENDPOINT=/api/waitlist pnpm --filter @lucidme/site build
+
+      - name: Build app (base /app, feedback → /api/feedback)
+        run: KIT_BASE=/app PUBLIC_FEEDBACK_ENDPOINT=/api/feedback pnpm --filter @lucidme/app build
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+
+      - name: Build server binary (linux x64)
+        working-directory: server
+        run: |
+          bun install
+          bun run check:types
+          bun run build   # target default: bun-linux-x64 (nibrun)
+
+      - name: Prepare the release tag
+        id: release
+        run: |
+          TODAY="v$(date +%Y.%-m.%-d)"
+          COUNT=$(git tag -l "${TODAY}-*" | wc -l | tr -d ' ')
+          echo "tag=${TODAY}-$((COUNT + 1))" >> "$GITHUB_OUTPUT"
+
+      - name: Create the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          gh release create "$TAG" \
+            --title "$TAG" \
+            --target "$GITHUB_SHA" \
+            --generate-notes \
+            server/dist/app#app-linux-x64
