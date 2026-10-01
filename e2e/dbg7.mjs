@@ -1,0 +1,12 @@
+import { chromium } from '@playwright/test';
+const browser = await chromium.launch();
+const app = await browser.newPage({ viewport: { width: 393, height: 660 } });
+app.on('console', (m) => ['error','warning'].includes(m.type()) && console.log(`[${m.type()}]`, m.text().slice(0, 200)));
+app.on('pageerror', (e) => console.log('[pageerror]', String(e).slice(0, 250)));
+await app.goto('http://localhost:7777/app/onboarding', { waitUntil: 'domcontentloaded' });
+await app.waitForTimeout(3000);
+console.log('url:', app.url());
+console.log('body:', JSON.stringify((await app.locator('body').innerText().catch(() => 'ERR')).slice(0, 250)));
+const btns = await app.locator('button').allTextContents().catch(() => []);
+console.log('bottoni:', btns.slice(0, 8));
+await browser.close();

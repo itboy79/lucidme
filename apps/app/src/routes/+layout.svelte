@@ -6,7 +6,7 @@
 <script lang="ts">
   import '../styles/tokens.css';
   import { page } from '$app/stores';
-  import { goto } from '$lib/navigation';
+  import { goto, stripBase } from '$lib/navigation';
   import { Nav, Toast, t, googleFontsHref } from '@lucidme/ui';
   import Starfield from '$lib/components/Starfield.svelte';
   import FeedbackButton from '$lib/components/FeedbackButton.svelte';
@@ -28,12 +28,12 @@
 
   // Sezione attiva derivata dal pathname (es. "/giardino" → "giardino").
   const active = $derived.by(() => {
-    const seg = $page.url.pathname.split('/').filter(Boolean)[0] ?? 'giardino';
+    const seg = stripBase($page.url.pathname).split('/').filter(Boolean)[0] ?? 'giardino';
     return seg;
   });
 
   // True se ci troviamo sulla route di onboarding (fullscreen, senza Nav).
-  const onOnboarding = $derived($page.url.pathname === '/onboarding');
+  const onOnboarding = $derived(stripBase($page.url.pathname) === '/onboarding');
 
   function handleSelect(id: string): void {
     goto(`/${id}`);
@@ -59,7 +59,7 @@
     const completed = onboardingStore.completed;
     const isOnb = onOnboarding;
     // Le route /dev/* sono esentate (diagnostiche, utili anche pre-onboarding).
-    const isDev = $page.url.pathname.startsWith('/dev');
+    const isDev = stripBase($page.url.pathname).startsWith('/dev');
     if (!onboardingStore.loaded) return;
     if (!completed && !isOnb && !isDev) {
       void goto('/onboarding');

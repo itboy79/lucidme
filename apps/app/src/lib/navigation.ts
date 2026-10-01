@@ -20,4 +20,14 @@ export function withBase(path: string): string {
   return `${base}${path}`;
 }
 
+/**
+ * Rimuove il base da un pathname completo (es. window.location.pathname o
+ * page.url.pathname, che INCLUDONO il base). I confronti di rotta nel codice
+ * usano path "di app" nudi ('/onboarding'): senza questo strip, sotto
+ * KIT_BASE=/app non matchano MAI (bug del guard onboarding → loop di nav).
+ */
+export function stripBase(pathname: string): string {
+  return pathname === base || pathname.startsWith(`${base}/`) ? pathname.slice(base.length) || '/' : pathname;
+}
+
 export { base };
