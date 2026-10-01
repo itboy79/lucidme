@@ -11,7 +11,18 @@ import { defineConfig } from 'vite';
 // PWA sono path assoluti e vanno prefissate quando l'app vive in una sotto-cartella.
 const BASE = process.env.KIT_BASE ?? '';
 
+// PUBLIC_* baked nel bundle: SvelteKit non inlina import.meta.env.PUBLIC_*
+// da process.env (Vite puro sì) — vedi src/lib/public-env.ts.
+const baked = (name: string): string => process.env[name] ?? '';
+
+
 export default defineConfig({
+  define: {
+    __LUCID_PUBLIC_BETA__: JSON.stringify(baked('PUBLIC_BETA')),
+    __LUCID_PUBLIC_FEEDBACK_ENDPOINT__: JSON.stringify(baked('PUBLIC_FEEDBACK_ENDPOINT')),
+    __LUCID_PUBLIC_POSTHOG_KEY__: JSON.stringify(baked('PUBLIC_POSTHOG_KEY')),
+    __LUCID_PUBLIC_POSTHOG_HOST__: JSON.stringify(baked('PUBLIC_POSTHOG_HOST')),
+  },
   plugins: [
     sveltekit(),
     VitePWA({

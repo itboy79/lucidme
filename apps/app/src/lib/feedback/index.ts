@@ -20,27 +20,13 @@ export interface FeedbackEntry {
   sentAt: string;
 }
 
-interface PublicEnv {
-  PUBLIC_BETA?: string;
-  PUBLIC_FEEDBACK_ENDPOINT?: string;
-}
+import { PUBLIC_BETA, PUBLIC_FEEDBACK_ENDPOINT } from '$lib/public-env';
 
 const QUEUE_KEY = 'lucidme:feedback:queue';
 
-function readEnv(): PublicEnv {
-  const fromMeta = (import.meta as unknown as { env?: PublicEnv }).env;
-  const fromProcess =
-    typeof process !== 'undefined' ? (process as unknown as { env?: PublicEnv }).env : undefined;
-  return {
-    PUBLIC_BETA: fromMeta?.PUBLIC_BETA ?? fromProcess?.PUBLIC_BETA,
-    PUBLIC_FEEDBACK_ENDPOINT:
-      fromMeta?.PUBLIC_FEEDBACK_ENDPOINT ?? fromProcess?.PUBLIC_FEEDBACK_ENDPOINT,
-  };
-}
-
 /** True solo nelle build beta (il bottone feedback esiste solo lì). */
 export function isBetaBuild(): boolean {
-  return readEnv().PUBLIC_BETA === 'true';
+  return PUBLIC_BETA === 'true';
 }
 
 function readQueue(): FeedbackEntry[] {
@@ -75,7 +61,7 @@ export function queueSize(): number {
  */
 export async function sendFeedback(text: string): Promise<'sent' | 'queued'> {
   const entry: FeedbackEntry = { text, sentAt: new Date().toISOString() };
-  const endpoint = readEnv().PUBLIC_FEEDBACK_ENDPOINT;
+  const endpoint = PUBLIC_FEEDBACK_ENDPOINT;
   if (!endpoint) {
     writeQueue([...readQueue(), entry]);
     return 'queued';

@@ -35,23 +35,7 @@ export type AnalyticsProps = Record<string, number | boolean | AnalyticsPropStri
 
 const STORAGE_KEY = 'lucidme:analytics:enabled';
 
-/** Env pubblica tipizzata localmente (evita `any` da import.meta.env). */
-interface PublicEnv {
-  PUBLIC_POSTHOG_KEY?: string;
-  PUBLIC_POSTHOG_HOST?: string;
-}
-
-function readEnv(): PublicEnv {
-  // In build SvelteKit inlinha i PUBLIC_* in import.meta.env; nei test node
-  // (e in alcuni runtime) è process.env il canale affidabile: leggiamo entrambi.
-  const fromMeta = (import.meta as unknown as { env?: PublicEnv }).env;
-  const fromProcess =
-    typeof process !== 'undefined' ? (process as unknown as { env?: PublicEnv }).env : undefined;
-  return {
-    PUBLIC_POSTHOG_KEY: fromMeta?.PUBLIC_POSTHOG_KEY ?? fromProcess?.PUBLIC_POSTHOG_KEY,
-    PUBLIC_POSTHOG_HOST: fromMeta?.PUBLIC_POSTHOG_HOST ?? fromProcess?.PUBLIC_POSTHOG_HOST,
-  };
-}
+import { PUBLIC_POSTHOG_HOST, PUBLIC_POSTHOG_KEY } from '$lib/public-env';
 
 function readEnabled(): boolean {
   try {
@@ -91,11 +75,10 @@ export function setAnalyticsEnabled(value: boolean): void {
  */
 export async function track(event: AnalyticsEvent, props?: AnalyticsProps): Promise<void> {
   if (!enabled) return;
-  const env = readEnv();
-  if (!env.PUBLIC_POSTHOG_KEY) return;
+  if (!PUBLIC_POSTHOG_KEY) return;
   try {
-    const key = env.PUBLIC_POSTHOG_KEY;
-    const host = env.PUBLIC_POSTHOG_HOST;
+    const key = PUBLIC_POSTHOG_KEY;
+    const host = PUBLIC_POSTHOG_HOST;
     // Init una volta sola: la promise è condivisa, i track() concorrenti
     // aspettano la stessa inizializzazione (nessun doppio init).
     initPromise ??= (async () => {
