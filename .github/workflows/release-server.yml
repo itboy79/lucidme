@@ -50,6 +50,9 @@ jobs:
           COUNT=$(git tag -l "${TODAY}-*" | wc -l | tr -d ' ')
           echo "tag=${TODAY}-$((COUNT + 1))" >> "$GITHUB_OUTPUT"
 
+      - name: Rename binary for the release asset
+        run: cp server/dist/app server/dist/app-linux-x64
+
       - name: Create the GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -59,4 +62,4 @@ jobs:
             --title "$TAG" \
             --target "$GITHUB_SHA" \
             --generate-notes \
-            server/dist/app#app-linux-x64
+            server/dist/app-linux-x64
