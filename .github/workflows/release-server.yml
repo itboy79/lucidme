@@ -29,7 +29,7 @@ jobs:
       - name: Build landing (waitlist → /api/waitlist)
         run: PUBLIC_WAITLIST_ENDPOINT=/api/waitlist pnpm --filter @lucidme/site build
 
-      - name: Build app (base /app, beta aperta: feedback attivo)
+      - name: Build app (base /app, beta aperta, feedback attivo)
         run: KIT_BASE=/app PUBLIC_FEEDBACK_ENDPOINT=/api/feedback PUBLIC_BETA=true pnpm --filter @lucidme/app build
 
       - uses: oven-sh/setup-bun@v2
