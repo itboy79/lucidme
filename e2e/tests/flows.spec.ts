@@ -50,7 +50,7 @@ test.describe('Onboarding flow', () => {
     await expect(page).toHaveURL(/\/onboarding/);
 
     // Slide 1 — benvenuto.
-    await expect(page.getByRole('heading', { level: 1 })).toContainText(/Lucid Me/i);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(/Vigilia/i);
     await page.getByRole('button', { name: /^inizi[ae]$/i }).click();
 
     // Slide 2 — come funziona (3 card Alba/Sentiero/Giardino) + "Avanti".

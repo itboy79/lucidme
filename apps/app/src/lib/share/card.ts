@@ -20,7 +20,7 @@ const H = 1920;
 /**
  * Genera un PNG 1080×1920 tramite canvas offscreen.
  * Disegna: sfondo radial-gradient notte, organismo (renderFrame), lucidity rate
- * (serif grande), wordmark "Lucid Me" in basso.
+ * (serif grande), wordmark "Vigilia" in basso.
  *
  * Privacy: l'unico input testuale è `lucidityRate` (numero) — nessun testo del sogno.
  */
@@ -73,7 +73,7 @@ export async function generateShareCard(input: ShareCardInput): Promise<Blob> {
   // Wordmark in basso.
   ctx.font = '340 48px Fraunces, Georgia, serif';
   ctx.fillStyle = '#e8e6f2';
-  ctx.fillText('Lucid Me', W / 2, H * 0.93);
+  ctx.fillText('Vigilia', W / 2, H * 0.93);
 
   const blob = await canvasToBlob(canvas);
   return blob;
@@ -87,7 +87,7 @@ export async function shareCard(blob: Blob): Promise<void> {
     share?: (data: { files: File[]; title?: string; text?: string }) => Promise<void>;
   };
   if (typeof nav.share === 'function' && typeof nav.canShare === 'function' && nav.canShare({ files: [file] })) {
-    await nav.share({ files: [file], title: 'Lucid Me', text: 'Il mio lucidity rate' });
+    await nav.share({ files: [file], title: 'Vigilia', text: 'Il mio lucidity rate' });
     return;
   }
   // Fallback: download diretto.

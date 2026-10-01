@@ -125,7 +125,7 @@
 </script>
 
 <svelte:head>
-  <title>Lume — Lucid Me</title>
+  <title>Lume — Vigilia</title>
 </svelte:head>
 
 <div class="eyebrow">{t('lume.eyebrow')}</div>

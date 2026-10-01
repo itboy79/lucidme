@@ -1,4 +1,4 @@
-/* landing.css — struttura e stile della landing "Lucid Me".
+/* landing.css — struttura e stile della landing "Vigilia".
  *
  * Stile "Organico Generativo": dark #0a0a14 (--lm-bg1), gradient notturno
  * sull'hero, Fraunces (serif) per i titoli con UNA parola in <em> viola,
@@ -455,5 +455,34 @@ h2 em {
   .skip-link,
   .form-row input {
     transition: none;
+  }
+}
+
+
+/* ---- Desktop: hero pieno, tipografia che respira, card affiancate ---- */
+@media (min-width: 900px) {
+  .hero-content {
+    max-width: 820px;
+    margin-inline: auto;
+    padding-bottom: 8vh;
+  }
+  .hero-content h1 {
+    font-size: clamp(44px, 5vw, 72px);
+  }
+  .hero-sub {
+    font-size: 18px;
+    max-width: 56ch;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .points,
+  .evidence {
+    max-width: 720px;
+  }
+  .section .container {
+    max-width: 980px;
   }
 }

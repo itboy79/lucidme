@@ -2,7 +2,7 @@
   Onboarding primo avvio (S8-2) — 4 schermate fullscreen + primo sogno guidato.
 
   Slide:
-    1. Benvenuto: eyebrow + h1 "Benvenutə in *Lucid Me*" + value prop + CTA "Inizia".
+    1. Benvenuto: eyebrow + h1 "Benvenutə in *Vigilia*" + value prop + CTA "Inizia".
     2. Come funziona: 3 mini-card (Alba / Sentiero / Giardino) in Panel blob + "Avanti".
     3. Notifiche (pre-prompt S8-2): spiegazione valore + "Sì, attiva" che richiede
        il permesso SOLO al tap; "Non ora" avanza senza toccare l'API Notification
@@ -416,6 +416,16 @@
   .dot:disabled {
     cursor: default;
     opacity: 0.5;
+  }
+
+  @media (min-width: 900px) {
+    .onb {
+      max-width: 640px;
+      margin-inline: auto;
+    }
+    .title {
+      font-size: clamp(38px, 3.4vw, 48px);
+    }
   }
 
   /* ---- Salta ---- */

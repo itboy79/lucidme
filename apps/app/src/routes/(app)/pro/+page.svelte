@@ -68,7 +68,7 @@
 </script>
 
 <svelte:head>
-  <title>Pro — Lucid Me</title>
+  <title>Pro — Vigilia</title>
 </svelte:head>
 
 <div class="eyebrow">{t('pro.eyebrow')}</div>

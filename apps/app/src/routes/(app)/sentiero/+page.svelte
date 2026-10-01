@@ -156,7 +156,7 @@
 </script>
 
 <svelte:head>
-  <title>Sentiero — Lucid Me</title>
+  <title>Sentiero — Vigilia</title>
 </svelte:head>
 
 <div class="eyebrow">{t('sentiero.eyebrow_giorno', undefined, { n: currentDay })}</div>

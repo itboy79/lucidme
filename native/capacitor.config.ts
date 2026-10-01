@@ -2,13 +2,13 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 /**
  * Capacitor 6 config.
- * - appId PROVVISORIO `me.lucid.app.dev` → bloccato da D-008 (naming definitivo).
+ * - appId PROVVISORIO `me.vigilia.app.dev` → bloccato da D-008 (naming definitivo).
  *   NON scegliere un altro appId in autonomia (regola roadmap/README.md).
  * - webDir punta al build statico di apps/app (adapter-static → apps/app/build).
  * - androidScheme https per quei plugin che lo richiedono.
  */
 const config: CapacitorConfig = {
-  appId: 'me.lucid.app.dev',
+  appId: 'me.vigilia.app.dev',
   appName: 'Lucid Me',
   webDir: '../apps/app/build',
   server: {

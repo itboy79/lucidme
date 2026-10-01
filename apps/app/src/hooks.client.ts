@@ -56,7 +56,7 @@ export const handleError: HandleClientError = async ({ error, event }) => {
       extra: { route_id: event.route?.id ?? 'unknown' },
     });
   }
-  console.error('[Lucid Me] client error:', error);
+  console.error('[Vigilia] client error:', error);
   return {
     message: 'Qualcosa è andato storto. Il tuo diario è salvo — nessun dato è stato perso.',
   };

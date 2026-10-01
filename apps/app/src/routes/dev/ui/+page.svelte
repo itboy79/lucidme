@@ -50,7 +50,7 @@
 </script>
 
 <svelte:head>
-  <title>Lucid Me · dev/ui catalog</title>
+  <title>Vigilia · dev/ui catalog</title>
 </svelte:head>
 
 <div class="catalog">

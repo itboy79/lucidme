@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Lucid Me — landing marketing + waitlist beta (statica, Vite vanilla TS).",
+  "description": "Vigilia — landing marketing + waitlist beta (statica, Vite vanilla TS).",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

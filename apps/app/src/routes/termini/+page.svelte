@@ -21,9 +21,9 @@
   const sezioni = [
     {
       id: 'cosa',
-      titolo: 'Cos\'è Lucid Me',
+      titolo: 'Cos\'è Vigilia',
       corpo: [
-        'Lucid Me è un diario onirico e uno strumento per la pratica dei sogni lucidi. Ti aiuta a registrare i sogni, a seguire un percorso di tecniche (ricordo, reality check, MILD, WBTB, SSILD, TLR) e a osservare i tuoi progressi nel tempo.',
+        'Vigilia è un diario onirico e uno strumento per la pratica dei sogni lucidi. Ti aiuta a registrare i sogni, a seguire un percorso di tecniche (ricordo, reality check, MILD, WBTB, SSILD, TLR) e a osservare i tuoi progressi nel tempo.',
         'È uno strumento personale di pratica e auto-osservazione. Non è una terapia, non è un trattamento medico e non sostituisce in alcun modo il parere di un professionista della salute.',
       ],
     },
@@ -31,7 +31,7 @@
       id: 'cosi-com-e',
       titolo: 'Il servizio "così com\'è"',
       corpo: [
-        'Lucid Me è offerto "così com\'è", senza garanzie esplicite o implicite. Facciamo del nostro meglio perché sia affidabile e utile, ma non garantiamo che sia privo di errori o adatto a ogni scopo.',
+        'Vigilia è offerto "così com\'è", senza garanzie esplicite o implicite. Facciamo del nostro meglio perché sia affidabile e utile, ma non garantiamo che sia privo di errori o adatto a ogni scopo.',
       ],
     },
     {
@@ -46,7 +46,7 @@
       id: 'responsabilita',
       titolo: 'I tuoi dati sono responsabilità tua',
       corpo: [
-        'Lucid Me è local-first: i tuoi sogni vivono sul tuo dispositivo. Questo ti dà pieno controllo, ma significa anche che la responsabilità del backup è tua.',
+        'Vigilia è local-first: i tuoi sogni vivono sul tuo dispositivo. Questo ti dà pieno controllo, ma significa anche che la responsabilità del backup è tua.',
         'Ti consigliamo di esportare periodicamente i tuoi dati (JSON o Markdown, disponibili anche nel piano gratuito). Non siamo responsabili della perdita di dati causata da malfunzionamenti del dispositivo, reset o disinstallazione dell\'app senza backup.',
       ],
     },
@@ -54,7 +54,7 @@
       id: 'salute',
       titolo: 'Salute e benessere',
       corpo: [
-        'Lucid Me parla di pratica onirica e di sonno, ma non fornisce consigli medici. Se hai disturbi del sonno, condizioni di salute o stai attraversando un momento difficile, rivolgenditi a un professionista qualificato.',
+        'Vigilia parla di pratica onirica e di sonno, ma non fornisce consigli medici. Se hai disturbi del sonno, condizioni di salute o stai attraversando un momento difficile, rivolgenditi a un professionista qualificato.',
         'Il nostro linguaggio usa "pratica" e "diario", mai "terapia" o "trattamento".',
       ],
     },
@@ -69,7 +69,7 @@
       id: 'modifiche',
       titolo: 'Modifiche dei termini',
       corpo: [
-        'Possiamo aggiornare questi termini nel tempo. Ogni modifica significativa sarà comunicata con preavviso, direttamente in app o tramite i canali ufficiale. Continuando a usare Lucid Me dopo le modifiche accetti la versione aggiornata.',
+        'Possiamo aggiornare questi termini nel tempo. Ogni modifica significativa sarà comunicata con preavviso, direttamente in app o tramite i canali ufficiale. Continuando a usare Vigilia dopo le modifiche accetti la versione aggiornata.',
       ],
     },
     {
@@ -81,10 +81,10 @@
 </script>
 
 <svelte:head>
-  <title>Lucid Me · Termini</title>
+  <title>Vigilia · Termini</title>
   <meta
     name="description"
-    content="Termini di servizio di Lucid Me: diario onirico e strumento di pratica, offerto così com'è, nessuna garanzia di risultati."
+    content="Termini di servizio di Vigilia: diario onirico e strumento di pratica, offerto così com'è, nessuna garanzia di risultati."
   />
 </svelte:head>
 

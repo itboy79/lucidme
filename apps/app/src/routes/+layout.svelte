@@ -91,7 +91,9 @@
 
   <!-- Schermo attivo: transizione opacity fade tra route. -->
   <main class="screen active">
-    {@render children?.()}
+    <div class="page-col">
+      {@render children?.()}
+    </div>
   </main>
 
   {#if !onOnboarding}
@@ -120,6 +122,26 @@
   }
   .screen::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Desktop: colonna leggibile al centro, tipografia che respira. Il mobile
+     resta identico (mobile-first). Le pagine possono allargarsi overriding
+     max-width nel loro blocco @media (es. giardino 1100px). */
+  @media (min-width: 900px) {
+    .screen {
+      padding: 64px clamp(32px, 7vw, 120px) 170px;
+    }
+    .page-col {
+      max-width: 780px;
+      margin-inline: auto;
+      width: 100%;
+    }
+    .screen :global(h1) {
+      font-size: clamp(36px, 3vw, 46px);
+    }
+    .screen :global(h2) {
+      font-size: clamp(24px, 2vw, 30px);
+    }
   }
   @keyframes fadeIn {
     from {

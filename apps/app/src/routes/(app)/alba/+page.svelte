@@ -280,14 +280,18 @@
 </script>
 
 <svelte:head>
-  <title>Alba — Lucid Me</title>
+  <title>Alba — Vigilia</title>
 </svelte:head>
 
 <div class="eyebrow">{eyebrow}</div>
 <h1>{t('alba.titolo_pre')} <em>{t('alba.titolo_em')}</em>?</h1>
 
 <div class="rec-wrap">
-  <canvas bind:this={previewCanvas} class="preview" aria-hidden="true"></canvas>
+  <!-- key sull'emozione: quando cambia, il preview pulsa (l'organismo
+       'risponde' alla scelta — feedback immediato, anti-slop). -->
+  {#key emotion}
+    <canvas bind:this={previewCanvas} class="preview" aria-hidden="true"></canvas>
+  {/key}
   {#if voiceSupported}
     <button
       class="rec-btn"
@@ -364,6 +368,24 @@
   .preview {
     width: 190px;
     height: 190px;
+    animation: previewIn 0.7s var(--lm-ease, ease-out);
+  }
+  @keyframes previewIn {
+    0% {
+      transform: scale(0.82);
+      opacity: 0.25;
+      filter: blur(4px);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .preview {
+      animation: none;
+    }
   }
   .rec-btn {
     margin-top: 2px;
@@ -453,6 +475,16 @@
     font-family: var(--lm-font-sans);
     font-size: 14px;
     font-weight: 300;
+  }
+
+  @media (min-width: 900px) {
+    .rec-wrap {
+      margin-top: 20px;
+    }
+    .preview {
+      width: 230px;
+      height: 230px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

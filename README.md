@@ -1,7 +1,7 @@
-# Lucid Me
+# Vigilia
 
 > Diario dei sogni lucidi — local-first, privacy-first, basato sull'evidenza.
-> PWA (SvelteKit) + shell native Capacitor. *Nome di lavoro: "Lucid Me" (D-008 pending).*
+> PWA (SvelteKit) + shell native Capacitor. *Nome di lavoro: "Vigilia" (D-008 pending).*
 
 Spec & roadmap in `../wiki-os/` — **quella è la fonte di verità**; questo repo è l'esecuzione.
 Per "cosa manca per il lancio": [`../wiki-os/09-chiusura-progetto.md`](../wiki-os/09-chiusura-progetto.md).

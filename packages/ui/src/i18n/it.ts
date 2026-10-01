@@ -187,7 +187,7 @@ export const it = {
   'privacy.titolo_pre': 'I tuoi sogni',
   'privacy.titolo_em': 'restano tuoi',
   'privacy.corpo':
-    'Lucid Me è local-first: ogni sogno vive solo sul tuo dispositivo. Niente cloud, niente account, niente analisi remota. Puoi esportare e cancellare quando vuoi.',
+    'Vigilia è local-first: ogni sogno vive solo sul tuo dispositivo. Niente cloud, niente account, niente analisi remota. Puoi esportare e cancellare quando vuoi.',
 
   // ---- Notte — Step 4 (S4-1..S4-4) ----
   'notte.sub_vuoto': 'La luce si abbassa. Tre gesti prima di attraversare.',
@@ -245,7 +245,7 @@ export const it = {
     'Ci aiuti a capire come viene usata l\u2019app. Mai contenuti dei sogni, mai dati personali. Attivo solo con il tuo consenso.',
 
   // ---- Pro / paywall (S8-1) ----
-  'pro.eyebrow': 'Lucid Me Pro',
+  'pro.eyebrow': 'Vigilia Pro',
   'pro.titolo_pre': 'Il diario resta',
   'pro.titolo_em': 'sempre libero',
   'pro.sub':
@@ -286,9 +286,9 @@ export const it = {
 
   // ---- Onboarding primo avvio (S8-2) ----
   // Slide 1 — benvenuto + promessa di valore.
-  'onboarding.slide1_eyebrow': 'Lucid Me',
+  'onboarding.slide1_eyebrow': 'Vigilia',
   'onboarding.slide1_titolo_pre': 'Benvenutə in',
-  'onboarding.slide1_titolo_em': 'Lucid Me',
+  'onboarding.slide1_titolo_em': 'Vigilia',
   'onboarding.slide1_sub':
     'Un diario per i tuoi sogni e una pratica del sognare lucido. Ogni sogno che scrivi diventa un organismo nel tuo giardino.',
   'onboarding.inizia': 'Inizia',

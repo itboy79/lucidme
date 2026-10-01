@@ -5,7 +5,7 @@
  * questo modulo li riallinea alla costante. Il rebrand è 1 riga: cambiare
  * APP_NAME (più i meta OG statici in index.html, vedi TODO(D-008) lì).
  */
-export const APP_NAME = 'Lucid Me';
+export const APP_NAME = 'Vigilia';
 
 /** Titolo del documento, composto dal solo punto in cui il nome è definito. */
 export function pageTitle(): string {

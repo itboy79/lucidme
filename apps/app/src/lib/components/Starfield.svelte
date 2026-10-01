@@ -42,9 +42,23 @@
 
   onMount(() => {
     let starPts = initStars(canvas);
+    // Parallasse col puntatore (SOLO desktop con pointer fine): il cielo si
+    // sposta di pochi px verso il mouse — l'app risponde prima del primo tap.
+    let px = 0;
+    let py = 0;
+    let tx = 0;
+    let ty = 0;
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const onResize = () => {
       starPts = initStars(canvas);
     };
+    const onMove = (e: PointerEvent): void => {
+      const r = canvas.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 14;
+      ty = ((e.clientY - r.top) / r.height - 0.5) * 10;
+    };
+    if (finePointer && !reduced) window.addEventListener('pointermove', onMove);
     window.addEventListener('resize', onResize);
 
     const loop = (time: number) => {
@@ -55,10 +69,14 @@
       }
       const sr = canvas.getBoundingClientRect();
       sc.clearRect(0, 0, sr.width, sr.height);
+      // easing verso il target di parallasse
+      px += (tx - px) * 0.04;
+      py += (ty - py) * 0.04;
       for (const p of starPts) {
         const a = 0.15 + Math.abs(Math.sin(time * 0.0006 + p.p)) * 0.5;
+        const depth = 0.4 + p.s; // le stelle grandi si spostano un filo più
         sc.beginPath();
-        sc.arc(p.x, p.y, p.s, 0, 7);
+        sc.arc(p.x + px * depth, p.y + py * depth, p.s, 0, 7);
         sc.fillStyle = `rgba(232,230,242,${a})`;
         sc.fill();
       }
@@ -69,6 +87,7 @@
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('pointermove', onMove);
     };
   });
 </script>

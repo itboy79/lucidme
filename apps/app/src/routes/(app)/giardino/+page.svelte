@@ -110,6 +110,17 @@
       if (ctx) {
         ctx.clearRect(0, 0, rect.width, rect.height);
         const list = visibleDreams;
+        // Pulviscolo ambientale (deterministico): il giardino respira anche
+        // tra gli organismi. 24 granelli che salgono lenti.
+        for (let d = 0; d < 24; d++) {
+          const dx = ((d * 137.5) % rect.width + ((time * 0.004 * (1 + (d % 3))) % 60)) % rect.width;
+          const dy = rect.height - ((time * 0.008 * (1 + (d % 2)) + d * 53) % (rect.height + 40));
+          const da = 0.05 + 0.08 * ((d % 4) / 4);
+          ctx.beginPath();
+          ctx.arc(dx, dy, 0.8 + (d % 3) * 0.5, 0, 7);
+          ctx.fillStyle = `rgba(182, 156, 255, ${da})`;
+          ctx.fill();
+        }
         for (let i = 0; i < positions.length; i++) {
           const pos = positions[i];
           const dream = list[i];
@@ -124,6 +135,17 @@
             // pulsa 2s: scala tra 1 e 1.25
             scale = 1 + 0.25 * (0.5 + 0.5 * Math.sin((time / 180) * Math.PI));
           }
+          if (i === hoverIndex) {
+            scale = Math.max(scale, 1.08);
+            // alone morbido sotto l'organismo hovered (feedback desktop)
+            const g = ctx.createRadialGradient(pos.x, pos.y, pos.size * 0.2, pos.x, pos.y, pos.size * 1.6);
+            g.addColorStop(0, 'rgba(127, 231, 220, 0.12)');
+            g.addColorStop(1, 'rgba(127, 231, 220, 0)');
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, pos.size * 1.6, 0, 7);
+            ctx.fill();
+          }
           renderFrame(ctx, params, pos.x, pos.y, pos.size * scale, time);
         }
       }
@@ -136,6 +158,26 @@
       handle.disconnect();
     };
   });
+
+  // ---- Hover (desktop): alone sull'organismo vicino al puntatore ----
+  let hoverIndex = -1;
+
+  function onCanvasMove(e: MouseEvent): void {
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    let found = -1;
+    for (let i = 0; i < positions.length; i++) {
+      const pos = positions[i];
+      if (pos && Math.hypot(pos.x - x, pos.y - y) < pos.size * 1.25) {
+        found = i;
+        break;
+      }
+    }
+    hoverIndex = found;
+    canvas.style.cursor = found >= 0 ? 'pointer' : 'default';
+  }
 
   // ---- Tap su organismo → DreamDetail ----
   function onCanvasClick(e: MouseEvent): void {
@@ -229,7 +271,7 @@
 <svelte:window onclick={onToastTap} />
 
 <svelte:head>
-  <title>Giardino — Lucid Me</title>
+  <title>Giardino — Vigilia</title>
 </svelte:head>
 
 <div class="giardino">
@@ -285,6 +327,7 @@
   {#if dreams.length === 0}
     <!-- Stato vuoto -->
     <div class="empty">
+      <div class="seed" aria-hidden="true"></div>
       <p class="empty-msg">{t('giardino.vuoto')}</p>
       <button class="empty-cta" type="button" onclick={() => goto('/alba')}>
         {t('giardino.vuoto_cta')}
@@ -313,6 +356,11 @@
       tabindex="0"
       aria-label={t('giardino.eyebrow')}
       onclick={onCanvasClick}
+      onmousemove={onCanvasMove}
+      onmouseleave={() => {
+        hoverIndex = -1;
+        if (canvas) canvas.style.cursor = 'default';
+      }}
     ></canvas>
 
     <div class="hint">{t('giardino.hint')}</div>
@@ -483,6 +531,29 @@
     justify-content: flex-end;
   }
 
+  /* Seme dormiente: unico elemento visivo nello stato vuoto (anti-slop:
+     un'immagine, non solo testo). Radial che respira piano. */
+  .seed {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 42% 38%, rgba(182, 156, 255, 0.55), rgba(182, 156, 255, 0.12) 55%, transparent 72%);
+    filter: blur(1px);
+    animation: seedBreathe 6s ease-in-out infinite;
+    margin-bottom: 6px;
+  }
+  @keyframes seedBreathe {
+    0%,
+    100% {
+      transform: scale(0.92);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+  }
+
   /* Stato vuoto. */
   .empty {
     position: absolute;
@@ -520,8 +591,20 @@
     transform: scale(0.97);
   }
 
+  /* Desktop: il giardino è la vetrina — più largo delle altre pagine. */
+  @media (min-width: 900px) {
+    .giardino {
+      max-width: 1100px;
+    }
+    .garden {
+      top: 190px;
+      height: calc(100% - 330px);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .hint {
+    .hint,
+    .seed {
       animation: none;
     }
   }

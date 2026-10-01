@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 /**
  * Smoke test — versione Step 1+.
  * La home reindirizza a /giardino (Step 1+); verifichiamo:
- * - l'app si avvia e mostra il brand "Lucid Me" (nella nav)
+ * - l'app si avvia e mostra il brand "Vigilia" (nella nav)
  * - il manifest è raggiungibile e ben formato
  * - le 5 sezioni della nav sono presenti
  * - la navigazione tra sezioni funziona
@@ -39,7 +39,7 @@ test.describe('Smoke — app base', () => {
     const res = await request.get('/manifest.webmanifest');
     expect(res.status()).toBe(200);
     const manifest = await res.json();
-    expect(manifest.name).toBe('Lucid Me');
+    expect(manifest.name).toBe('Vigilia');
     expect(manifest.display).toBe('standalone');
     expect(String(manifest.theme_color).toLowerCase()).toBe('#0a0a14');
     expect(manifest.icons.length).toBeGreaterThan(0);

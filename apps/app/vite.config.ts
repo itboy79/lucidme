@@ -31,8 +31,8 @@ export default defineConfig({
       includeAssets: ['favicon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png'],
       injectRegister: false, // registriamo manualmente in src/lib/pwa/register.ts (step S0-2)
       manifest: {
-        name: 'Lucid Me',
-        short_name: 'Lucid Me',
+        name: 'Vigilia',
+        short_name: 'Vigilia',
         description: 'Coach scientifico per la pratica e il tracciamento dei sogni lucidi.',
         lang: 'it',
         dir: 'ltr',

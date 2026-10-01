@@ -28,7 +28,7 @@
       id: 'dove',
       titolo: 'Dove vivono i tuoi sogni',
       corpo: [
-        'Sul tuo dispositivo. Lucid Me è un\'app local-first: ogni sogno viene salvato in un database SQLite che risiede nella memoria del tuo telefono o del tuo computer. Non sui nostri server.',
+        'Sul tuo dispositivo. Vigilia è un\'app local-first: ogni sogno viene salvato in un database SQLite che risiede nella memoria del tuo telefono o del tuo computer. Non sui nostri server.',
         'Questo significa che puoi scrivere, leggere e rileggere i tuoi sogni anche completamente offline. Nessuna connessione necessaria, nessun account obbligatorio.',
       ],
     },
@@ -76,7 +76,7 @@
       id: 'bambini',
       titolo: 'Bambini e minorenni',
       corpo: [
-        'Lucid Me è pensato per persone di 13 anni o più. Non raccogliamo l\'età degli utenti.',
+        'Vigilia è pensato per persone di 13 anni o più. Non raccogliamo l\'età degli utenti.',
       ],
     },
     {
@@ -90,10 +90,10 @@
 </script>
 
 <svelte:head>
-  <title>Lucid Me · Privacy</title>
+  <title>Vigilia · Privacy</title>
   <meta
     name="description"
-    content="Informativa privacy di Lucid Me: i tuoi sogni restano sul tuo dispositivo. Local-first, nessuna raccolta di default."
+    content="Informativa privacy di Vigilia: i tuoi sogni restano sul tuo dispositivo. Local-first, nessuna raccolta di default."
   />
 </svelte:head>
 
@@ -127,7 +127,7 @@
       Ultimo aggiornamento: <time>{ultimoAggiornamento}</time>
     </p>
     <p class="nota">
-      Lucid Me è un diario onirico e uno strumento di pratica. Non è una terapia
+      Vigilia è un diario onirico e uno strumento di pratica. Non è una terapia
       medica né un sostituto di pareri professionali. Vedi i <a href={withBase('/termini')}>Termini</a>.
     </p>
   </footer>

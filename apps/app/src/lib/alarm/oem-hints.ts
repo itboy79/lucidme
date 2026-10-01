@@ -28,8 +28,8 @@ export const OEM_HINTS: Readonly<Record<string, OemHint>> = {
     issue:
       'MIUI può bloccare le notifiche di sveglia in background per risparmio batteria.',
     steps: [
-      'Impostazioni → App → Lucid Me → Risparmio energetico → "Nessuna restrizione".',
-      'Attiva "Avvio automatico" per Lucid Me.',
+      'Impostazioni → App → Vigilia → Risparmio energetico → "Nessuna restrizione".',
+      'Attiva "Avvio automatico" per Vigilia.',
       'Blocca le notifiche dell\'app NON devono essere silenziate.',
     ],
     deepLink: 'android.settings.APPLICATION_DETAILS_SETTINGS',
@@ -40,7 +40,7 @@ export const OEM_HINTS: Readonly<Record<string, OemHint>> = {
       'One UI mette le app in stato di sospensione dopo alcuni giorni di inattività.',
     steps: [
       'Impostazioni → Manutenzione dispositivo → Batteria → Limiti uso in background.',
-      'Rimuovi Lucid Me dalla lista delle app in sospensione.',
+      'Rimuovi Vigilia dalla lista delle app in sospensione.',
     ],
     deepLink: 'android.settings.SETTINGS',
   },
@@ -49,7 +49,7 @@ export const OEM_HINTS: Readonly<Record<string, OemHint>> = {
     issue:
       'EMUI può terminare le app in background per ottimizzare la batteria.',
     steps: [
-      'Impostazioni → Batteria → Avvio app → Lucid Me → gestisci manualmente.',
+      'Impostazioni → Batteria → Avvio app → Vigilia → gestisci manualmente.',
       'Attiva "Avvio automatico" e "Esecuzione in background".',
     ],
     deepLink: 'android.settings.SETTINGS',
@@ -59,8 +59,8 @@ export const OEM_HINTS: Readonly<Record<string, OemHint>> = {
     issue:
       'ColorOS ha un "App Freeze" che congela le app poco usate, bloccando le sveglie.',
     steps: [
-      'Impostazioni → Batteria → Ultilizzo app in background → Lucid Me.',
-      'Disattiva il congelamento automatico per Lucid Me.',
+      'Impostazioni → Batteria → Ultilizzo app in background → Vigilia.',
+      'Disattiva il congelamento automatico per Vigilia.',
     ],
     deepLink: 'android.settings.SETTINGS',
   },

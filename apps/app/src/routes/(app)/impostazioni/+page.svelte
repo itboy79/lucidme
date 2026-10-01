@@ -142,7 +142,7 @@
 </script>
 
 <svelte:head>
-  <title>Impostazioni — Lucid Me</title>
+  <title>Impostazioni — Vigilia</title>
 </svelte:head>
 
 <div class="eyebrow">{t('impostazioni.eyebrow')}</div>

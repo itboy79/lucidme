@@ -57,6 +57,17 @@
   .primary:active {
     transform: scale(0.97);
   }
+  /* Desktop: risposta al passaggio — un bagliore, niente colori nuovi. */
+  @media (hover: hover) and (pointer: fine) {
+    .primary:hover {
+      box-shadow: 0 0 26px rgba(127, 231, 220, 0.35), 0 6px 24px rgba(10, 10, 20, 0.5);
+      transform: translateY(-1px);
+    }
+    .ghost:hover {
+      background: rgba(127, 231, 220, 0.16);
+      transform: translateY(-1px);
+    }
+  }
   /* `.start-btn` (riga 75). */
   .ghost {
     margin-top: 16px;

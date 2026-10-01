@@ -32,7 +32,7 @@ async function ensureChannel(): Promise<void> {
     await LocalNotifications.createChannel({
       channel: {
         id: CHANNEL_ID,
-        name: 'Sveglia WBTB Lucid Me',
+        name: 'Sveglia WBTB Vigilia',
         description: 'Sveglia per il risveglio nel mezzo della notte (WBTB).',
         importance: 5, // MAX
         visibility: 1, // public
@@ -57,7 +57,7 @@ export const nativeBackend: AlarmBackend = {
       notifications: [
         {
           id,
-          title: opts?.title ?? 'Lucid Me',
+          title: opts?.title ?? 'Vigilia',
           body: opts?.body ?? 'È ora: svegliati con dolcezza.',
           schedule: { at },
           // sound custom: path relativo al bundle nativo (Capacitor serve i file
