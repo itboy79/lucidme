@@ -6,7 +6,7 @@
 <script lang="ts">
   import '../styles/tokens.css';
   import { page } from '$app/stores';
-  import { goto } from '$app/navigation';
+  import { goto } from '$lib/navigation';
   import { Nav, Toast, t, googleFontsHref } from '@lucidme/ui';
   import Starfield from '$lib/components/Starfield.svelte';
   import FeedbackButton from '$lib/components/FeedbackButton.svelte';

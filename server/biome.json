@@ -1,0 +1,24 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.5.11/schema.json",
+	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+	"files": {
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/dist",
+			"!**/public",
+			"!**/bun.lock"
+		]
+	},
+	"formatter": { "enabled": true },
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"preset": "recommended",
+			"suspicious": { "useAwait": "error", "noDeprecatedImports": "error" },
+			"nursery": { "noFloatingPromises": "error" },
+			"style": { "noNonNullAssertion": "off", "noMagicNumbers": "error" }
+		}
+	},
+	"javascript": { "formatter": { "semicolons": "asNeeded" } }
+}

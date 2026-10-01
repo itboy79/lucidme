@@ -5,6 +5,11 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
   preprocess: vitePreprocess(),
   kit: {
+    // Base path configurabile (deploy self-hosted sotto /app, es. nibrun).
+    // Default '' = root (dev, e2e, Capacitor). In build: KIT_BASE=/app pnpm build.
+    paths: {
+      base: /** @type {'' | `/${string}` | undefined} */ (process.env.KIT_BASE ?? ''),
+    },
     // SPA mode: una sola index.html con fallback client-side. Prerequisite per Capacitor.
     adapter: adapter({
       fallback: 'index.html',

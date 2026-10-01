@@ -21,7 +21,7 @@
     addDays,
     toDateStr,
   } from '@lucidme/core';
-  import { goto } from '$app/navigation';
+  import { goto } from '$lib/navigation';
   import { dreamsStore } from '$lib/stores/dreams.svelte';
   import { entitlementStore } from '$lib/entitlements.svelte.js';
   import { generateShareCard, shareCard } from '$lib/share/card';

@@ -8,7 +8,7 @@
   §8.5.4 (privacy by default, scrub dei sogni), §8.5.3 (budget).
 -->
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import { goto, withBase } from '$lib/navigation';
   import { Panel, t } from '@lucidme/ui';
 
   // Data odierna come "ultimo aggiornamento" (formato IT lungo).
@@ -128,7 +128,7 @@
     </p>
     <p class="nota">
       Lucid Me è un diario onirico e uno strumento di pratica. Non è una terapia
-      medica né un sostituto di pareri professionali. Vedi i <a href="/termini">Termini</a>.
+      medica né un sostituto di pareri professionali. Vedi i <a href={withBase('/termini')}>Termini</a>.
     </p>
   </footer>
 </div>

@@ -5,7 +5,7 @@
   e §8.5.5 (claim scientifici con fonte, niente garanzie di risultati).
 -->
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import { goto, withBase } from '$lib/navigation';
   import { Panel, t } from '@lucidme/ui';
 
   const ultimoAggiornamento = new Date().toLocaleDateString('it-IT', {
@@ -118,7 +118,7 @@
       Ultimo aggiornamento: <time>{ultimoAggiornamento}</time>
     </p>
     <p class="nota">
-      Vedi anche l'<a href="/privacy">Informativa privacy</a>.
+      Vedi anche l'<a href={withBase('/privacy')}>Informativa privacy</a>.
     </p>
   </footer>
 </div>

@@ -19,7 +19,7 @@
   import { can, PATH_FREE_DAYS } from '@lucidme/core';
   import { getDb, PathRepo, type PathProgress, PATH_MAX_DAY } from '@lucidme/db';
   import { PHASE_LABEL, type Lesson, type Phase } from '@lucidme/content';
-  import { goto } from '$app/navigation';
+  import { goto } from '$lib/navigation';
   import { track } from '$lib/analytics/index.js';
   import { entitlementStore } from '$lib/entitlements.svelte.js';
   import LessonPlayer from '$lib/components/LessonPlayer.svelte';

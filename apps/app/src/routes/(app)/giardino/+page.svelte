@@ -15,7 +15,7 @@
   import type { Dream } from '@lucidme/core';
   import { renderFrame, gardenLayout } from '@lucidme/generative';
   import type { OrganismParams, GardenNode, GardenPosition } from '@lucidme/generative';
-  import { goto } from '$app/navigation';
+  import { goto } from '$lib/navigation';
   import { page } from '$app/stores';
   import { dreamsStore } from '$lib/stores/dreams.svelte.js';
   import { getDbClient } from '$lib/db/client.svelte.js';

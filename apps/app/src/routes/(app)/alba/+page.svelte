@@ -28,7 +28,7 @@
   import type { Emotion, Lucidity, Dream } from '@lucidme/core';
   import { renderFrame } from '@lucidme/generative';
   import type { OrganismParams } from '@lucidme/generative';
-  import { goto } from '$app/navigation';
+  import { goto } from '$lib/navigation';
   import { untrack } from 'svelte';
   import { dreamsStore } from '$lib/stores/dreams.svelte.js';
   import { getDbClient } from '$lib/db/client.svelte.js';

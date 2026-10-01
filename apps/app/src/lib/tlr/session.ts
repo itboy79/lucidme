@@ -22,8 +22,10 @@
 import { mulberry32, hashStr } from '@lucidme/generative';
 
 /** Path degli asset audio (non bundled, referenziati). */
-export const TLR_CUE_URL = '/audio/tlr/cue.mp3';
-export const TLR_INTRO_URL = '/audio/tlr/session-intro.mp3';
+import { withBase } from '$lib/navigation';
+
+export const TLR_CUE_URL = withBase('/audio/tlr/cue.mp3');
+export const TLR_INTRO_URL = withBase('/audio/tlr/session-intro.mp3');
 
 /** Durate (ms). */
 const INTRO_MS = 3 * 60 * 1000; // 3 min

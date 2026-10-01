@@ -17,6 +17,7 @@
   import type { Lesson } from '@lucidme/content';
   import { t, showToast } from '@lucidme/ui';
   import { renderMarkdown } from '$lib/markdown';
+  import { withBase } from '$lib/navigation';
 
   interface Props {
     lesson: Lesson;
@@ -48,7 +49,7 @@
   let audioChecked = $state(false);
   let audioEl: HTMLAudioElement | null = $state(null);
 
-  const audioSrc = $derived.by(() => `/audio/lessons/${lesson.day}.mp3`);
+  const audioSrc = $derived.by(() => withBase(`/audio/lessons/${lesson.day}.mp3`));
 
   // Controllo esistenza traccia via HEAD (no errori a UI).
   $effect(() => {

@@ -30,7 +30,7 @@
   } from '@lucidme/ui';
   import { createDream } from '@lucidme/core';
   import type { Dream, Emotion, Lucidity } from '@lucidme/core';
-  import { goto } from '$app/navigation';
+  import { goto } from '$lib/navigation';
   import { onboardingStore } from '$lib/stores/onboarding.svelte.js';
   import { dreamsStore } from '$lib/stores/dreams.svelte.js';
   import { getDbClient } from '$lib/db/client.svelte.js';

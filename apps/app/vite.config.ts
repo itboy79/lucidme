@@ -7,6 +7,10 @@ import { defineConfig } from 'vite';
  * Pattern consigliato dalla doc ufficiale per SvelteKit (no peer nascoste).
  * Precache dell'app shell; NESSUNA cache runtime custom in Step 0 (regola S0-2).
  */
+// Stesso valore di kit.paths.base (svelte.config.js): le icone del manifest
+// PWA sono path assoluti e vanno prefissate quando l'app vive in una sotto-cartella.
+const BASE = process.env.KIT_BASE ?? '';
+
 export default defineConfig({
   plugins: [
     sveltekit(),
@@ -27,9 +31,9 @@ export default defineConfig({
         theme_color: '#0a0a14',
         categories: ['health', 'lifestyle', 'productivity'],
         icons: [
-          { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
-          { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
-          { src: '/icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: `${BASE}/icons/icon-192.png`, sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: `${BASE}/icons/icon-512.png`, sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: `${BASE}/icons/icon-maskable-512.png`, sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
       workbox: {

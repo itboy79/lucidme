@@ -15,7 +15,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { t, Panel, Button, showToast } from '@lucidme/ui';
-  import { goto } from '$app/navigation';
+  import { goto, withBase } from '$lib/navigation';
   import { track } from '$lib/analytics/index.js';
   import { billing } from '$lib/billing/index.js';
   import type { Plan } from '$lib/billing/index.js';
@@ -112,7 +112,7 @@
 </button>
 
 <p class="legal">
-  <a href="/privacy">{t('impostazioni.privacy')}</a> · <a href="/termini">{t('impostazioni.termini')}</a>
+  <a href={withBase('/privacy')}>{t('impostazioni.privacy')}</a> · <a href={withBase('/termini')}>{t('impostazioni.termini')}</a>
 </p>
 
 <style>

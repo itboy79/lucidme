@@ -8,7 +8,7 @@
   import { onMount } from 'svelte';
   import { t, showToast, Panel } from '@lucidme/ui';
   import { exportJSON, exportMarkdown } from '@lucidme/db';
-  import { goto } from '$app/navigation';
+  import { goto } from '$lib/navigation';
   import { getDbClient } from '$lib/db/client.svelte.js';
   import { downloadText } from '$lib/download.js';
   import {

@@ -15,7 +15,7 @@
   import { t, showToast } from '@lucidme/ui';
   import { can, detectSigns } from '@lucidme/core';
   import type { SignHit } from '@lucidme/core';
-  import { goto } from '$app/navigation';
+  import { goto, withBase } from '$lib/navigation';
   import { dreamsStore } from '$lib/stores/dreams.svelte.js';
   import { nightStore } from '$lib/stores/night.svelte.js';
   import { settingsStore } from '$lib/stores/settings.svelte.js';
@@ -93,7 +93,7 @@
     }
     try {
       await scheduleWBTB(at, backend, {
-        sound: `/audio/alarms/${sleep.sound}.mp3`,
+        sound: withBase(`/audio/alarms/${sleep.sound}.mp3`),
         vibrate: true,
         title: t('notte.wbtb_card_lbl'),
         body: t('notte.rientro'),

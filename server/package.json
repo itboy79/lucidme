@@ -1,0 +1,24 @@
+{
+	"name": "lucidme-server",
+	"type": "module",
+	"private": true,
+	"description": "Lucid Me — server Bun/Elysia: serve landing (/) e app (/app), API waitlist+feedback su SQLite embedded. Un binario, deploy su nibrun.",
+	"scripts": {
+		"dev": "bun src/main.ts",
+		"build": "bun scripts/build.ts",
+		"build:local": "BUILD_TARGET=host bun scripts/build.ts",
+		"start": "bun src/main.ts",
+		"check:types": "tsc --noEmit",
+		"check:codestyle": "biome check",
+		"fix:codestyle": "biome check --write",
+		"check:all": "bun run --parallel check:types check:codestyle"
+	},
+	"dependencies": {
+		"elysia": "^1.4.29"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.11",
+		"@types/bun": "1.4.2",
+		"typescript": "^5.9.3"
+	}
+}
